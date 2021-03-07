@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5ed41cc420fc24aa5ae0d2622d5c9d, type: 3}
+  m_Name: Unit Database
+  m_EditorClassIdentifier: 
+  catNormalUnits:
+  - unitPrefab: {fileID: 7153909894877746408, guid: 0c636e613a80a144cb76cba5d360324d,
+      type: 3}
+    ID: 0
+    name: Kniffen
+    health: 2
+    initialMovement: 1
+    abilityDesc: 
+    unitSprite: {fileID: 21300000, guid: 6b05746738a5b594fa8303e12fce7829, type: 3}
+  catRareUnits: []
+  catEpicUnits: []
+  catLegendaryUnits: []
+  dogNormalUnits: []
+  dogRareUnits: []
+  dogEpicUnits: []
+  dogLegendaryUnits: []
