@@ -23,9 +23,8 @@ public class Gacha : MonoBehaviour, IPointerClickHandler
         int random = Random.Range(1, 100);
         if (random <= normalRate) {
             if (GameManager.currentPlayer == GameManager.PLAYER1) {
-                //Change to dogs
-                if (unitDatabase.catNormalUnits.Count > 0) {
-                    Hand.singleton.AddToHand(unitDatabase.catNormalUnits[Random.Range(0, unitDatabase.catNormalUnits.Count)]);
+                if (unitDatabase.dogNormalUnits.Count > 0) {
+                    Hand.singleton.AddToHand(unitDatabase.dogNormalUnits[Random.Range(0, unitDatabase.dogNormalUnits.Count)]);
                 }
             }
             else {

@@ -12,6 +12,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler {
     public int yPosition;
     public string tileType;
 
+    public Vector3 offset;
+
     public Tile Left;
     public Tile Right;
     public Tile Up;
@@ -29,7 +31,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler {
     #region Unit Functions
     public void PlaceUnit(Unit unit) {
         myUnit = unit;
-        myUnit.transform.position = transform.position - new Vector3(0, 0, 0);
+        myUnit.transform.position = transform.position + offset;
         myUnit.RecalculateDepth();
         myUnit.OccupiedTile = this;
     }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Unit Database
   m_EditorClassIdentifier: 
   catNormalUnits:
-  - unitPrefab: {fileID: 7153909894877746408, guid: 0c636e613a80a144cb76cba5d360324d,
+  - unitPrefab: {fileID: 8311470979704103897, guid: 5f7a5249effc9c34492694b4cfc5f508,
       type: 3}
     ID: 0
     name: Kniffen
@@ -24,7 +24,15 @@ MonoBehaviour:
   catRareUnits: []
   catEpicUnits: []
   catLegendaryUnits: []
-  dogNormalUnits: []
+  dogNormalUnits:
+  - unitPrefab: {fileID: 7992186078789772754, guid: d85100311868a8d40828db9a5111fb2d,
+      type: 3}
+    ID: 0
+    name: Spike
+    health: 2
+    initialMovement: 1
+    abilityDesc: 
+    unitSprite: {fileID: 21300000, guid: 18e3024581351f542b3ee352e0832718, type: 3}
   dogRareUnits: []
   dogEpicUnits: []
   dogLegendaryUnits: []
