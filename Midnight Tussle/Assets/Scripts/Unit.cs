@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class Unit : MonoBehaviour {
 
     protected string characterName;
-    public int totalHealth;
+    public int initialHealth;
     public int currentHealth;
     public int initialMovement;
     public int player;
@@ -17,6 +18,8 @@ public abstract class Unit : MonoBehaviour {
     private SpriteRenderer myRenderer;
     private Shader shaderGUItext;
     private Shader shaderSpritesDefault;
+
+    private UITracker myUITracker;
 
     [SerializeField]
     private Text DamageTextPrefab;
@@ -40,6 +43,11 @@ public abstract class Unit : MonoBehaviour {
     #endregion
 
     #region Initialization
+    void Awake() {
+        myUITracker = Instantiate(GameManager.singleton.uiTrackerPrefab).GetComponent<UITracker>();
+        myUITracker.TrackObject = gameObject;
+    }
+
     void Start() {
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
         shaderGUItext = Shader.Find("GUI/Text Shader");
@@ -49,7 +57,7 @@ public abstract class Unit : MonoBehaviour {
     }
 
     public void Setup(UnitDatabaseSO.UnitData data, int team) {
-        totalHealth = data.health;
+        initialHealth = data.health;
         characterName = data.name;
         initialMovement = data.initialMovement;
         player = team;
@@ -67,7 +75,8 @@ public abstract class Unit : MonoBehaviour {
     }
 
     public void SetHPFull() {
-        currentHealth = totalHealth;
+        currentHealth = initialHealth;
+        UpdateUI();
     }
 
     public void RecalculateDepth() {
@@ -77,6 +86,13 @@ public abstract class Unit : MonoBehaviour {
     public Tile OccupiedTile {
         get { return occupiedTile; }
         set { occupiedTile = value; }
+    }
+    #endregion
+
+    #region Update
+    private void UpdateUI() {
+        myUITracker.GetComponentInChildren<TextMeshProUGUI>().text = currentHealth.ToString();
+        myUITracker.transform.SetParent(GameManager.singleton.canvas.transform);
     }
     #endregion
 
@@ -90,16 +106,28 @@ public abstract class Unit : MonoBehaviour {
             if (occupiedTile.Right != null && occupiedTile.Right.Unit == null) {
                 StartCoroutine(MoveUnitInDirection(player));
             }
-            else {
+            else if (occupiedTile.Right.Unit.player != GameManager.PLAYER1) {
                 //Fight
+                int enemyHP = occupiedTile.Right.Unit.GetHP;
+                occupiedTile.Right.Unit.TakeDamage(currentHealth);
+                TakeDamage(enemyHP);
+                if (currentHealth > 0) {
+                    StartCoroutine(MoveUnitInDirection(player));
+                }
             }
         }
         else {
             if (occupiedTile.Left != null && occupiedTile.Left.Unit == null) {
                 StartCoroutine(MoveUnitInDirection(player));
             }
-            else {
+            else if (occupiedTile.Left.Unit.player != GameManager.PLAYER2) {
                 //Fight
+                int enemyHP = occupiedTile.Left.Unit.GetHP;
+                occupiedTile.Left.Unit.TakeDamage(currentHealth);
+                TakeDamage(enemyHP);
+                if (currentHealth > 0) {
+                    StartCoroutine(MoveUnitInDirection(player));
+                }
             }
         }
     }
@@ -135,6 +163,13 @@ public abstract class Unit : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         currentHealth -= damage;
+        if (currentHealth > 0) {
+            StartCoroutine("HurtAnimation", damage);
+        }
+        else {
+            StartCoroutine("DeathAnimation");
+        }
+        UpdateUI();
     }
     #endregion
 
@@ -190,6 +225,10 @@ public abstract class Unit : MonoBehaviour {
         myRenderer.color = new Color(1, 1, 1, 1);
         transform.localScale = new Vector3(1, 1, 1);
         gameObject.SetActive(false);
+        myUITracker.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
+        Destroy(myUITracker.gameObject);
     }
 
     public void StartBounceAnimation() {
@@ -219,7 +258,7 @@ public abstract class Unit : MonoBehaviour {
 
     #region Stats
     public void ResetStats() {
-        currentHealth = totalHealth;
+        currentHealth = initialHealth;
     }
 
     public void HPDamage(int damage) {

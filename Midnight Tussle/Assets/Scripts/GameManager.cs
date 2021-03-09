@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,8 +20,16 @@ public class GameManager : MonoBehaviour
     private List<Unit> player1Units;
     private List<Unit> player2Units;
 
+    private int player1NexusHP;
+    private int player2NexusHP;
+
     [SerializeField]
     Unit testUnit;
+    [SerializeField]
+    public UITracker uiTrackerPrefab;
+
+    public Canvas canvas;
+    public TextMeshProUGUI turnText;
 
     [SerializeField]
     private Button endButton;
@@ -123,9 +132,11 @@ public class GameManager : MonoBehaviour
     public void EndTurn() {
         if (currentPlayer == PLAYER1) {
             currentPlayer = PLAYER2;
+            turnText.text = "Cats' Turn";
         }
         else {
             currentPlayer = PLAYER1;
+            turnText.text = "Dogs' Turn";
         }
         Hand.singleton.ClearHand();
         NewTurn();

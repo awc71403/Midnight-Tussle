@@ -57,6 +57,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler {
         if (myUnit == null && UnitUI.chosenUnitUI != null) {
             Debug.Log("Conditions met");
             GameManager.singleton.PlaceCharacterOnTile(UnitUI.chosenUnitUI.unitData, xPosition, yPosition, GameManager.currentPlayer);
+            Destroy(UnitUI.chosenUnitUI.gameObject);
+            UnitUI.chosenUnitUI = null;
         }
     }
     #endregion

@@ -30,7 +30,9 @@ public class Hand : MonoBehaviour
 
     public void ClearHand() {
         foreach (UnitUI unit in unitUIs) {
-            Destroy(unit.gameObject);
+            if (unit != null) {
+                Destroy(unit.gameObject);
+            }
         }
         unitUIs.Clear();
     }
