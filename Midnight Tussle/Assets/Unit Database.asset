@@ -21,9 +21,33 @@ MonoBehaviour:
     initialMovement: 1
     abilityDesc: 
     unitSprite: {fileID: 21300000, guid: 6b05746738a5b594fa8303e12fce7829, type: 3}
-  catRareUnits: []
-  catEpicUnits: []
-  catLegendaryUnits: []
+  catRareUnits:
+  - unitPrefab: {fileID: 9110706679802483771, guid: 79298b2bd285cc3448a84803ecd17f34,
+      type: 3}
+    ID: 0
+    name: Inari
+    health: 3
+    initialMovement: 1
+    abilityDesc: 
+    unitSprite: {fileID: 21300000, guid: 236a9121118b0f54f9f3e2753cd733ff, type: 3}
+  catEpicUnits:
+  - unitPrefab: {fileID: 1025033007645038000, guid: 366cf34d4e628de4bbd59f8df875d948,
+      type: 3}
+    ID: 0
+    name: Catana
+    health: 4
+    initialMovement: 1
+    abilityDesc: 
+    unitSprite: {fileID: 0}
+  catLegendaryUnits:
+  - unitPrefab: {fileID: 3234577546225863125, guid: 9f9da09b646e8ea418132ed8abffb25e,
+      type: 3}
+    ID: 0
+    name: Nebula
+    health: 6
+    initialMovement: 1
+    abilityDesc: 
+    unitSprite: {fileID: 21300000, guid: 9c86fbc595db1d34190e8b81317e57cf, type: 3}
   dogNormalUnits:
   - unitPrefab: {fileID: 7992186078789772754, guid: d85100311868a8d40828db9a5111fb2d,
       type: 3}
@@ -33,6 +57,30 @@ MonoBehaviour:
     initialMovement: 1
     abilityDesc: 
     unitSprite: {fileID: 21300000, guid: 18e3024581351f542b3ee352e0832718, type: 3}
-  dogRareUnits: []
-  dogEpicUnits: []
-  dogLegendaryUnits: []
+  dogRareUnits:
+  - unitPrefab: {fileID: 7645063791550250310, guid: fc3873aeee6718647bf4d720808d5994,
+      type: 3}
+    ID: 0
+    name: Luke
+    health: 3
+    initialMovement: 1
+    abilityDesc: 
+    unitSprite: {fileID: 21300000, guid: cf94ffac8e0e6d54294f966e95e87ca2, type: 3}
+  dogEpicUnits:
+  - unitPrefab: {fileID: 2491811894778559173, guid: ed5d7e4fc3c5735449f7d71ee139a416,
+      type: 3}
+    ID: 0
+    name: Luke
+    health: 4
+    initialMovement: 1
+    abilityDesc: 
+    unitSprite: {fileID: 21300000, guid: f9cc573cd9ce052438f470f45eb437a6, type: 3}
+  dogLegendaryUnits:
+  - unitPrefab: {fileID: 4941031574210219637, guid: 83101238b15f2ee45bd81d174b838121,
+      type: 3}
+    ID: 0
+    name: Cupid
+    health: 6
+    initialMovement: 1
+    abilityDesc: 
+    unitSprite: {fileID: 21300000, guid: a913a235a3c7c6f47bb9f4cd8e98ff3a, type: 3}
