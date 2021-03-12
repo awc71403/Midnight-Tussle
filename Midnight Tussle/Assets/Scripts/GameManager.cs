@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public static bool actionInProcess;
     public static int turn;
 
+    public Gacha gachaMachine;
+
     private Tile[] tiles;
 
     private List<Unit> player1Units;
@@ -127,6 +129,7 @@ public class GameManager : MonoBehaviour
     private void NewTurn() {
         turn++;
         Mobalize();
+        gachaMachine.GachaReset();
     }
 
     public void EndTurn() {

@@ -3779,6 +3779,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1689713251 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5711989385408597336, guid: 9d2e9c84ca4ca804eb5a442e5b65a4ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 5711989386226978186}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e18a978c5f21ed64dbfd703faee52c54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1732353929
 GameObject:
   m_ObjectHideFlags: 0
@@ -4312,6 +4324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   database: {fileID: 11400000, guid: f8492649f54baa74081cedc062f495fa, type: 2}
+  gachaMachine: {fileID: 1689713251}
   testUnit: {fileID: 7153909894877746408, guid: 0c636e613a80a144cb76cba5d360324d,
     type: 3}
   uiTrackerPrefab: {fileID: 2575905813055563272, guid: e72fe105f46cdee4996c64a1883fb226,
@@ -4939,7 +4952,7 @@ PrefabInstance:
     - target: {fileID: 5711989385408597337, guid: 9d2e9c84ca4ca804eb5a442e5b65a4ab,
         type: 3}
       propertyPath: m_Color.a
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5711989385408597336, guid: 9d2e9c84ca4ca804eb5a442e5b65a4ab,
         type: 3}
