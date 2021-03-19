@@ -61,7 +61,7 @@ MonoBehaviour:
   - unitPrefab: {fileID: 7645063791550250310, guid: fc3873aeee6718647bf4d720808d5994,
       type: 3}
     ID: 0
-    name: Luke
+    name: Bandit
     health: 3
     initialMovement: 1
     abilityDesc: 
@@ -70,7 +70,7 @@ MonoBehaviour:
   - unitPrefab: {fileID: 2491811894778559173, guid: ed5d7e4fc3c5735449f7d71ee139a416,
       type: 3}
     ID: 0
-    name: Luke
+    name: Jimmy
     health: 4
     initialMovement: 1
     abilityDesc: 
@@ -79,7 +79,7 @@ MonoBehaviour:
   - unitPrefab: {fileID: 4941031574210219637, guid: 83101238b15f2ee45bd81d174b838121,
       type: 3}
     ID: 0
-    name: Cupid
+    name: Halo
     health: 6
     initialMovement: 1
     abilityDesc: 
