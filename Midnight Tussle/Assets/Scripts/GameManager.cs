@@ -6,156 +6,35 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    #region Variables
-    public static GameManager singleton;
+    public static GameManager instance;
 
-    public UnitDatabaseSO database;
-
-    public static int currentPlayer;
-    public static bool actionInProcess;
-    public static int turn;
-
-    public Gacha gachaMachine;
-
-    private Tile[] tiles;
-
-    private List<Unit> player1Units;
-    private List<Unit> player2Units;
-
-    private int player1NexusHP;
-    private int player2NexusHP;
-
-    [SerializeField]
-    Unit testUnit;
-    [SerializeField]
-    public UITracker uiTrackerPrefab;
-
-    public Canvas canvas;
-    public TextMeshProUGUI turnText;
-
-    [SerializeField]
-    private Button endButton;
-
-    private Tile[,] mapArray;
-
-    private const int m_xSize = 5;
-    private const int m_ySize = 4;
-
-    public const int PLAYER1 = 1;
-    public const int PLAYER2 = 2;
-    #endregion
+    private TussleManager tussleManager;
 
     #region Initialization
     public void Awake() {
         // Singleton makes sure there is only one of this object
-        if (singleton != null) {
-            DestroyImmediate(gameObject);
-            return;
+        if (instance == null) {
+            instance = this;
         }
-        singleton = this;
+        else if (instance != this) {
+            Destroy(gameObject);
+        }
 
-        player1Units = new List<Unit>();
-        player2Units = new List<Unit>();
-
-        currentPlayer = PLAYER1;
-        turn = 1;
-
-        SetTiles();
+        DontDestroyOnLoad(gameObject);
     }
 
-    public void Update() {
+    void Start(){
+        StartTussle();
     }
+
     #endregion
 
-    #region Set Up
-    public void SetTiles() {
-
-        tiles = GetComponentsInChildren<Tile>();
-        // Fill mapArray, which should be empty at first.
-        mapArray = new Tile[m_xSize, m_ySize];
-
-        // Nested for loop that creates mapYSize * mapXSize tiles.
-        for (int y = 0; y < m_ySize; y++) {
-            for (int x = 0; x < m_xSize; x++) {
-                mapArray[x, y] = tiles[y * m_xSize + x];
-                mapArray[x, y].xPosition = x;
-                mapArray[x, y].yPosition = y;
-            }
+    // The function used to begin a tussle in the actual "Tussle" scene
+    public void StartTussle() {
+        if(tussleManager == null){
+            tussleManager = FindObjectOfType<TussleManager>();
         }
 
-        for (int y = 0; y < m_ySize; y++) {
-            for (int x = 0; x < m_xSize; x++) {
-                if (x - 1 >= 0) {
-                    mapArray[x, y].Left = mapArray[x - 1, y];
-                }
-                if (x + 1 < m_xSize) {
-                    mapArray[x, y].Right = mapArray[x + 1, y];
-                }
-                if (y + 1 < m_ySize) {
-                    mapArray[x, y].Down = mapArray[x, y + 1];
-                }
-                if (y - 1 >= 0) {
-                    mapArray[x, y].Up = mapArray[x, y - 1];
-                }
-            }
-        }
+        tussleManager.StartTussle();
     }
-
-    public void PlaceCharacterOnTile(UnitDatabaseSO.UnitData data, int x, int y, int player) {
-        // Instantiate an instance of the unit and place it on the given tile.
-        Unit newUnit = Instantiate(data.unitPrefab).GetComponent<Unit>();
-        newUnit.Setup(data, player);
-        newUnit.OccupiedTile = mapArray[x, y];
-        mapArray[x, y].transform.GetComponent<Tile>().PlaceUnit(newUnit);
-        //Set Player
-        if (player == PLAYER1) {
-            player1Units.Add(newUnit);
-        } else {
-            player2Units.Add(newUnit);
-        }
-    }
-    #endregion
-
-    #region UI
-    public void ShowCharacterUI(Unit selectedUnit) {
-    }
-
-    public void ClearUI() {
-
-    }
-    #endregion
-
-    #region Turn
-    private void NewTurn() {
-        turn++;
-        Mobalize();
-        gachaMachine.GachaReset();
-    }
-
-    public void EndTurn() {
-        if (currentPlayer == PLAYER1) {
-            currentPlayer = PLAYER2;
-            turnText.text = "Cats' Turn";
-        }
-        else {
-            currentPlayer = PLAYER1;
-            turnText.text = "Dogs' Turn";
-        }
-        Hand.singleton.ClearHand();
-        NewTurn();
-    }
-
-    private void Mobalize() {
-        List<Unit> units;
-        if (currentPlayer == PLAYER1) {
-            units = player1Units;
-        }
-        else {
-            units = player2Units;
-        }
-        foreach (Unit unit in units) {
-            unit.Movement();
-        }
-    }
-    #endregion
 }

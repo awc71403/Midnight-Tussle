@@ -7,17 +7,18 @@ using UnityEngine.EventSystems;
 public class Tile : MonoBehaviour, IPointerClickHandler {
     #region Instance Variables
 
-    public Unit myUnit;
-    public int xPosition;
-    public int yPosition;
-    public string tileType;
+    // THESE ARE ZERO-INDEXED, with 0,0 being the bottom left
+    private int xIndex;
+    private int yIndex;
 
-    public Vector3 offset;
+    public Vector3 unitOffset;
 
-    public Tile Left;
-    public Tile Right;
-    public Tile Up;
-    public Tile Down;
+    [HideInInspector] public Tile Left;
+    [HideInInspector] public Tile Right;
+    [HideInInspector] public Tile Up;
+    [HideInInspector] public Tile Down;
+
+    private Unit myUnit;
 
     #endregion
 
@@ -31,7 +32,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler {
     #region Unit Functions
     public void PlaceUnit(Unit unit) {
         myUnit = unit;
-        myUnit.transform.position = transform.position + offset;
+        myUnit.transform.position = transform.position + unitOffset;
         myUnit.RecalculateDepth();
         myUnit.OccupiedTile = this;
     }
@@ -43,24 +44,25 @@ public class Tile : MonoBehaviour, IPointerClickHandler {
 
     #region Variable Functions
     public int GetXPosition() {
-        return xPosition;
+        return xIndex;
     }
 
     public int GetYPosition() {
-        return yPosition;
+        return yIndex;
     }
     #endregion
 
     #region Click
     public void OnPointerClick(PointerEventData eventData) {
         Debug.Log("Tile Click");
-        if (myUnit == null && UnitUI.chosenUnitUI != null) {
-            Debug.Log("Conditions met");
-            GameManager.singleton.PlaceCharacterOnTile(UnitUI.chosenUnitUI.unitData, xPosition, yPosition, GameManager.currentPlayer);
-            Destroy(UnitUI.chosenUnitUI.gameObject);
-            UnitUI.chosenUnitUI = null;
-        }
+        // if (myUnit == null && UnitUI.chosenUnitUI != null) {
+        //     Debug.Log("Conditions met");
+        //     GameManager.singleton.PlaceCharacterOnTile(UnitUI.chosenUnitUI.unitData, xPosition, yPosition, GameManager.currentPlayer);
+        //     Destroy(UnitUI.chosenUnitUI.gameObject);
+        //     UnitUI.chosenUnitUI = null;
+        // }
     }
+
     #endregion
 
 }

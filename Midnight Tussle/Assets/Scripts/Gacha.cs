@@ -4,95 +4,101 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Gacha : MonoBehaviour, IPointerClickHandler
+public class Gacha : MonoBehaviour
 {
     #region Variables
-    public int normalRate;
-    public int rareRate;
-    public int epicRate;
-    public int legendaryRate;
 
-    private int gachaRemaining;
+    [Header("Units")]
+    [SerializeField] private List<Unit> catNormalUnits;
+    [SerializeField] private List<Unit> catRareUnits;
+    [SerializeField] private List<Unit> catEpicUnits;
+    [SerializeField] private List<Unit> catLegendaryUnits;
 
-    private UnitDatabaseSO unitDatabase;
+    [SerializeField] private List<Unit> dogNormalUnits;
+    [SerializeField] private List<Unit> dogRareUnits;
+    [SerializeField] private List<Unit> dogEpicUnits;
+    [SerializeField] private List<Unit> dogLegendaryUnits;
 
-    private const int gachaAmount = 5;
+    [Header("Settings")]
+    [SerializeField] private float[] startDistribution = new float[TussleManager.MAX_LEVEL];
+    [SerializeField] private float[] finalDistribution = new float[TussleManager.MAX_LEVEL];
+    private float[] differenceDistribution = new float[TussleManager.MAX_LEVEL];
+
+    List<Unit>[] catUnits;
+    List<Unit>[] dogUnits;
+
     #endregion
 
-    private void Start() {
-        unitDatabase = GameManager.singleton.database;
-        gachaRemaining = gachaAmount;
+    void Awake(){
+        for(int i = 0; i < TussleManager.MAX_LEVEL; i++){
+            differenceDistribution[i] = finalDistribution[i] - startDistribution[i];
+        }
+
+        // Set up cat units
+        catUnits = new List<Unit>[4]{catNormalUnits, catRareUnits, catEpicUnits, catLegendaryUnits};
+
+        // Set up dog units
+        dogUnits = new List<Unit>[4]{dogNormalUnits, dogRareUnits, dogEpicUnits, dogLegendaryUnits};
     }
+
 
     #region Gacha
-    private void GachaRoll() {
-        gachaRemaining--;
 
-        int random = Random.Range(1, 100);
-        if (random <= normalRate) {
-            if (GameManager.currentPlayer == GameManager.PLAYER1) {
-                if (unitDatabase.dogNormalUnits.Count > 0) {
-                    Hand.singleton.AddToHand(unitDatabase.dogNormalUnits[Random.Range(0, unitDatabase.dogNormalUnits.Count)]);
-                }
-            }
-            else {
-                if (unitDatabase.catNormalUnits.Count > 0) {
-                    Hand.singleton.AddToHand(unitDatabase.catNormalUnits[Random.Range(0, unitDatabase.catNormalUnits.Count)]);
-                }
-            }
-        }
-        else if (random <= normalRate + rareRate) {
-            if (GameManager.currentPlayer == GameManager.PLAYER1) {
-                if (unitDatabase.dogRareUnits.Count > 0) {
-                    Hand.singleton.AddToHand(unitDatabase.dogRareUnits[Random.Range(0, unitDatabase.dogRareUnits.Count)]);
-                }
-            }
-            else {
-                if (unitDatabase.catRareUnits.Count > 0) {
-                    Hand.singleton.AddToHand(unitDatabase.catRareUnits[Random.Range(0, unitDatabase.catRareUnits.Count)]);
-                }
-            }
-        }
-        else if (random <= normalRate + rareRate + epicRate) {
-            if (GameManager.currentPlayer == GameManager.PLAYER1) {
+    // Will roll count units, 
+    public List<Unit> Roll(PlayerType roller, int count, int level) {
 
-            }
-            else {
+        float[] currentDist = currentDistribution(level);
 
-            }
-        }
-        else {
-            if (GameManager.currentPlayer == GameManager.PLAYER1) {
-                if (unitDatabase.dogLegendaryUnits.Count > 0) {
-                    Hand.singleton.AddToHand(unitDatabase.dogLegendaryUnits[Random.Range(0, unitDatabase.dogLegendaryUnits.Count)]);
+        List<Unit> recruits = new List<Unit>(count); 
+
+        for(int rollIndex = 0; rollIndex < count; rollIndex++){
+
+            float random = Random.value;
+
+            float sumRate = 0;
+
+            for(int rarity = 0; rarity < TussleManager.MAX_LEVEL; rarity++){
+                sumRate += currentDist[rarity];
+                
+                if(random <= sumRate){
+                    Unit recruit;
+                    if(roller == PlayerType.DOG){
+                        recruit = Utils.RandomFromList(dogUnits[rarity]);
+                        recruit.player = PlayerType.DOG;
+                    }
+                    else{
+                        recruit = Utils.RandomFromList(catUnits[rarity]);
+                        recruit.player = PlayerType.CAT;
+                    }
+                    recruit.rarity = rarity;
+                    recruits.Add(recruit);
+
+                    break;
                 }
+                
             }
-            else {
-                if (unitDatabase.catLegendaryUnits.Count > 0) {
-                    Hand.singleton.AddToHand(unitDatabase.catLegendaryUnits[Random.Range(0, unitDatabase.catLegendaryUnits.Count)]);
-                }
-            }
+            
         }
 
-        if (gachaRemaining <= 0) {
-            GetComponent<Image>().color = new Color(.5f, .5f, .5f);
-        }
+        return recruits;
     }
 
-    public void GachaReset() {
-        gachaRemaining = gachaAmount;
-        GetComponent<Image>().color = new Color(1f, 1f, 1f);
+    // Lerps between the start and final distributions according to level (1 returns start, MAX_LEVEL returns final)
+    private float[] currentDistribution(int level){
+        
+        if(level == 1) return startDistribution;
+        else if(level == TussleManager.MAX_LEVEL) return finalDistribution;
 
-    }
-    #endregion
+        float[] distribution = new float[TussleManager.MAX_LEVEL];
+        
+        float differenceFactor = (level - 1) / (TussleManager.MAX_LEVEL - 1);
 
-    #region Click
-    public void OnPointerClick(PointerEventData eventData) {
-        if (eventData.button == PointerEventData.InputButton.Left) {
-            if (gachaRemaining > 0) {
-                GachaRoll();
-            }
+        for(int i = 0; i < TussleManager.MAX_LEVEL; i++){
+            distribution[i] = startDistribution[i] + differenceDistribution[i] * differenceFactor;
         }
+
+        return distribution;
     }
+
     #endregion
 }

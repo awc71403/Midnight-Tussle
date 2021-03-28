@@ -6,20 +6,23 @@ using UnityEngine.UI;
 
 public abstract class Unit : MonoBehaviour {
 
-    protected string characterName;
-    public int initialHealth;
-    public int currentHealth;
-    public int initialMovement;
-    public int player;
-
-    public Tile occupiedTile;
+    [Header("Stats")]
+    public string characterName;
+    public int maxHealth;
+    public int movement;
+    public int attack;
+    
+    [HideInInspector] public PlayerType player;
+    [HideInInspector] public int rarity;
+    
+    private int health;
+    
+    private Tile occupiedTile;
 
     // Sprite Rendering
     private SpriteRenderer myRenderer;
     private Shader shaderGUItext;
     private Shader shaderSpritesDefault;
-
-    private UITracker myUITracker;
 
     [SerializeField]
     private Text DamageTextPrefab;
@@ -44,8 +47,7 @@ public abstract class Unit : MonoBehaviour {
 
     #region Initialization
     void Awake() {
-        myUITracker = Instantiate(GameManager.singleton.uiTrackerPrefab).GetComponent<UITracker>();
-        myUITracker.TrackObject = gameObject;
+
     }
 
     void Start() {
@@ -53,16 +55,9 @@ public abstract class Unit : MonoBehaviour {
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
         audioSource = GetComponent<AudioSource>();
-        SetHPFull();
+        health = maxHealth;
     }
 
-    public void Setup(UnitDatabaseSO.UnitData data, int team) {
-        initialHealth = data.health;
-        characterName = data.name;
-        initialMovement = data.initialMovement;
-        player = team;
-        SetHPFull();
-    }
     #endregion
 
     #region Getter and Setter
@@ -70,14 +65,9 @@ public abstract class Unit : MonoBehaviour {
         get { return characterName; }
     }
 
-    public int GetHP {
-        get { return currentHealth; }
-    }
-
-    public void SetHPFull() {
-        currentHealth = initialHealth;
-        UpdateUI();
-    }
+    // public int GetHP {
+    //     get { return currentHealth; }
+    // }
 
     public void RecalculateDepth() {
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
@@ -91,9 +81,9 @@ public abstract class Unit : MonoBehaviour {
 
     #region Update
     private void UpdateUI() {
-        myUITracker.GetComponentInChildren<TextMeshProUGUI>().text = currentHealth.ToString();
-        myUITracker.transform.SetParent(GameManager.singleton.canvas.transform);
+        // myUITracker.GetComponentInChildren<TextMeshProUGUI>().text = health.ToString();
     }
+    
     #endregion
 
     #region Movement
@@ -102,68 +92,69 @@ public abstract class Unit : MonoBehaviour {
     }
 
     public void Movement() {
-        if (player == GameManager.PLAYER1) {
-            if (occupiedTile.Right != null && occupiedTile.Right.Unit == null) {
-                StartCoroutine(MoveUnitInDirection(player));
-            }
-            else if (occupiedTile.Right.Unit.player != GameManager.PLAYER1) {
-                //Fight
-                int enemyHP = occupiedTile.Right.Unit.GetHP;
-                occupiedTile.Right.Unit.TakeDamage(currentHealth);
-                TakeDamage(enemyHP);
-                if (currentHealth > 0) {
-                    StartCoroutine(MoveUnitInDirection(player));
-                }
-            }
-        }
-        else {
-            if (occupiedTile.Left != null && occupiedTile.Left.Unit == null) {
-                StartCoroutine(MoveUnitInDirection(player));
-            }
-            else if (occupiedTile.Left.Unit.player != GameManager.PLAYER2) {
-                //Fight
-                int enemyHP = occupiedTile.Left.Unit.GetHP;
-                occupiedTile.Left.Unit.TakeDamage(currentHealth);
-                TakeDamage(enemyHP);
-                if (currentHealth > 0) {
-                    StartCoroutine(MoveUnitInDirection(player));
-                }
-            }
-        }
+        // if (player == GameManager.PLAYER1) {
+        //     if (occupiedTile.Right != null && occupiedTile.Right.Unit == null) {
+        //         StartCoroutine(MoveUnitInDirection(player));
+        //     }
+        //     else if (occupiedTile.Right.Unit.player != GameManager.PLAYER1) {
+        //         //Fight
+        //         int enemyHP = occupiedTile.Right.Unit.GetHP;
+        //         occupiedTile.Right.Unit.TakeDamage(currentHealth);
+        //         TakeDamage(enemyHP);
+        //         if (currentHealth > 0) {
+        //             StartCoroutine(MoveUnitInDirection(player));
+        //         }
+        //     }
+        // }
+        // else {
+        //     if (occupiedTile.Left != null && occupiedTile.Left.Unit == null) {
+        //         StartCoroutine(MoveUnitInDirection(player));
+        //     }
+        //     else if (occupiedTile.Left.Unit.player != GameManager.PLAYER2) {
+        //         //Fight
+        //         int enemyHP = occupiedTile.Left.Unit.GetHP;
+        //         occupiedTile.Left.Unit.TakeDamage(currentHealth);
+        //         TakeDamage(enemyHP);
+        //         if (currentHealth > 0) {
+        //             StartCoroutine(MoveUnitInDirection(player));
+        //         }
+        //     }
+        // }
     }
 
     IEnumerator MoveUnitInDirection(int player) {
         // Action in process!
-        GameManager.actionInProcess = true;
+        // GameManager.actionInProcess = true;
 
-        float tileSize = GetComponent<SpriteRenderer>().sprite.bounds.size.x;
+        // float tileSize = GetComponent<SpriteRenderer>().sprite.bounds.size.x;
 
-        // Calculate the steps you need to take
+        // // Calculate the steps you need to take
 
-        //Take that step!
-        if (player == GameManager.PLAYER1) {
-            transform.position += new Vector3(tileSize, 0);
-            occupiedTile = occupiedTile.Right;
-        }
-        else {
-            transform.position -= new Vector3(tileSize, 0);
-            occupiedTile = occupiedTile.Left;
-        }
-        RecalculateDepth();
-        StartBounceAnimation();
-        yield return new WaitForSeconds(stepDuration);
-        occupiedTile.PlaceUnit(this);
+        // //Take that step!
+        // if (player == GameManager.PLAYER1) {
+        //     transform.position += new Vector3(tileSize, 0);
+        //     occupiedTile = occupiedTile.Right;
+        // }
+        // else {
+        //     transform.position -= new Vector3(tileSize, 0);
+        //     occupiedTile = occupiedTile.Left;
+        // }
+        // RecalculateDepth();
+        // StartBounceAnimation();
+        // yield return new WaitForSeconds(stepDuration);
+        // occupiedTile.PlaceUnit(this);
 
-        // Action over!
-        GameManager.actionInProcess = false;
+        // // Action over!
+        // GameManager.actionInProcess = false;
+        yield return null;
     }
     #endregion
 
     #region Attack
 
     public void TakeDamage(int damage) {
-        currentHealth -= damage;
-        if (currentHealth > 0) {
+        health -= damage;
+        if (health > 0) {
             StartCoroutine("HurtAnimation", damage);
         }
         else {
@@ -225,10 +216,10 @@ public abstract class Unit : MonoBehaviour {
         myRenderer.color = new Color(1, 1, 1, 1);
         transform.localScale = new Vector3(1, 1, 1);
         gameObject.SetActive(false);
-        myUITracker.gameObject.SetActive(false);
+        // myUITracker.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
-        Destroy(myUITracker.gameObject);
+        // Destroy(myUITracker.gameObject);
     }
 
     public void StartBounceAnimation() {
@@ -257,13 +248,10 @@ public abstract class Unit : MonoBehaviour {
     #endregion
 
     #region Stats
-    public void ResetStats() {
-        currentHealth = initialHealth;
-    }
 
     public void HPDamage(int damage) {
-        currentHealth -= damage;
-        if (currentHealth > 0) {
+        health = Mathf.Max(health - damage, 0);
+        if (health != 0) {
             StartCoroutine("HurtAnimation", damage);
         }
         else {
@@ -271,4 +259,10 @@ public abstract class Unit : MonoBehaviour {
         }
     }
     #endregion
+
+
+    public Sprite GetSprite(){
+        //FIX ME
+        return GetComponent<SpriteRenderer>().sprite;
+    }
 }

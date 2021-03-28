@@ -1,0 +1,151 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public enum PlayerType{
+    DOG,
+    CAT
+}
+
+[RequireComponent(typeof(Gacha))]
+public class TussleManager : MonoBehaviour
+{
+    #region Static Variables
+    public const int MAX_LEVEL = 4; // This is NOT zero-indexed!!!!
+    public static List<Sprite> raritySprites;
+
+    #endregion 
+
+
+    #region Variables
+    public static TussleManager instance;
+
+    // References
+    [Header("References")]
+    [SerializeField] private Transform tileParent;
+    [SerializeField] private UIManager uiManager;
+    [SerializeField] private Player dogPlayer;
+    [SerializeField] private Player catPlayer;
+
+    [Header("Settings")]
+    [SerializeField] private List<int> rolledAtLevel = new List<int>(MAX_LEVEL);
+    [SerializeField] private List<int> placedAtLevel = new List<int>(MAX_LEVEL);
+    [SerializeField] private List<Sprite> temp_raritySprites = new List<Sprite>(MAX_LEVEL + 1); // None, Common, Rare, Epic, Legendary
+
+    private Gacha gachaMachine;
+
+    private PlayerType currentTurn;
+    private int turnCount = 0;
+
+    private Tile[,] mapArray = new Tile[XSIZE, YSIZE];
+
+    private const int XSIZE = 5;
+    private const int YSIZE = 4;
+
+    
+    private Player currentPlayer {
+        get { return currentTurn == PlayerType.DOG ? dogPlayer : catPlayer; }
+
+    }
+
+    #endregion
+
+    #region Set Up
+
+    void Awake(){
+        raritySprites = temp_raritySprites;
+    }
+
+    void Start(){
+        gachaMachine = GetComponent<Gacha>();
+    }
+
+    // Called by the GameManager, used to set the Tussle in motion  and run setup for the match
+    public void StartTussle() {
+        currentTurn = PlayerType.DOG;
+
+        // THESE SHOULD BE STORED WITH 0,0 AT BOTTOM LEFT in the hierarchy!!! And running horizontally in sequence!
+
+        // Fill mapArray, which should be empty at first.
+
+        // Nested for loop that creates mapYSize * mapXSize tiles.
+        for(int y = 0; y < YSIZE; y++){
+            for(int x = 0; x < XSIZE; x++){
+                mapArray[x, y] = tileParent.GetChild(y * XSIZE + x).GetComponent<Tile>();
+            }
+        }
+
+
+        for (int y = 0; y < YSIZE; y++) {
+            for (int x = 0; x < XSIZE; x++) {
+                //Error-check
+                if(mapArray[x, y] == null){
+                    Debug.LogError("The tile indexes aren't set up right!");
+                }
+
+                if (x - 1 >= 0) {
+                    mapArray[x, y].Left = mapArray[x - 1, y];
+                }
+                if (x + 1 < XSIZE) {
+                    mapArray[x, y].Right = mapArray[x + 1, y];
+                }
+                if (y + 1 < YSIZE) {
+                    mapArray[x, y].Down = mapArray[x, y + 1];
+                }
+                if (y - 1 >= 0) {
+                    mapArray[x, y].Up = mapArray[x, y - 1];
+                }
+            }
+        }
+
+        NewTurn();
+    }
+
+    public void PlaceCharacterOnTile(Unit recruit, int x, int y, int player) {
+        // Instantiate an instance of the unit and place it on the given tile.
+        Unit newUnit = Instantiate(recruit).GetComponent<Unit>();
+        // newUnit.Setup();
+        newUnit.OccupiedTile = mapArray[x, y];
+        mapArray[x, y].transform.GetComponent<Tile>().PlaceUnit(newUnit);
+    }
+
+    #endregion
+
+    #region UI
+    public void ShowCharacterUI(Unit selectedUnit) {
+    }
+
+    public void ClearUI() {
+
+    }
+    #endregion
+
+    #region Turn
+    
+    // Called to begin a turn
+    private void NewTurn() {
+        turnCount++;
+        int newRecruits = rolledAtLevel[currentPlayer.GetLevel() - 1];
+        uiManager.StartTurn(currentTurn, newRecruits);
+        List<Unit> rolled = gachaMachine.Roll(currentTurn, newRecruits, currentPlayer.GetLevel());
+        currentPlayer.StartRecruiting(rolled);
+    }
+
+    // Called to end a turn
+    public void EndTurn() {
+        if (currentTurn == PlayerType.DOG) {
+            currentTurn = PlayerType.CAT;
+        }
+        else {
+            currentTurn = PlayerType.DOG;
+
+        }
+        NewTurn();
+    }
+
+    #endregion
+
+
+}
