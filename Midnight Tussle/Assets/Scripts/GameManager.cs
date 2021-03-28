@@ -8,8 +8,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    private TussleManager tussleManager;
-
     #region Initialization
     public void Awake() {
         // Singleton makes sure there is only one of this object
@@ -31,10 +29,6 @@ public class GameManager : MonoBehaviour
 
     // The function used to begin a tussle in the actual "Tussle" scene
     public void StartTussle() {
-        if(tussleManager == null){
-            tussleManager = FindObjectOfType<TussleManager>();
-        }
-
-        tussleManager.StartTussle();
+        TussleManager.instance.StartTussle();
     }
 }

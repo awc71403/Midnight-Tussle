@@ -55,6 +55,12 @@ public class TussleManager : MonoBehaviour
     #region Set Up
 
     void Awake(){
+        if (instance != null) {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        instance = this;
+
         raritySprites = temp_raritySprites;
     }
 
@@ -74,6 +80,8 @@ public class TussleManager : MonoBehaviour
         for(int y = 0; y < YSIZE; y++){
             for(int x = 0; x < XSIZE; x++){
                 mapArray[x, y] = tileParent.GetChild(y * XSIZE + x).GetComponent<Tile>();
+                mapArray[x, y].xIndex = x;
+                mapArray[x, y].yIndex = y;
             }
         }
 
@@ -103,12 +111,17 @@ public class TussleManager : MonoBehaviour
         NewTurn();
     }
 
-    public void PlaceCharacterOnTile(Unit recruit, int x, int y, int player) {
+    public void PlaceUnitOnTile(Unit recruitPrefab, Tile tile) {
         // Instantiate an instance of the unit and place it on the given tile.
-        Unit newUnit = Instantiate(recruit).GetComponent<Unit>();
-        // newUnit.Setup();
-        newUnit.OccupiedTile = mapArray[x, y];
-        mapArray[x, y].transform.GetComponent<Tile>().PlaceUnit(newUnit);
+        Unit instantiated = Instantiate<Unit>(recruitPrefab, tile.transform.position, Quaternion.identity, transform);
+        tile.PlaceUnit(instantiated);
+        bool continueRecruit = currentPlayer.AddUnit(instantiated);
+        
+        if(!continueRecruit){
+            // Move on to movement phase
+        }
+        
+        
     }
 
     #endregion
@@ -128,9 +141,10 @@ public class TussleManager : MonoBehaviour
     private void NewTurn() {
         turnCount++;
         int newRecruits = rolledAtLevel[currentPlayer.GetLevel() - 1];
+        int toRecruit = placedAtLevel[currentPlayer.GetLevel() - 1];
         uiManager.StartTurn(currentTurn, newRecruits);
         List<Unit> rolled = gachaMachine.Roll(currentTurn, newRecruits, currentPlayer.GetLevel());
-        currentPlayer.StartRecruiting(rolled);
+        currentPlayer.StartRecruiting(rolled, toRecruit);
     }
 
     // Called to end a turn

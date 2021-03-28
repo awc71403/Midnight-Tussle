@@ -15,13 +15,19 @@ public class Player : MonoBehaviour
 
     private int nexusHealth;
 
-    private List<Unit> units;
+    private List<Unit> units = new List<Unit>();
 
     // Add pity
 
     // Add XP
     
     // Add UI
+
+    #endregion
+
+    #region Turn Variables
+
+    private int countToRecruit;
 
     #endregion
 
@@ -41,10 +47,18 @@ public class Player : MonoBehaviour
         return 1;
     }
 
-    public void StartRecruiting(List<Unit> rolled){
+    public void StartRecruiting(List<Unit> rolled, int countToRecruit){
+        this.countToRecruit = countToRecruit;
+        recruitManager.SetRemaining(countToRecruit);
         recruitManager.CreateRecruits(rolled);
     }
 
+    // Returns true if there are still more to place
+    public bool AddUnit(Unit unit){
+        recruitManager.SetRemaining(--countToRecruit);
+        units.Add(unit);
+        return countToRecruit != 0; // FIX ME add condition about no more placement spots available
+    }
     #endregion
 
 }

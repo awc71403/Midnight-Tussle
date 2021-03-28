@@ -11,6 +11,11 @@ public abstract class Unit : MonoBehaviour {
     public int maxHealth;
     public int movement;
     public int attack;
+
+    [Header("References")]
+    [SerializeField] private TextMeshPro HPText;
+    [SerializeField] private TextMeshPro attackText;
+    [SerializeField] private TextMeshPro movementText;
     
     [HideInInspector] public PlayerType player;
     [HideInInspector] public int rarity;
@@ -21,15 +26,12 @@ public abstract class Unit : MonoBehaviour {
 
     // Sprite Rendering
     private SpriteRenderer myRenderer;
-    private Shader shaderGUItext;
-    private Shader shaderSpritesDefault;
 
     [SerializeField]
     private Text DamageTextPrefab;
     public Text damageText;
 
-    [SerializeField]
-    private Animator anim;
+    private Animator animator;
 
     [SerializeField]
     private AudioClip[] stepSounds;
@@ -46,16 +48,19 @@ public abstract class Unit : MonoBehaviour {
     #endregion
 
     #region Initialization
+    
     void Awake() {
+        myRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
+        health = maxHealth;
 
     }
 
-    void Start() {
-        myRenderer = gameObject.GetComponent<SpriteRenderer>();
-        shaderGUItext = Shader.Find("GUI/Text Shader");
-        shaderSpritesDefault = Shader.Find("Sprites/Default");
-        audioSource = GetComponent<AudioSource>();
-        health = maxHealth;
+    void Start(){
+        HPText.text = health.ToString();
+        attackText.text = attack.ToString();
+        movementText.text = movement.ToString();
     }
 
     #endregion
@@ -80,8 +85,9 @@ public abstract class Unit : MonoBehaviour {
     #endregion
 
     #region Update
-    private void UpdateUI() {
-        // myUITracker.GetComponentInChildren<TextMeshProUGUI>().text = health.ToString();
+
+    void Update(){
+
     }
     
     #endregion
@@ -160,27 +166,12 @@ public abstract class Unit : MonoBehaviour {
         else {
             StartCoroutine("DeathAnimation");
         }
-        UpdateUI();
     }
     #endregion
 
-    #region Sprite
-    void WhiteSprite() {
-        myRenderer.material.shader = shaderGUItext;
-        myRenderer.color = Color.white;
-    }
-
-    void NormalSprite() {
-        myRenderer.material.shader = shaderSpritesDefault;
-        myRenderer.color = Color.white;
-    }
-    #endregion
 
     #region Animation
     IEnumerator HurtAnimation(int damage) {
-        // Go white
-        WhiteSprite();
-
         //Create Damage Text
         print("damage text created");
         damageText = Instantiate(DamageTextPrefab);
@@ -199,8 +190,6 @@ public abstract class Unit : MonoBehaviour {
             transform.position = defaultPosition;
         }
 
-        // Go normal
-        NormalSprite();
     }
 
     IEnumerator DeathAnimation() {
