@@ -4,7 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Tile : MonoBehaviour, IPointerUpHandler {
+public enum Direction {
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
+}
+
+public class Tile : MonoBehaviour {
     #region Instance Variables
 
     // THESE ARE ZERO-INDEXED, with 0,0 being the bottom left
@@ -13,10 +20,7 @@ public class Tile : MonoBehaviour, IPointerUpHandler {
 
     public Vector3 unitOffset;
 
-    [HideInInspector] public Tile Left;
-    [HideInInspector] public Tile Right;
-    [HideInInspector] public Tile Up;
-    [HideInInspector] public Tile Down;
+    public Dictionary<Direction, Tile> directionMap = new Dictionary<Direction, Tile>();
 
     private Unit myUnit;
 
@@ -40,20 +44,11 @@ public class Tile : MonoBehaviour, IPointerUpHandler {
     public void ClearUnit() {
         myUnit = null;
     }
-    #endregion
 
-    #region Click
-    public void OnPointerUp(PointerEventData eventData) {
-
-        // Debug.Log("Tile Click");
-        // if (myUnit == null && UnitUI.chosenUnitUI != null) {
-        //     Debug.Log("Conditions met");
-        //     GameManager.singleton.PlaceCharacterOnTile(UnitUI.chosenUnitUI.unitData, xPosition, yPosition, GameManager.currentPlayer);
-        //     Destroy(UnitUI.chosenUnitUI.gameObject);
-        //     UnitUI.chosenUnitUI = null;
-        // }
+    public bool HasUnit(){
+        return myUnit == null;
     }
-
     #endregion
+
 
 }

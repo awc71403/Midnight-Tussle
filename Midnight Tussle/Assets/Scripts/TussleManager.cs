@@ -94,16 +94,16 @@ public class TussleManager : MonoBehaviour
                 }
 
                 if (x - 1 >= 0) {
-                    mapArray[x, y].Left = mapArray[x - 1, y];
+                    mapArray[x, y].directionMap[Direction.LEFT] = mapArray[x - 1, y];
                 }
                 if (x + 1 < XSIZE) {
-                    mapArray[x, y].Right = mapArray[x + 1, y];
+                    mapArray[x, y].directionMap[Direction.RIGHT] = mapArray[x + 1, y];
                 }
                 if (y + 1 < YSIZE) {
-                    mapArray[x, y].Down = mapArray[x, y + 1];
+                    mapArray[x, y].directionMap[Direction.DOWN] = mapArray[x, y + 1];
                 }
                 if (y - 1 >= 0) {
-                    mapArray[x, y].Up = mapArray[x, y - 1];
+                    mapArray[x, y].directionMap[Direction.UP] = mapArray[x, y - 1];
                 }
             }
         }
@@ -119,6 +119,7 @@ public class TussleManager : MonoBehaviour
         
         if(!continueRecruit){
             // Move on to movement phase
+            currentPlayer.ActivateMovement();
         }
         
         

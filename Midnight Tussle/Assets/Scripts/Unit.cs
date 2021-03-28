@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public abstract class Unit : MonoBehaviour {
 
+    #region Variables
+
     [Header("Stats")]
     public string characterName;
     public int maxHealth;
@@ -21,6 +23,13 @@ public abstract class Unit : MonoBehaviour {
     [HideInInspector] public int rarity;
     
     private int health;
+    private int Health {
+        get { return health; }
+        set{
+            health = value;
+            HPText.text = value.ToString();
+        }
+    }
     
     private Tile occupiedTile;
 
@@ -43,6 +52,22 @@ public abstract class Unit : MonoBehaviour {
     float totalStretch = 0.3f;
     float totalSquish = 0.3f;
 
+    #endregion
+
+    #region Turn Variables
+
+    private int movementLeft;
+    public int MovementLeft{
+        get { return movementLeft; }
+        set{
+            movementLeft = value;
+            movementText.text = value.ToString();
+        }
+
+    }
+
+    #endregion
+
     #region Abstract
     public abstract void Ability();
     #endregion
@@ -53,12 +78,12 @@ public abstract class Unit : MonoBehaviour {
         myRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
-        health = maxHealth;
+        Health = maxHealth;
 
     }
 
     void Start(){
-        HPText.text = health.ToString();
+        HPText.text = Health.ToString();
         attackText.text = attack.ToString();
         movementText.text = movement.ToString();
     }
@@ -93,11 +118,12 @@ public abstract class Unit : MonoBehaviour {
     #endregion
 
     #region Movement
-    public void InitialMovement() {
-
+    public void MovementState(bool state){
+        movementLeft = movement;
+        movementText.gameObject.SetActive(state);
     }
 
-    public void Movement() {
+    public void Movementr() {
         // if (player == GameManager.PLAYER1) {
         //     if (occupiedTile.Right != null && occupiedTile.Right.Unit == null) {
         //         StartCoroutine(MoveUnitInDirection(player));
@@ -128,31 +154,18 @@ public abstract class Unit : MonoBehaviour {
         // }
     }
 
-    IEnumerator MoveUnitInDirection(int player) {
-        // Action in process!
-        // GameManager.actionInProcess = true;
-
-        // float tileSize = GetComponent<SpriteRenderer>().sprite.bounds.size.x;
-
-        // // Calculate the steps you need to take
-
-        // //Take that step!
-        // if (player == GameManager.PLAYER1) {
-        //     transform.position += new Vector3(tileSize, 0);
-        //     occupiedTile = occupiedTile.Right;
-        // }
-        // else {
-        //     transform.position -= new Vector3(tileSize, 0);
-        //     occupiedTile = occupiedTile.Left;
-        // }
+    public IEnumerator MoveUnitInDirection(Direction direction) {
+        Tile target = occupiedTile.directionMap[direction];
+        if(target != null && !target.HasUnit()){
+            occupiedTile = occupiedTile.directionMap[direction];
+            occupiedTile.PlaceUnit(this);
+            transform.position = occupiedTile.transform.position;
+        }
         // RecalculateDepth();
         // StartBounceAnimation();
-        // yield return new WaitForSeconds(stepDuration);
-        // occupiedTile.PlaceUnit(this);
+        yield return new WaitForSeconds(stepDuration);
+        
 
-        // // Action over!
-        // GameManager.actionInProcess = false;
-        yield return null;
     }
     #endregion
 
@@ -160,7 +173,7 @@ public abstract class Unit : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         health -= damage;
-        if (health > 0) {
+        if (Health > 0) {
             StartCoroutine("HurtAnimation", damage);
         }
         else {
@@ -239,8 +252,8 @@ public abstract class Unit : MonoBehaviour {
     #region Stats
 
     public void HPDamage(int damage) {
-        health = Mathf.Max(health - damage, 0);
-        if (health != 0) {
+        Health = Mathf.Max(Health - damage, 0);
+        if (Health != 0) {
             StartCoroutine("HurtAnimation", damage);
         }
         else {
