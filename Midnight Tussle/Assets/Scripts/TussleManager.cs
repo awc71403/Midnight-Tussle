@@ -93,18 +93,18 @@ public class TussleManager : MonoBehaviour
                     Debug.LogError("The tile indexes aren't set up right!");
                 }
 
-                if (x - 1 >= 0) {
-                    mapArray[x, y].directionMap[Direction.LEFT] = mapArray[x - 1, y];
-                }
-                if (x + 1 < XSIZE) {
-                    mapArray[x, y].directionMap[Direction.RIGHT] = mapArray[x + 1, y];
-                }
-                if (y + 1 < YSIZE) {
-                    mapArray[x, y].directionMap[Direction.DOWN] = mapArray[x, y + 1];
-                }
-                if (y - 1 >= 0) {
-                    mapArray[x, y].directionMap[Direction.UP] = mapArray[x, y - 1];
-                }
+                if (x - 1 >= 0) mapArray[x, y].directionMap[Direction.LEFT] = mapArray[x - 1, y];
+                else mapArray[x, y].directionMap[Direction.LEFT] = null;
+                
+                if (x + 1 < XSIZE) mapArray[x, y].directionMap[Direction.RIGHT] = mapArray[x + 1, y];
+                else mapArray[x, y].directionMap[Direction.RIGHT] = null;
+                
+                if (y - 1 >= 0) mapArray[x, y].directionMap[Direction.DOWN] = mapArray[x, y - 1];
+                else mapArray[x, y].directionMap[Direction.DOWN] = null;
+                
+                if (y + 1 < YSIZE) mapArray[x, y].directionMap[Direction.UP] = mapArray[x, y + 1];
+                else mapArray[x, y].directionMap[Direction.UP] = null;
+                
             }
         }
 

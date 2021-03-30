@@ -23,15 +23,12 @@ public abstract class Unit : MonoBehaviour {
     [HideInInspector] public int rarity;
     
     private int health;
-    private int Health {
-        get { return health; }
-        set{
-            health = value;
-            HPText.text = value.ToString();
-        }
+    private void Updatehealth(int value) {
+        health = value;
+        HPText.text = value.ToString();
     }
     
-    private Tile occupiedTile;
+    public Tile occupiedTile;
 
     // Sprite Rendering
     private SpriteRenderer myRenderer;
@@ -56,14 +53,10 @@ public abstract class Unit : MonoBehaviour {
 
     #region Turn Variables
 
-    private int movementLeft;
-    public int MovementLeft{
-        get { return movementLeft; }
-        set{
-            movementLeft = value;
-            movementText.text = value.ToString();
-        }
-
+    public int movementLeft;
+    private void UpdateMovementLeft(int value){
+        movementLeft = value;
+        movementText.text = value.ToString();
     }
 
     #endregion
@@ -78,12 +71,12 @@ public abstract class Unit : MonoBehaviour {
         myRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
-        Health = maxHealth;
+        health = maxHealth;
 
     }
 
     void Start(){
-        HPText.text = Health.ToString();
+        HPText.text = health.ToString();
         attackText.text = attack.ToString();
         movementText.text = movement.ToString();
     }
@@ -96,17 +89,13 @@ public abstract class Unit : MonoBehaviour {
     }
 
     // public int GetHP {
-    //     get { return currentHealth; }
+    //     get { return currenthealth; }
     // }
 
     public void RecalculateDepth() {
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
     }
 
-    public Tile OccupiedTile {
-        get { return occupiedTile; }
-        set { occupiedTile = value; }
-    }
     #endregion
 
     #region Update
@@ -119,7 +108,7 @@ public abstract class Unit : MonoBehaviour {
 
     #region Movement
     public void MovementState(bool state){
-        movementLeft = movement;
+        UpdateMovementLeft(movement);
         movementText.gameObject.SetActive(state);
     }
 
@@ -131,9 +120,9 @@ public abstract class Unit : MonoBehaviour {
         //     else if (occupiedTile.Right.Unit.player != GameManager.PLAYER1) {
         //         //Fight
         //         int enemyHP = occupiedTile.Right.Unit.GetHP;
-        //         occupiedTile.Right.Unit.TakeDamage(currentHealth);
+        //         occupiedTile.Right.Unit.TakeDamage(currenthealth);
         //         TakeDamage(enemyHP);
-        //         if (currentHealth > 0) {
+        //         if (currenthealth > 0) {
         //             StartCoroutine(MoveUnitInDirection(player));
         //         }
         //     }
@@ -145,9 +134,9 @@ public abstract class Unit : MonoBehaviour {
         //     else if (occupiedTile.Left.Unit.player != GameManager.PLAYER2) {
         //         //Fight
         //         int enemyHP = occupiedTile.Left.Unit.GetHP;
-        //         occupiedTile.Left.Unit.TakeDamage(currentHealth);
+        //         occupiedTile.Left.Unit.TakeDamage(currenthealth);
         //         TakeDamage(enemyHP);
-        //         if (currentHealth > 0) {
+        //         if (currenthealth > 0) {
         //             StartCoroutine(MoveUnitInDirection(player));
         //         }
         //     }
@@ -156,10 +145,16 @@ public abstract class Unit : MonoBehaviour {
 
     public IEnumerator MoveUnitInDirection(Direction direction) {
         Tile target = occupiedTile.directionMap[direction];
-        if(target != null && !target.HasUnit()){
-            occupiedTile = occupiedTile.directionMap[direction];
-            occupiedTile.PlaceUnit(this);
-            transform.position = occupiedTile.transform.position;
+        if(target != null){
+            // Going to another tile
+            if(!target.HasUnit()){
+                occupiedTile.directionMap[direction].PlaceUnit(this);
+                UpdateMovementLeft(movementLeft - 1);
+            }
+        }
+        else{
+            // Hitting edge
+            UpdateMovementLeft(movementLeft - 1);
         }
         // RecalculateDepth();
         // StartBounceAnimation();
@@ -173,7 +168,7 @@ public abstract class Unit : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         health -= damage;
-        if (Health > 0) {
+        if (health > 0) {
             StartCoroutine("HurtAnimation", damage);
         }
         else {
@@ -252,8 +247,8 @@ public abstract class Unit : MonoBehaviour {
     #region Stats
 
     public void HPDamage(int damage) {
-        Health = Mathf.Max(Health - damage, 0);
-        if (Health != 0) {
+        health = Mathf.Max(health - damage, 0);
+        if (health != 0) {
             StartCoroutine("HurtAnimation", damage);
         }
         else {

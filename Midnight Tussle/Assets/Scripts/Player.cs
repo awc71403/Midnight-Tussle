@@ -104,9 +104,21 @@ public class Player : MonoBehaviour
         playerUI.SetArrowState(direction, true);
 
         // Order based on direction
-        Queue<Unit> movementQueue = new Queue<Unit>(units);
-        
-        
+        Queue<Unit> movementQueue = new Queue<Unit>(units.Where(u => u.movementLeft > 0));
+        switch(direction){
+            case Direction.LEFT:
+                movementQueue.OrderBy(u => u.occupiedTile.xIndex);
+                break;
+            case Direction.RIGHT:
+                movementQueue.OrderByDescending(u => u.occupiedTile.xIndex);
+                break;
+            case Direction.UP:
+                movementQueue.OrderByDescending(u => u.occupiedTile.yIndex);
+                break;
+            case Direction.DOWN:
+                movementQueue.OrderBy(u => u.occupiedTile.yIndex);
+                break;
+        }
 
         // Process one-by-one
         while(movementQueue.Count != 0){
@@ -134,7 +146,7 @@ public class Player : MonoBehaviour
 
     private bool MovesLeft(){
         foreach(Unit unit in units){
-            if(unit.MovementLeft != 0) return true;
+            if(unit.movementLeft != 0) return true;
         }
 
         return false;

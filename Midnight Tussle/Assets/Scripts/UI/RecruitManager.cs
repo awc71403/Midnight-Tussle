@@ -34,7 +34,6 @@ public class RecruitManager : MonoBehaviour
     // Makes a RecruitUI for the unit and places in the right position
     public void CreateRecruit(int index, int totalCount, Unit unit){
         //Place it at (index+1/totalCount+1)*height and centered horizontally
-        
         Vector2 position = new Vector2(bottom.x, ( (float) (index+1)/(totalCount+1) ) * height + bottom.y);
 
         //Instantiate RecruitUI under the manager

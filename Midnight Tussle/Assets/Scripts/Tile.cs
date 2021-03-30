@@ -34,11 +34,15 @@ public class Tile : MonoBehaviour {
     #endregion
 
     #region Unit Functions
+
+    // Detaches the unit from its current tile and puts it on this
     public void PlaceUnit(Unit unit) {
         myUnit = unit;
         myUnit.transform.position = transform.position + unitOffset;
-        myUnit.RecalculateDepth();
-        myUnit.OccupiedTile = this;
+        // myUnit.RecalculateDepth();
+
+        if(myUnit.occupiedTile && myUnit.occupiedTile != this) myUnit.occupiedTile.ClearUnit();
+        myUnit.occupiedTile = this;
     }
 
     public void ClearUnit() {
@@ -46,7 +50,7 @@ public class Tile : MonoBehaviour {
     }
 
     public bool HasUnit(){
-        return myUnit == null;
+        return myUnit != null;
     }
     #endregion
 
