@@ -44,6 +44,11 @@ public class Player : MonoBehaviour
 
     #endregion
 
+    #region Getter
+    public List<Unit> GetUnits {
+        get { return units; }
+    }
+    #endregion
 
     #region Functions
 

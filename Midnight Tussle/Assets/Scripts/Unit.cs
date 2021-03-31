@@ -14,6 +14,11 @@ public abstract class Unit : MonoBehaviour {
     public int movement;
     public int attack;
 
+    public Ability ability;
+
+    public enum Species { DOG, CAT }
+    public Species species;
+
     [Header("References")]
     [SerializeField] private TextMeshPro HPText;
     [SerializeField] private TextMeshPro attackText;
@@ -48,21 +53,16 @@ public abstract class Unit : MonoBehaviour {
     // Movement Bounce Animation
     float totalStretch = 0.3f;
     float totalSquish = 0.3f;
-
     #endregion
 
     #region Turn Variables
 
     public int movementLeft;
-    private void UpdateMovementLeft(int value){
+    public void UpdateMovementLeft(int value){
         movementLeft = value;
         movementText.text = value.ToString();
     }
 
-    #endregion
-
-    #region Abstract
-    public abstract void Ability();
     #endregion
 
     #region Initialization
@@ -177,6 +177,13 @@ public abstract class Unit : MonoBehaviour {
     }
     #endregion
 
+    #region Ability
+    public void CheckAbilityCond(Ability.ActivationType type) {
+        if (ability.type == type) {
+            ability.TriggerAbility(this);
+        }
+    }
+    #endregion
 
     #region Animation
     IEnumerator HurtAnimation(int damage) {
@@ -254,6 +261,11 @@ public abstract class Unit : MonoBehaviour {
         else {
             StartCoroutine("DeathAnimation");
         }
+    }
+
+    public void IncreaseHP(int amount) {
+        health += amount;
+        HPText.text = health.ToString();
     }
     #endregion
 

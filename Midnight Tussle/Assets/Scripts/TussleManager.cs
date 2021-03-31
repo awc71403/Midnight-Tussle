@@ -18,7 +18,6 @@ public class TussleManager : MonoBehaviour
 
     #endregion 
 
-
     #region Variables
     public static TussleManager instance;
 
@@ -26,8 +25,8 @@ public class TussleManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform tileParent;
     [SerializeField] private UIManager uiManager;
-    [SerializeField] private Player dogPlayer;
-    [SerializeField] private Player catPlayer;
+    [SerializeField] public Player dogPlayer;
+    [SerializeField] public Player catPlayer;
 
     [Header("Settings")]
     [SerializeField] private List<int> rolledAtLevel = new List<int>(MAX_LEVEL);
