@@ -80,7 +80,13 @@ public class Player : MonoBehaviour
     public bool AddUnit(Unit unit){
         recruitManager.SetRemaining(--countToRecruit);
         units.Add(unit);
+        unit.player = this;
         return countToRecruit != 0; // FIX ME add condition about no more placement spots available
+    }
+
+    public void RemoveUnit(Unit unit)
+    {
+        units.Remove(unit);
     }
 
     public void ActivateMovement(){

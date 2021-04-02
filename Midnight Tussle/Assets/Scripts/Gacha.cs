@@ -64,11 +64,11 @@ public class Gacha : MonoBehaviour
                     Unit recruit;
                     if(roller == PlayerType.DOG){
                         recruit = Utils.RandomFromList(dogUnits[rarity]);
-                        recruit.player = PlayerType.DOG;
+                        recruit.playertype = PlayerType.DOG;
                     }
                     else{
                         recruit = Utils.RandomFromList(catUnits[rarity]);
-                        recruit.player = PlayerType.CAT;
+                        recruit.playertype = PlayerType.CAT;
                     }
                     recruit.rarity = rarity;
                     recruits.Add(recruit);
