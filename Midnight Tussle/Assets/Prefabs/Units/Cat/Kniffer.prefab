@@ -97,13 +97,13 @@ MonoBehaviour:
   maxHealth: 5
   movement: 2
   attack: 3
-  ability: {fileID: 0}
+  ability: {fileID: 11400000, guid: d5acb41deac125b49b6369e4c4cf0b22, type: 2}
   species: 1
   HPText: {fileID: 7402342197581830434}
   attackText: {fileID: 7402342196538992782}
   movementText: {fileID: 7402342196821090440}
-  player: 0
-  rarity: 0
+  player: 1
+  rarity: 2
   occupiedTile: {fileID: 0}
   DamageTextPrefab: {fileID: 0}
   damageText: {fileID: 0}

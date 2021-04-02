@@ -97,7 +97,7 @@ MonoBehaviour:
   maxHealth: 5
   movement: 2
   attack: 3
-  ability: {fileID: 0}
+  ability: {fileID: 11400000, guid: d5acb41deac125b49b6369e4c4cf0b22, type: 2}
   species: 1
   HPText: {fileID: 4948963116798748554}
   attackText: {fileID: 4948963115692987942}

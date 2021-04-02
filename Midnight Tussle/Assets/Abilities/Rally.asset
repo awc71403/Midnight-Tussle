@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82c7a3c802b61a1439c567a1dee49f3f, type: 3}
-  m_Name: New Rally
+  m_Name: Rally
   m_EditorClassIdentifier: 
-  aName: New Ability
+  aName: Rally
   aDesc: Ability Description
   type: 0

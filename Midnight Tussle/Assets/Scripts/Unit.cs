@@ -16,9 +16,6 @@ public abstract class Unit : MonoBehaviour {
 
     public Ability ability;
 
-    public enum Species { DOG, CAT }
-    public Species species;
-
     [Header("References")]
     [SerializeField] private TextMeshPro HPText;
     [SerializeField] private TextMeshPro attackText;
@@ -79,6 +76,8 @@ public abstract class Unit : MonoBehaviour {
         HPText.text = health.ToString();
         attackText.text = attack.ToString();
         movementText.text = movement.ToString();
+
+        CheckAbilityCond(Ability.ActivationType.SUMMON);
     }
 
     #endregion
@@ -179,6 +178,7 @@ public abstract class Unit : MonoBehaviour {
 
     #region Ability
     public void CheckAbilityCond(Ability.ActivationType type) {
+        Debug.Log(ability);
         if (ability.type == type) {
             ability.TriggerAbility(this);
         }
