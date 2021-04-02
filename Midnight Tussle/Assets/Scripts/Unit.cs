@@ -33,9 +33,6 @@ public abstract class Unit : MonoBehaviour {
     // Sprite Rendering
     private SpriteRenderer myRenderer;
 
-    [SerializeField]
-    private Text DamageTextPrefab;
-    public Text damageText;
 
     private Animator animator;
 
@@ -150,6 +147,14 @@ public abstract class Unit : MonoBehaviour {
             if(!target.HasUnit()){
                 occupiedTile.directionMap[direction].PlaceUnit(this);
                 UpdateMovementLeft(movementLeft - 1);
+            } else
+            {
+                Debug.Log("encountered enemy");
+                if (player == target.Unit.player)
+                {
+                    target.Unit.TakeDamage(attack, true, this);
+                }
+                UpdateMovementLeft(movementLeft - 1);
             }
         }
         else{
@@ -166,12 +171,18 @@ public abstract class Unit : MonoBehaviour {
 
     #region Attack
 
-    public void TakeDamage(int damage) {
+    public void TakeDamage(int damage, bool first_attack, Unit attacker) {
         health -= damage;
+        if (first_attack)
+        {
+            attacker.TakeDamage(attack, false, null);
+        }
         if (health > 0) {
             StartCoroutine("HurtAnimation", damage);
         }
         else {
+            occupiedTile.ClearUnit();
+            
             StartCoroutine("DeathAnimation");
         }
     }
@@ -180,12 +191,6 @@ public abstract class Unit : MonoBehaviour {
 
     #region Animation
     IEnumerator HurtAnimation(int damage) {
-        //Create Damage Text
-        print("damage text created");
-        damageText = Instantiate(DamageTextPrefab);
-        Vector3 textPositionOffset = new Vector3(0, 1.25f, 0);
-        damageText.transform.position = Camera.main.WorldToScreenPoint(transform.position + textPositionOffset);
-        //damageText.GetComponent<DamageTextBehavior>().SetDamage(damage);
 
         // Shaking
         Vector3 defaultPosition = transform.position;
@@ -212,7 +217,7 @@ public abstract class Unit : MonoBehaviour {
 
         myRenderer.color = new Color(1, 1, 1, 1);
         transform.localScale = new Vector3(1, 1, 1);
-        gameObject.SetActive(false);
+        
         // myUITracker.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
