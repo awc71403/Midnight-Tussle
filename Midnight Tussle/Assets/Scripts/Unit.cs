@@ -21,8 +21,9 @@ public abstract class Unit : MonoBehaviour {
     [SerializeField] private TextMeshPro attackText;
     [SerializeField] private TextMeshPro movementText;
     
-    [HideInInspector] public PlayerType player;
+    [HideInInspector] public PlayerType playertype;
     [HideInInspector] public int rarity;
+    public Player player;
     
     private int health;
     private void Updatehealth(int value) {
@@ -149,7 +150,7 @@ public abstract class Unit : MonoBehaviour {
             } else
             {
                 Debug.Log("encountered enemy");
-                if (player == target.Unit.player)
+                if (playertype != target.Unit.playertype)
                 {
                     target.Unit.TakeDamage(attack, true, this);
                 }
@@ -181,7 +182,7 @@ public abstract class Unit : MonoBehaviour {
         }
         else {
             occupiedTile.ClearUnit();
-            
+            player.RemoveUnit(this);
             StartCoroutine("DeathAnimation");
         }
     }
