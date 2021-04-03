@@ -26,7 +26,7 @@ public abstract class Unit : MonoBehaviour {
     public Player player;
     
     private int health;
-    private void Updatehealth(int value) {
+    public void Updatehealth(int value) {
         health = value;
         HPText.text = value.ToString();
     }
@@ -51,7 +51,7 @@ public abstract class Unit : MonoBehaviour {
     #endregion
 
     #region Turn Variables
-
+    public Direction movingDirection;
     public int movementLeft;
     public void UpdateMovementLeft(int value){
         movementLeft = value;
@@ -141,6 +141,7 @@ public abstract class Unit : MonoBehaviour {
     }
 
     public IEnumerator MoveUnitInDirection(Direction direction) {
+        movingDirection = direction;
         Tile target = occupiedTile.directionMap[direction];
         if(target != null){
             // Going to another tile
@@ -152,6 +153,7 @@ public abstract class Unit : MonoBehaviour {
                 Debug.Log("encountered enemy");
                 if (playertype != target.Unit.playertype)
                 {
+                    CheckAbilityCond(Ability.ActivationType.ATTACK);
                     target.Unit.TakeDamage(attack, true, this);
                 }
                 UpdateMovementLeft(movementLeft - 1);
@@ -172,6 +174,7 @@ public abstract class Unit : MonoBehaviour {
     #region Attack
 
     public void TakeDamage(int damage, bool first_attack, Unit attacker) {
+        CheckAbilityCond(Ability.ActivationType.DAMAGE);
         health -= damage;
         if (first_attack)
         {
@@ -183,6 +186,8 @@ public abstract class Unit : MonoBehaviour {
         else {
             occupiedTile.ClearUnit();
             player.RemoveUnit(this);
+            //Might need to change locations
+            CheckAbilityCond(Ability.ActivationType.DEATH);
             StartCoroutine("DeathAnimation");
         }
     }
@@ -228,6 +233,7 @@ public abstract class Unit : MonoBehaviour {
         
         // myUITracker.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
+        //Will cause time related bugs
         Destroy(gameObject);
         // Destroy(myUITracker.gameObject);
     }

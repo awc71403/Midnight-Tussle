@@ -8,7 +8,7 @@ public class Rally : Ability {
     public const int RALLYAMOUNT = 2;
 
     public override void TriggerAbility(Unit unit) {
-        if (unit.player == PlayerType.DOG) {
+        if (unit.playertype == PlayerType.DOG) {
             List<Unit> units = TussleManager.instance.dogPlayer.GetUnits;
             units[Random.Range(0, units.Count)].IncreaseHP(RALLYAMOUNT);
         }

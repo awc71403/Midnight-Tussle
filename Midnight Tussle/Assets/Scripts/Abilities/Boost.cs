@@ -8,7 +8,7 @@ public class Boost : Ability
     public const int BOOSTAMOUNT = 1;
 
     public override void TriggerAbility(Unit unit) {
-        if (unit.player == PlayerType.DOG) {
+        if (unit.playertype == PlayerType.DOG) {
             Tile rightTile = unit.occupiedTile.directionMap[Direction.RIGHT];
             if (rightTile != null) {
                 Unit rightUnit = rightTile.Unit;

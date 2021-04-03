@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3eb903eea4cf1e744b8c2615f890f35d, type: 3}
-  m_Name: Reinforcement
+  m_Script: {fileID: 11500000, guid: 1f7b8395684428b48a8f4d1b06da896c, type: 3}
+  m_Name: None
   m_EditorClassIdentifier: 
-  aName: Reinforcement
-  aDesc: Ability Description
+  aName: None
+  aDesc: None
   type: 0
-  minionAbility: {fileID: 11400000, guid: c34ea5a31b6ff7c4db9c51253eb84193, type: 2}
