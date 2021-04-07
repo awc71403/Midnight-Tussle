@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     
     [Header("References")]
     [SerializeField] private PlayerUI playerUI;
+    public Nexus nexus;
+
 
     private RecruitManager recruitManager;
 
@@ -76,9 +78,13 @@ public class Player : MonoBehaviour
     }
 
     public void StartRecruiting(List<Unit> rolled, int countToRecruit){
+        //Check if there is a place to put units
+        playerUI.HandState(true);
         this.countToRecruit = countToRecruit;
         recruitManager.SetRemaining(countToRecruit);
         recruitManager.CreateRecruits(rolled);
+    
+        
     }
 
     // Returns true if there are still more to place
@@ -146,7 +152,6 @@ public class Player : MonoBehaviour
         // Stop if no more moves left
         if(!MovesLeft()){
             movingPhase = false;
-            playerUI.HandState(true);
             playerUI.MoveState(false);
             foreach(Unit unit in units){
                 unit.MovementState(false);
@@ -164,5 +169,7 @@ public class Player : MonoBehaviour
     }
 
     #endregion
+
+    
 
 }

@@ -19,8 +19,8 @@ public class Reinforcement : Ability
 
         minion.occupiedTile.Unit = minion;
         unit.player.AddUnit(minion);
-        minion.UpdateMovementLeft(0);
+        minion.movementLeft = 0;
 
-        minion.Updatehealth(MINIONHP);
+        minion.health  = MINIONHP;
     }
 }

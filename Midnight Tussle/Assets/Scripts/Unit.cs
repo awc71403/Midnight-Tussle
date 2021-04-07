@@ -25,11 +25,7 @@ public abstract class Unit : MonoBehaviour {
     [HideInInspector] public int rarity;
     public Player player;
     
-    private int health;
-    public void Updatehealth(int value) {
-        health = value;
-        HPText.text = value.ToString();
-    }
+    public int health;
     
     public Tile occupiedTile;
 
@@ -53,10 +49,6 @@ public abstract class Unit : MonoBehaviour {
     #region Turn Variables
     public Direction movingDirection;
     public int movementLeft;
-    public void UpdateMovementLeft(int value){
-        movementLeft = value;
-        movementText.text = value.ToString();
-    }
 
     #endregion
 
@@ -98,14 +90,15 @@ public abstract class Unit : MonoBehaviour {
     #region Update
 
     void Update(){
-
+        HPText.text = health.ToString();
+        movementText.text = movementLeft.ToString();
     }
     
     #endregion
 
     #region Movement
     public void MovementState(bool state){
-        UpdateMovementLeft(movement);
+        movementLeft = movement;
         movementText.gameObject.SetActive(state);
     }
 
@@ -147,22 +140,33 @@ public abstract class Unit : MonoBehaviour {
             // Going to another tile
             if(!target.HasUnit()){
                 occupiedTile.directionMap[direction].PlaceUnit(this);
-                UpdateMovementLeft(movementLeft - 1);
             } else
             {
                 Debug.Log("encountered enemy");
                 if (playertype != target.Unit.playertype)
                 {
                     CheckAbilityCond(Ability.ActivationType.ATTACK);
-                    target.Unit.TakeDamage(attack, true, this);
+                    Unit targetUnit = target.Unit;
+                    targetUnit.TakeDamage(attack);
+                    if(targetUnit.health > 0){
+                        TakeDamage(targetUnit.attack);
+                    }
+                    else{
+                        
+                    }
                 }
-                UpdateMovementLeft(movementLeft - 1);
             }
         }
         else{
-            // Hitting edge
-            UpdateMovementLeft(movementLeft - 1);
+            if(playertype == PlayerType.DOG && direction == Direction.RIGHT){
+                // Dog attacks Nexus
+                yield return TussleManager.instance.AttackNexus(attack, PlayerType.CAT);
+            }
+            else if(playertype == PlayerType.CAT && direction == Direction.LEFT){
+                yield return TussleManager.instance.AttackNexus(attack, PlayerType.DOG);
+            }
         }
+        movementLeft--;
         // RecalculateDepth();
         // StartBounceAnimation();
         yield return new WaitForSeconds(stepDuration);
@@ -173,13 +177,9 @@ public abstract class Unit : MonoBehaviour {
 
     #region Attack
 
-    public void TakeDamage(int damage, bool first_attack, Unit attacker) {
+    public void TakeDamage(int damage) {
         CheckAbilityCond(Ability.ActivationType.DAMAGE);
         health -= damage;
-        if (first_attack)
-        {
-            attacker.TakeDamage(attack, false, null);
-        }
         if (health > 0) {
             StartCoroutine("HurtAnimation", damage);
         }
@@ -227,13 +227,9 @@ public abstract class Unit : MonoBehaviour {
             transform.localScale = new Vector3(1.5f - i, 1.5f - i, 1);
             yield return null;
         }
-
-        myRenderer.color = new Color(1, 1, 1, 1);
-        transform.localScale = new Vector3(1, 1, 1);
         
         // myUITracker.gameObject.SetActive(false);
-        yield return new WaitForSeconds(1f);
-        //Will cause time related bugs
+        yield return null; //Just to make sure any logic that needed to run this frame gets run
         Destroy(gameObject);
         // Destroy(myUITracker.gameObject);
     }
@@ -264,16 +260,6 @@ public abstract class Unit : MonoBehaviour {
     #endregion
 
     #region Stats
-
-    public void HPDamage(int damage) {
-        health = Mathf.Max(health - damage, 0);
-        if (health != 0) {
-            StartCoroutine("HurtAnimation", damage);
-        }
-        else {
-            StartCoroutine("DeathAnimation");
-        }
-    }
 
     public void IncreaseHP(int amount) {
         health += amount;

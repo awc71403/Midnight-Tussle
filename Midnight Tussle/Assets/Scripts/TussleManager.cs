@@ -40,14 +40,15 @@ public class TussleManager : MonoBehaviour
 
     private Tile[,] mapArray = new Tile[XSIZE, YSIZE];
 
-    private const int XSIZE = 5;
-    private const int YSIZE = 4;
-
+    public const int XSIZE = 6;
+    public const int YSIZE = 5;
     
     private Player currentPlayer {
         get { return currentTurn == PlayerType.DOG ? dogPlayer : catPlayer; }
 
     }
+
+    private int furthestColumn;
 
     #endregion
 
@@ -115,8 +116,8 @@ public class TussleManager : MonoBehaviour
         Unit instantiated = Instantiate<Unit>(recruitPrefab, tile.transform.position, Quaternion.identity, transform);
         tile.PlaceUnit(instantiated);
         bool continueRecruit = currentPlayer.AddUnit(instantiated);
-        
-        if(!continueRecruit){
+        UpdateFurthestColumnCanSpawn();
+        if(!continueRecruit || ColumnAvailable()){
             // Move on to movement phase
             currentPlayer.ActivateMovement();
         }
@@ -144,7 +145,17 @@ public class TussleManager : MonoBehaviour
         int toRecruit = placedAtLevel[currentPlayer.GetLevel() - 1];
         uiManager.StartTurn(currentTurn, newRecruits);
         List<Unit> rolled = gachaMachine.Roll(currentTurn, newRecruits, currentPlayer.GetLevel());
-        currentPlayer.StartRecruiting(rolled, toRecruit);
+
+        UpdateFurthestColumnCanSpawn();
+
+        if(ColumnAvailable()){
+            currentPlayer.StartRecruiting(rolled, toRecruit);
+        }
+        else{
+            currentPlayer.ActivateMovement();
+        }
+
+        
     }
 
     // Called to end a turn
@@ -160,6 +171,78 @@ public class TussleManager : MonoBehaviour
     }
 
     #endregion
+
+    public IEnumerator AttackNexus(int damage, PlayerType playerType){
+        if(playerType == PlayerType.DOG){
+            dogPlayer.nexus.TakeDamage(damage);
+            if(dogPlayer.nexus.health == 0){
+                yield return dogPlayer.nexus.DeathAnimation();
+            }
+            else{
+                yield return dogPlayer.nexus.HurtAnimation();
+            }
+        }
+        else{
+            catPlayer.nexus.TakeDamage(damage);
+            if(catPlayer.nexus.health == 0){
+                yield return catPlayer.nexus.DeathAnimation();
+            }
+            else{
+                yield return catPlayer.nexus.HurtAnimation();
+            }
+        }
+
+
+    }
+
+    private void UpdateFurthestColumnCanSpawn(){
+        int first =  currentTurn == PlayerType.DOG ? 0 : XSIZE - 1; 
+        int direction = currentTurn == PlayerType.DOG ? 1 : -1; 
+        
+        int max = first - direction;
+
+        for(int i = 0; i < XSIZE; i++){
+            for(int j = 0; j < YSIZE; j++){
+                if(mapArray[i,j].HasUnit() && mapArray[i,j].Unit.playertype == currentTurn){
+                    if(currentTurn == PlayerType.DOG){
+                        max = Mathf.Max(max, i);
+                    }
+                    else{
+                        max = Mathf.Min(max, i);
+                    }
+                }
+                
+            }
+        }
+        bool firstOpen = false;
+        for(int row = 0; row < YSIZE; row++){
+            if(!mapArray[first,row].HasUnit()){
+                firstOpen = true;
+                break;
+            }
+        }
+
+        if((max < 0 || max >= XSIZE) && firstOpen){
+            furthestColumn = first;
+        }
+        else{
+        furthestColumn = max;
+
+        }   
+    }
+
+    private bool ColumnAvailable(){
+        return furthestColumn >= 0 && furthestColumn < XSIZE;
+    }
+
+    public bool ColumnInRange(int column){
+        if(currentTurn == PlayerType.DOG){
+            return column <= furthestColumn;
+        }
+        else{
+            return column >= furthestColumn;
+        }
+    }
 
 
 }

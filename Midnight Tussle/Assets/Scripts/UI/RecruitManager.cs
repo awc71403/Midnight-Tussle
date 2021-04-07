@@ -10,15 +10,16 @@ public class RecruitManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI remainingText;
     [SerializeField] private GameObject RecruitUIPrefab;
 
-    private Vector2 bottom;
-    private float height;
+    private Vector2 bottomLeft;
+    private float heightThird;
+    private float widthThird;
 
     void Start(){
         Vector3[] fourCorners = new Vector3[4];
         recruitBox.GetWorldCorners(fourCorners);
-        bottom.x = (fourCorners[0].x + fourCorners[3].x)/2;
-        bottom.y = fourCorners[0].y;
-        height = fourCorners[1].y - fourCorners[0].y;
+        bottomLeft = fourCorners[0];
+        heightThird = Mathf.Abs(fourCorners[1].y - fourCorners[0].y) / 2;
+        widthThird = Mathf.Abs(fourCorners[3].x - fourCorners[0].x) / 2;
     }
 
     public void SetRemaining(int remainCount){
@@ -34,7 +35,7 @@ public class RecruitManager : MonoBehaviour
     // Makes a RecruitUI for the unit and places in the right position
     public void CreateRecruit(int index, int totalCount, Unit unit){
         //Place it at (index+1/totalCount+1)*height and centered horizontally
-        Vector2 position = new Vector2(bottom.x, ( (float) (index+1)/(totalCount+1) ) * height + bottom.y);
+        Vector2 position = GetPosition(index);
 
         //Instantiate RecruitUI under the manager
         Recruited recruit = Instantiate(RecruitUIPrefab, position, Quaternion.identity, transform).GetComponent<Recruited>();
@@ -47,5 +48,11 @@ public class RecruitManager : MonoBehaviour
             Destroy(child.gameObject);
         }
         remainingText.text = "";
+    }
+
+    private Vector2 GetPosition(int index){
+        int x = index % 3; // Get the row
+        int y = index / 3; // Get the column
+        return bottomLeft + Vector2.up * y * heightThird + Vector2.right * x * widthThird;
     }
 }

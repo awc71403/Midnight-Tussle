@@ -13,7 +13,7 @@ public class Boost : Ability
             if (rightTile != null) {
                 Unit rightUnit = rightTile.Unit;
                 if (rightUnit != null) {
-                    rightUnit.UpdateMovementLeft(rightUnit.movement + BOOSTAMOUNT);
+                    rightUnit.movementLeft = rightUnit.movement + BOOSTAMOUNT;
                 }
             }
         }
@@ -22,7 +22,7 @@ public class Boost : Ability
             if (leftTile != null) {
                 Unit leftUnit = leftTile.Unit;
                 if (leftUnit != null) {
-                    leftUnit.UpdateMovementLeft(leftUnit.movement + BOOSTAMOUNT);
+                    leftUnit.movementLeft = leftUnit.movement + BOOSTAMOUNT;
                 }
             }
         }

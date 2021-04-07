@@ -15,7 +15,7 @@ public class Fury : Ability {
                 if (adjTile != null) {
                     Unit adjUnit = adjTile.Unit;
                     if (adjUnit != null && unit.playertype != adjUnit.playertype) {
-                        adjUnit.TakeDamage(unit.attack, false, null);
+                        adjUnit.TakeDamage(unit.attack);
                     }
                 }
             }
