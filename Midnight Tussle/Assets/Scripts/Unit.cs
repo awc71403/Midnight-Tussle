@@ -9,9 +9,13 @@ public abstract class Unit : MonoBehaviour {
     #region Variables
 
     [Header("Stats")]
+    [Tooltip("Name of this specific unit")]
     public string characterName;
+    [Tooltip("Amount of healtht he unit starts with")]
     public int maxHealth;
+    [Tooltip("Number of tiles the unit can move every turn")]
     public int movement;
+    [Tooltip("Amount of damage this unit deals to enemies")]
     public int attack;
 
     public Ability ability;
@@ -23,10 +27,11 @@ public abstract class Unit : MonoBehaviour {
     
     [HideInInspector] public PlayerType playertype;
     [HideInInspector] public int rarity;
+    [Tooltip("A reference to the player object which controlls the units")]
     public Player player;
-    
+    [Tooltip("The current health that this unit has")]
     public int health;
-    
+    [Tooltip("holds a reference of the tile that is currently occupied")]
     public Tile occupiedTile;
 
     // Sprite Rendering
