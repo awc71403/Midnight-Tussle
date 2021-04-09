@@ -84,7 +84,7 @@ public abstract class Unit : MonoBehaviour {
     // }
 
     public void RecalculateDepth() {
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+        transform.position = new Vector3(transform.position.x, transform.position.y + .25f, transform.position.y);
     }
 
     #endregion
@@ -169,7 +169,7 @@ public abstract class Unit : MonoBehaviour {
             }
         }
         movementLeft--;
-        // RecalculateDepth();
+        RecalculateDepth();
         // StartBounceAnimation();
         yield return new WaitForSeconds(stepDuration);
         
