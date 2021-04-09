@@ -10,7 +10,7 @@ public abstract class Unit : MonoBehaviour {
 
     [Header("Stats")]
     public string characterName;
-    public int maxHealth;
+    public int initialHealth;
     public int movement;
     public int attack;
 
@@ -24,7 +24,9 @@ public abstract class Unit : MonoBehaviour {
     [HideInInspector] public PlayerType playertype;
     [HideInInspector] public int rarity;
     public Player player;
-    
+
+    public Unit killedBy;
+
     public int health;
     
     public Tile occupiedTile;
@@ -58,7 +60,7 @@ public abstract class Unit : MonoBehaviour {
         myRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
-        health = maxHealth;
+        health = initialHealth;
 
     }
 
@@ -147,9 +149,9 @@ public abstract class Unit : MonoBehaviour {
                 {
                     CheckAbilityCond(Ability.ActivationType.ATTACK);
                     Unit targetUnit = target.Unit;
-                    targetUnit.TakeDamage(attack);
+                    targetUnit.TakeDamage(attack, this);
                     if(targetUnit.health > 0){
-                        TakeDamage(targetUnit.attack);
+                        TakeDamage(targetUnit.attack, targetUnit);
                     }
                     else{
                         
@@ -158,11 +160,11 @@ public abstract class Unit : MonoBehaviour {
             }
         }
         else{
-            if(playertype == PlayerType.DOG && direction == Direction.RIGHT){
+            if (playertype == PlayerType.DOG && direction == Direction.RIGHT){
                 // Dog attacks Nexus
                 yield return TussleManager.instance.AttackNexus(attack, PlayerType.CAT);
             }
-            else if(playertype == PlayerType.CAT && direction == Direction.LEFT){
+            else if (playertype == PlayerType.CAT && direction == Direction.LEFT){
                 yield return TussleManager.instance.AttackNexus(attack, PlayerType.DOG);
             }
         }
@@ -177,17 +179,18 @@ public abstract class Unit : MonoBehaviour {
 
     #region Attack
 
-    public void TakeDamage(int damage) {
-        CheckAbilityCond(Ability.ActivationType.DAMAGE);
+    public void TakeDamage(int damage, Unit from) {
         health -= damage;
+        CheckAbilityCond(Ability.ActivationType.DAMAGE);
         if (health > 0) {
             StartCoroutine("HurtAnimation", damage);
         }
         else {
+            killedBy = from;
+            CheckAbilityCond(Ability.ActivationType.DEATH);
             occupiedTile.ClearUnit();
             player.RemoveUnit(this);
             //Might need to change locations
-            CheckAbilityCond(Ability.ActivationType.DEATH);
             StartCoroutine("DeathAnimation");
         }
     }

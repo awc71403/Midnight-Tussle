@@ -37,7 +37,7 @@ public class Recruited : MonoBehaviour {
         this.recruit = recruit;
         spriteImage.sprite = recruit.GetSprite();
         rarityImage.sprite = TussleManager.raritySprites[recruit.rarity + 1]; // +1 beecause of None sprite
-        HPText.text = recruit.maxHealth.ToString();
+        HPText.text = recruit.initialHealth.ToString();
         movementText.text = recruit.movement.ToString();
         attackText.text = recruit.attack.ToString();
         

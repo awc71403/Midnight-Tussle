@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eb32ebd2b116bc4e82be023eeeb7f7a, type: 3}
-  m_Name: Fury
+  m_Script: {fileID: 11500000, guid: ef23046c6a32d3841bdbead7f3a91a75, type: 3}
+  m_Name: Resilient
   m_EditorClassIdentifier: 
-  aName: Fury
-  aDesc: Attacks all enemies around you when attacking.
-  type: 4
+  aName: Resilient
+  aDesc: If I survive damage, increase my health by 1.
+  type: 3
