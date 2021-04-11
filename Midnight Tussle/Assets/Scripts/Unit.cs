@@ -37,6 +37,13 @@ public abstract class Unit : MonoBehaviour {
     // Sprite Rendering
     private SpriteRenderer myRenderer;
 
+    //Checks if mouse is hovering over unti
+    private bool Mouse_over;
+   
+    //Determins the GUI paramaters
+    private float box_width= 150;
+    private float box_height=75;
+
 
     private Animator animator;
 
@@ -277,4 +284,27 @@ public abstract class Unit : MonoBehaviour {
         //FIX ME
         return GetComponent<SpriteRenderer>().sprite;
     }
+
+    #region GUI_abilities
+
+    private void OnGUI()
+    {
+        
+        if (!Mouse_over)
+        {
+            Debug.Log("GUI works");
+            return;
+        }
+        GUI.Box(new Rect(Input.mousePosition.x, -Input.mousePosition.y + Screen.height, box_width, box_height), ability.aDesc);
+    }
+    private void OnMouseOver()
+    {
+        Mouse_over = true;
+    }
+
+    private void OnMouseExit()
+    {
+        Mouse_over = false;
+    }
+    #endregion
 }
