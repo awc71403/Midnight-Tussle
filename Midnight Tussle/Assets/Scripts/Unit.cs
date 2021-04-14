@@ -84,7 +84,7 @@ public abstract class Unit : MonoBehaviour {
     // }
 
     public void RecalculateDepth() {
-        transform.position = new Vector3(transform.position.x, transform.position.y + .25f, transform.position.y);
+        transform.position = new Vector3(occupiedTile.gameObject.transform.position.x, occupiedTile.gameObject.transform.position.y + .5f, occupiedTile.gameObject.transform.position.y);
     }
 
     #endregion

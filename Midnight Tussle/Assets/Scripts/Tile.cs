@@ -38,10 +38,10 @@ public class Tile : MonoBehaviour {
     // Detaches the unit from its current tile and puts it on this
     public void PlaceUnit(Unit unit) {
         myUnit = unit;
-        myUnit.RecalculateDepth();
 
         if(myUnit.occupiedTile && myUnit.occupiedTile != this) myUnit.occupiedTile.ClearUnit();
         myUnit.occupiedTile = this;
+        myUnit.RecalculateDepth();
     }
 
     public void ClearUnit() {
