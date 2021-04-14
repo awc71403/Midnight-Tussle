@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3eb903eea4cf1e744b8c2615f890f35d, type: 3}
-  m_Name: Reinforcement
+  m_Script: {fileID: 11500000, guid: de711c6c465c8f545b51ffbf4a1712ca, type: 3}
+  m_Name: Revenge
   m_EditorClassIdentifier: 
-  aName: Reinforcement
-  aDesc: On death, summons a 2/2/2 minion in it's place.
+  aName: Revenge
+  aDesc: On death, transform enemy into 1/1/1 unit.
   type: 2
   dogMinionSprite: {fileID: 21300000, guid: 5b451841f5ca7ec43b4afc6e767711b4, type: 3}
   catMinionSprite: {fileID: 21300000, guid: 7326c802afd9dd84f9d8ecc563d0ef8c, type: 3}
-  minionAbility: {fileID: 11400000, guid: c34ea5a31b6ff7c4db9c51253eb84193, type: 2}

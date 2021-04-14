@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Boost
   m_EditorClassIdentifier: 
   aName: Boost
-  aDesc: Ability Description
-  type: 0
+  aDesc: Gives the ally infront, 1 speed for this turn.
+  type: 1

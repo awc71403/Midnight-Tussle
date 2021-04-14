@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Rally
   m_EditorClassIdentifier: 
   aName: Rally
-  aDesc: Ability Description
-  type: 0
+  aDesc: Gives a random ally +2 health.
+  type: 1

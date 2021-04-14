@@ -87,6 +87,10 @@ public class Player : MonoBehaviour
         
     }
 
+    public void CallMovement(Direction direction) {
+        Movement(direction);
+    }
+
     // Returns true if there are still more to place
     public bool AddUnit(Unit unit){
         recruitManager.SetRemaining(--countToRecruit);

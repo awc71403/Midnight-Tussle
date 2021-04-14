@@ -24,12 +24,14 @@ public abstract class Unit : MonoBehaviour {
     [SerializeField] private TextMeshPro HPText;
     [SerializeField] private TextMeshPro attackText;
     [SerializeField] private TextMeshPro movementText;
-    
+
     [HideInInspector] public PlayerType playertype;
     [HideInInspector] public int rarity;
     [Tooltip("A reference to the player object which controlls the units")]
     public Player player;
-    [Tooltip("The current health that this unit has")]
+
+    public Unit killedBy;
+
     public int health;
     [Tooltip("holds a reference of the tile that is currently occupied")]
     public Tile occupiedTile;
@@ -39,7 +41,7 @@ public abstract class Unit : MonoBehaviour {
 
     //Checks if mouse is hovering over unti
     private bool Mouse_over;
-   
+
     //Determins the GUI paramaters
     private float box_width= 150;
     private float box_height=75;
@@ -65,12 +67,12 @@ public abstract class Unit : MonoBehaviour {
     #endregion
 
     #region Initialization
-    
+
     void Awake() {
         myRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
-        health = maxHealth;
+        health = initialHealth;
 
     }
 
@@ -94,7 +96,7 @@ public abstract class Unit : MonoBehaviour {
     // }
 
     public void RecalculateDepth() {
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+        transform.position = new Vector3(occupiedTile.gameObject.transform.position.x, occupiedTile.gameObject.transform.position.y + .5f, occupiedTile.gameObject.transform.position.y);
     }
 
     #endregion
@@ -105,7 +107,7 @@ public abstract class Unit : MonoBehaviour {
         HPText.text = health.ToString();
         movementText.text = movementLeft.ToString();
     }
-    
+
     #endregion
 
     #region Movement
@@ -159,47 +161,48 @@ public abstract class Unit : MonoBehaviour {
                 {
                     CheckAbilityCond(Ability.ActivationType.ATTACK);
                     Unit targetUnit = target.Unit;
-                    targetUnit.TakeDamage(attack);
+                    targetUnit.TakeDamage(attack, this);
                     if(targetUnit.health > 0){
-                        TakeDamage(targetUnit.attack);
+                        TakeDamage(targetUnit.attack, targetUnit);
                     }
                     else{
-                        
+
                     }
                 }
             }
         }
         else{
-            if(playertype == PlayerType.DOG && direction == Direction.RIGHT){
+            if (playertype == PlayerType.DOG && direction == Direction.RIGHT){
                 // Dog attacks Nexus
                 yield return TussleManager.instance.AttackNexus(attack, PlayerType.CAT);
             }
-            else if(playertype == PlayerType.CAT && direction == Direction.LEFT){
+            else if (playertype == PlayerType.CAT && direction == Direction.LEFT){
                 yield return TussleManager.instance.AttackNexus(attack, PlayerType.DOG);
             }
         }
         movementLeft--;
-        // RecalculateDepth();
+        RecalculateDepth();
         // StartBounceAnimation();
         yield return new WaitForSeconds(stepDuration);
-        
+
 
     }
     #endregion
 
     #region Attack
 
-    public void TakeDamage(int damage) {
-        CheckAbilityCond(Ability.ActivationType.DAMAGE);
+    public void TakeDamage(int damage, Unit from) {
         health -= damage;
+        CheckAbilityCond(Ability.ActivationType.DAMAGE);
         if (health > 0) {
             StartCoroutine("HurtAnimation", damage);
         }
         else {
+            killedBy = from;
+            CheckAbilityCond(Ability.ActivationType.DEATH);
             occupiedTile.ClearUnit();
             player.RemoveUnit(this);
             //Might need to change locations
-            CheckAbilityCond(Ability.ActivationType.DEATH);
             StartCoroutine("DeathAnimation");
         }
     }
@@ -239,7 +242,7 @@ public abstract class Unit : MonoBehaviour {
             transform.localScale = new Vector3(1.5f - i, 1.5f - i, 1);
             yield return null;
         }
-        
+
         // myUITracker.gameObject.SetActive(false);
         yield return null; //Just to make sure any logic that needed to run this frame gets run
         Destroy(gameObject);
@@ -289,7 +292,7 @@ public abstract class Unit : MonoBehaviour {
 
     private void OnGUI()
     {
-        
+
         if (!Mouse_over)
         {
             Debug.Log("GUI works");
