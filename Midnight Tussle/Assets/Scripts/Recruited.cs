@@ -80,12 +80,13 @@ public class Recruited : MonoBehaviour {
         if(collider){
             // Place the recruit onto the map
             Tile tile = collider.GetComponent<Tile>();
-            if(TussleManager.instance.ColumnInRange(tile.xIndex)){
-                TussleManager.instance.PlaceUnitOnTile(recruit, tile);
-                Destroy(this.gameObject);
-            }
-            
-
+            TussleManager tussle = TussleManager.instance;
+            if(tussle.ColumnInRange(tile.xIndex)){
+                if (!tile.HasUnit()) {
+                    tussle.PlaceUnitOnTile(recruit, tile);
+                    Destroy(this.gameObject);
+                }
+            }           
         }
     }
 

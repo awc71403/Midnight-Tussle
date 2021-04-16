@@ -96,7 +96,7 @@ public abstract class Unit : MonoBehaviour {
     // }
 
     public void RecalculateDepth() {
-        transform.position = new Vector3(occupiedTile.gameObject.transform.position.x, occupiedTile.gameObject.transform.position.y + .5f, occupiedTile.gameObject.transform.position.y);
+        transform.position = new Vector3(occupiedTile.gameObject.transform.position.x, occupiedTile.gameObject.transform.position.y + .28f, occupiedTile.gameObject.transform.position.y);
     }
 
     #endregion
@@ -174,10 +174,10 @@ public abstract class Unit : MonoBehaviour {
         else{
             if (playertype == PlayerType.DOG && direction == Direction.RIGHT){
                 // Dog attacks Nexus
-                yield return TussleManager.instance.AttackNexus(attack, PlayerType.CAT);
+                yield return TussleManager.instance.AttackNexus(this, PlayerType.CAT);
             }
             else if (playertype == PlayerType.CAT && direction == Direction.LEFT){
-                yield return TussleManager.instance.AttackNexus(attack, PlayerType.DOG);
+                yield return TussleManager.instance.AttackNexus(this, PlayerType.DOG);
             }
         }
         movementLeft--;

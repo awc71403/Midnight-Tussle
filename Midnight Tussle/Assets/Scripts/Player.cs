@@ -56,16 +56,20 @@ public class Player : MonoBehaviour
 
     void Update(){
         if(movingPhase && !moveInProcess){
-            if(Input.GetKeyDown(KeyCode.LeftArrow)){
+            if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            {
                 StartCoroutine("Movement", Direction.LEFT);
             }
-            else if(Input.GetKeyDown(KeyCode.RightArrow)){
+            else if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            {
                 StartCoroutine("Movement", Direction.RIGHT);
             }
-            else if(Input.GetKeyDown(KeyCode.UpArrow)){
+            else if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            {
                 StartCoroutine("Movement", Direction.UP);
             }
-            else if(Input.GetKeyDown(KeyCode.DownArrow)){
+            else if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            {
                 StartCoroutine("Movement", Direction.DOWN);
             }
             
