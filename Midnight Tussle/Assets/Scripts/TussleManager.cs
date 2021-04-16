@@ -172,9 +172,9 @@ public class TussleManager : MonoBehaviour
 
     #endregion
 
-    public IEnumerator AttackNexus(int damage, PlayerType playerType){
+    public IEnumerator AttackNexus(Unit unit, PlayerType playerType){
         if(playerType == PlayerType.DOG){
-            dogPlayer.nexus.TakeDamage(damage);
+            dogPlayer.nexus.TakeDamage(unit.attack);
             if(dogPlayer.nexus.health == 0){
                 yield return dogPlayer.nexus.DeathAnimation();
             }
@@ -183,7 +183,7 @@ public class TussleManager : MonoBehaviour
             }
         }
         else{
-            catPlayer.nexus.TakeDamage(damage);
+            catPlayer.nexus.TakeDamage(unit.attack);
             if(catPlayer.nexus.health == 0){
                 yield return catPlayer.nexus.DeathAnimation();
             }
@@ -191,8 +191,8 @@ public class TussleManager : MonoBehaviour
                 yield return catPlayer.nexus.HurtAnimation();
             }
         }
-
-
+        unit.player.RemoveUnit(unit);
+        Destroy(unit.gameObject);
     }
 
     private void UpdateFurthestColumnCanSpawn(){
