@@ -28,8 +28,8 @@ public class Recruited : MonoBehaviour {
     private bool Mouse_over;
 
     //Determins the GUI paramaters
-    private float box_width = 150;
-    private float box_height = 75;
+    private float box_width = 250;
+    private float box_height = 25;
     private float SCheight = Screen.height;
 
 
@@ -98,11 +98,8 @@ public class Recruited : MonoBehaviour {
         {
             return;
         }
-        //Debug.Log(transform.position);
-        //Debug.Log(Input.mousePosition);
-        //Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Vector2 worldPoint2d = new Vector2(worldPoint.x, worldPoint.y);
-        GUI.Box(new Rect(Input.mousePosition.x, -Input.mousePosition.y+ SCheight, box_width, box_height), recruit.ability.aDesc);
+        
+        GUI.Box(new Rect(Input.mousePosition.x + 20, -Input.mousePosition.y+ SCheight, box_width, box_height), recruit.ability.aDesc);
     }
     private void OnMouseOver()
     {

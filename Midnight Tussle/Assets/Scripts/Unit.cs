@@ -12,7 +12,7 @@ public abstract class Unit : MonoBehaviour {
     [Tooltip("Name of this specific unit")]
     public string characterName;
     [Tooltip("Amount of healtht he unit starts with")]
-    public int maxHealth;
+    public int initialHealth;
     [Tooltip("Number of tiles the unit can move every turn")]
     public int movement;
     [Tooltip("Amount of damage this unit deals to enemies")]
@@ -43,8 +43,8 @@ public abstract class Unit : MonoBehaviour {
     private bool Mouse_over;
 
     //Determins the GUI paramaters
-    private float box_width= 150;
-    private float box_height=75;
+    private float box_width= 250;
+    private float box_height=25;
 
 
     private Animator animator;
@@ -298,7 +298,7 @@ public abstract class Unit : MonoBehaviour {
             Debug.Log("GUI works");
             return;
         }
-        GUI.Box(new Rect(Input.mousePosition.x, -Input.mousePosition.y + Screen.height, box_width, box_height), ability.aDesc);
+        GUI.Box(new Rect(Input.mousePosition.x + 20, -Input.mousePosition.y + Screen.height, box_width, box_height), ability.aDesc);
     }
     private void OnMouseOver()
     {
