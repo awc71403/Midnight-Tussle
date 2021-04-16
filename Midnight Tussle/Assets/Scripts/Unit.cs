@@ -9,9 +9,13 @@ public abstract class Unit : MonoBehaviour {
     #region Variables
 
     [Header("Stats")]
+    [Tooltip("Name of this specific unit")]
     public string characterName;
+    [Tooltip("Amount of healtht he unit starts with")]
     public int initialHealth;
+    [Tooltip("Number of tiles the unit can move every turn")]
     public int movement;
+    [Tooltip("Amount of damage this unit deals to enemies")]
     public int attack;
 
     public Ability ability;
@@ -20,19 +24,27 @@ public abstract class Unit : MonoBehaviour {
     [SerializeField] private TextMeshPro HPText;
     [SerializeField] private TextMeshPro attackText;
     [SerializeField] private TextMeshPro movementText;
-    
+
     [HideInInspector] public PlayerType playertype;
     [HideInInspector] public int rarity;
+    [Tooltip("A reference to the player object which controlls the units")]
     public Player player;
 
     public Unit killedBy;
 
     public int health;
-    
+    [Tooltip("holds a reference of the tile that is currently occupied")]
     public Tile occupiedTile;
 
     // Sprite Rendering
     private SpriteRenderer myRenderer;
+
+    //Checks if mouse is hovering over unti
+    private bool Mouse_over;
+
+    //Determins the GUI paramaters
+    private float box_width= 250;
+    private float box_height=25;
 
 
     private Animator animator;
@@ -55,7 +67,7 @@ public abstract class Unit : MonoBehaviour {
     #endregion
 
     #region Initialization
-    
+
     void Awake() {
         myRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
@@ -95,7 +107,7 @@ public abstract class Unit : MonoBehaviour {
         HPText.text = health.ToString();
         movementText.text = movementLeft.ToString();
     }
-    
+
     #endregion
 
     #region Movement
@@ -154,7 +166,7 @@ public abstract class Unit : MonoBehaviour {
                         TakeDamage(targetUnit.attack, targetUnit);
                     }
                     else{
-                        
+
                     }
                 }
             }
@@ -172,7 +184,7 @@ public abstract class Unit : MonoBehaviour {
         RecalculateDepth();
         // StartBounceAnimation();
         yield return new WaitForSeconds(stepDuration);
-        
+
 
     }
     #endregion
@@ -230,7 +242,7 @@ public abstract class Unit : MonoBehaviour {
             transform.localScale = new Vector3(1.5f - i, 1.5f - i, 1);
             yield return null;
         }
-        
+
         // myUITracker.gameObject.SetActive(false);
         yield return null; //Just to make sure any logic that needed to run this frame gets run
         Destroy(gameObject);
@@ -275,4 +287,27 @@ public abstract class Unit : MonoBehaviour {
         //FIX ME
         return GetComponent<SpriteRenderer>().sprite;
     }
+
+    #region GUI_abilities
+
+    private void OnGUI()
+    {
+
+        if (!Mouse_over)
+        {
+            Debug.Log("GUI works");
+            return;
+        }
+        GUI.Box(new Rect(Input.mousePosition.x + 20, -Input.mousePosition.y + Screen.height, box_width, box_height), ability.aDesc);
+    }
+    private void OnMouseOver()
+    {
+        Mouse_over = true;
+    }
+
+    private void OnMouseExit()
+    {
+        Mouse_over = false;
+    }
+    #endregion
 }
