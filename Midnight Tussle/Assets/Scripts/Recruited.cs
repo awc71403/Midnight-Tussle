@@ -36,7 +36,7 @@ public class Recruited : MonoBehaviour {
     public void Setup(Unit recruit) {
         this.recruit = recruit;
         spriteImage.sprite = recruit.GetSprite();
-        rarityImage.sprite = TussleManager.raritySprites[recruit.rarity + 1]; // +1 beecause of None sprite
+        rarityImage.sprite = TussleManager.raritySprites[recruit.rarity];
         HPText.text = recruit.initialHealth.ToString();
         movementText.text = recruit.movement.ToString();
         attackText.text = recruit.attack.ToString();
@@ -57,6 +57,30 @@ public class Recruited : MonoBehaviour {
         Vector2 mousePos = (Vector2)main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (mousePos - (Vector2)this.transform.position);
         rb.velocity = direction.normalized * dragSpeed * direction.magnitude;
+
+        Collider2D collider = Physics2D.OverlapPoint(mousePos, tileMask);
+        if (collider)
+        {
+            TussleManager tussle = TussleManager.instance;
+            Tile hoveredTile = Tile.hoveredTile;
+            if (Tile.hoveredTile != null) {
+                if (hoveredTile.HasUnit()) {
+                    Tile.hoveredTile.GetComponent<SpriteRenderer>().color = Color.clear;
+                }
+                else if (tussle.ColumnInRange(hoveredTile.xIndex)) {
+                    Tile.hoveredTile.GetComponent<SpriteRenderer>().color = new Color(0, 1, 0, .5f);
+                }
+            }
+            Tile tile = collider.GetComponent<Tile>();
+            if (tussle.ColumnInRange(tile.xIndex))
+            {
+                if (!tile.HasUnit())
+                {
+                    tile.GetComponent<SpriteRenderer>().color = new Color(0, 1, 0, .25f);
+                    Tile.hoveredTile = tile;
+                }
+            }
+        }
     }
 
     private void OnMouseDown()

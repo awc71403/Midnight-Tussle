@@ -43,11 +43,12 @@ public class TussleManager : MonoBehaviour
     public const int XSIZE = 6;
     public const int YSIZE = 5;
     
-    private Player currentPlayer {
+    public Player currentPlayer {
         get { return currentTurn == PlayerType.DOG ? dogPlayer : catPlayer; }
 
     }
 
+    [SerializeField]
     private int furthestColumn;
 
     #endregion
@@ -226,9 +227,41 @@ public class TussleManager : MonoBehaviour
             furthestColumn = first;
         }
         else{
-        furthestColumn = max;
+            furthestColumn = max;
+        }
 
-        }   
+        foreach (Tile tile in mapArray) {
+            if (currentTurn == PlayerType.DOG)
+            {
+                if (tile.xIndex <= furthestColumn && !tile.HasUnit())
+                {
+                    tile.GetComponent<SpriteRenderer>().color = new Color(0, 1, 0, .5f);
+                }
+                else
+                {
+                    tile.GetComponent<SpriteRenderer>().color = Color.clear;
+                }
+            }
+            else
+            {
+                if (tile.xIndex >= furthestColumn && !tile.HasUnit())
+                {
+                    tile.GetComponent<SpriteRenderer>().color = new Color(0, 1, 0, .5f);
+                }
+                else
+                {
+                    tile.GetComponent<SpriteRenderer>().color = Color.clear;
+                }
+            }
+        }
+
+    }
+
+    public void ResetTileColor() {
+        foreach (Tile tile in mapArray)
+        {
+            tile.GetComponent<SpriteRenderer>().color = Color.clear;
+        }
     }
 
     private bool ColumnAvailable(){

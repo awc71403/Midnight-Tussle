@@ -15,8 +15,12 @@ public class Tile : MonoBehaviour {
     #region Instance Variables
 
     // THESE ARE ZERO-INDEXED, with 0,0 being the bottom left
-    [HideInInspector] public int xIndex;
-    [HideInInspector] public int yIndex;
+    [HideInInspector]
+    public int xIndex;
+    [HideInInspector]
+    public int yIndex;
+
+    public static Tile hoveredTile;
 
     public Vector3 unitOffset;
 
@@ -52,6 +56,4 @@ public class Tile : MonoBehaviour {
         return myUnit != null;
     }
     #endregion
-
-
 }

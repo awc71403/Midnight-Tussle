@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
 
     private int countToRecruit;
 
-    private bool movingPhase = false;
+    public bool movingPhase = false;
     private bool moveInProcess = false;
 
     #endregion
@@ -119,6 +119,8 @@ public class Player : MonoBehaviour
         foreach(Unit unit in units){
             unit.MovementState(true);
         }
+
+        TussleManager.instance.ResetTileColor();
         movingPhase = true;
     }
 
