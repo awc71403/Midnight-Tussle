@@ -24,7 +24,15 @@ public class Recruited : MonoBehaviour {
     private bool dragging = false;
     private Vector2 origin;
 
-    
+    //Checks if mouse is hovering over unti
+    private bool Mouse_over;
+
+    //Determins the GUI paramaters
+    private float box_width = 250;
+    private float box_height = 25;
+    private float SCheight = Screen.height;
+
+
 
     #region Initialization
     private void Awake()
@@ -105,4 +113,27 @@ public class Recruited : MonoBehaviour {
             }           
         }
     }
+
+    #region GUI_abilities
+
+    private void OnGUI()
+    {
+
+        if (!Mouse_over)
+        {
+            return;
+        }
+        
+        GUI.Box(new Rect(Input.mousePosition.x + 20, -Input.mousePosition.y+ SCheight, box_width, box_height), recruit.ability.aDesc);
+    }
+    private void OnMouseOver()
+    {
+        Mouse_over = true;
+    }
+
+    private void OnMouseExit()
+    {
+        Mouse_over = false;
+    }
+    #endregion
 }
