@@ -43,9 +43,10 @@ public abstract class Unit : MonoBehaviour {
     private bool Mouse_over;
 
     //Determins the GUI paramaters
-    private float box_width= 250;
-    private float box_height=25;
-
+    //private float box_width= 250;
+    //private float box_height=25;
+    //Get the UI object Info
+    private InforUI InfoHolder;
 
     private Animator animator;
 
@@ -73,7 +74,7 @@ public abstract class Unit : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         health = initialHealth;
-
+        InfoHolder = FindObjectOfType<InforUI>();
     }
 
     void Start(){
@@ -290,24 +291,19 @@ public abstract class Unit : MonoBehaviour {
 
     #region GUI_abilities
 
-    private void OnGUI()
-    {
-
-        if (!Mouse_over)
-        {
-            Debug.Log("GUI works");
-            return;
-        }
-        GUI.Box(new Rect(Input.mousePosition.x + 20, -Input.mousePosition.y + Screen.height, box_width, box_height), ability.aDesc);
-    }
     private void OnMouseOver()
     {
         Mouse_over = true;
+        Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        InfoHolder.transform.position =  new Vector2(mousepos.x, mousepos.y);
+        InfoHolder.over = true;
+        InfoHolder.ability.text = ability.aDesc;
     }
 
     private void OnMouseExit()
     {
         Mouse_over = false;
+        InfoHolder.over = false;
     }
     #endregion
 }

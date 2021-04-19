@@ -28,10 +28,11 @@ public class Recruited : MonoBehaviour {
     private bool Mouse_over;
 
     //Determins the GUI paramaters
-    private float box_width = 250;
-    private float box_height = 25;
+    //private float box_width = 250;
+    //private float box_height = 25;
     private float SCheight = Screen.height;
-
+    //Get the UI object Info
+    private InforUI InfoHolder;
 
 
     #region Initialization
@@ -39,6 +40,7 @@ public class Recruited : MonoBehaviour {
     {
         rb = this.GetComponent<Rigidbody2D>();
         main = Camera.main;
+        InfoHolder = FindObjectOfType<InforUI>();
     }
     
     public void Setup(Unit recruit) {
@@ -92,24 +94,19 @@ public class Recruited : MonoBehaviour {
 
     #region GUI_abilities
 
-    private void OnGUI()
-    {
-
-        if (!Mouse_over)
-        {
-            return;
-        }
-        
-        GUI.Box(new Rect(Input.mousePosition.x + 20, -Input.mousePosition.y+ SCheight, box_width, box_height), recruit.ability.aDesc);
-    }
     private void OnMouseOver()
     {
         Mouse_over = true;
+        Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        InfoHolder.transform.position = new Vector2(mousepos.x, mousepos.y);
+        InfoHolder.over = true;
+        InfoHolder.ability.text = recruit.ability.aDesc;
     }
 
     private void OnMouseExit()
     {
         Mouse_over = false;
+        InfoHolder.over = false;
     }
     #endregion
 }
