@@ -158,6 +158,7 @@ public abstract class Unit : MonoBehaviour {
             // Going to another tile
             if(!target.HasUnit()){
                 occupiedTile.directionMap[direction].PlaceUnit(this);
+                InfoHolder.ResetUnit();
             } else
             {
                 Debug.Log("encountered enemy");
