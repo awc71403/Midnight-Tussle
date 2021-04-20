@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1423688122914116993}
   - component: {fileID: 1423688122914116998}
   - component: {fileID: 1423688122914116999}
+  - component: {fileID: -6876549532198134007}
   m_Layer: 0
   m_Name: Clyde
   m_TagString: Untagged
@@ -99,17 +100,43 @@ MonoBehaviour:
   movement: 1
   ability: {fileID: 11400000, guid: 8e9f8c21b6590644288a63ed5b5f2d1b, type: 2}
   HPText: {fileID: 5732670347452153989}
-  attackText: {fileID: 5732670346346475817}
   movementText: {fileID: 5732670346097932591}
   playertype: 0
-  rarity: 0
+  rarity: 1
   player: {fileID: 0}
   killedBy: {fileID: 0}
   health: 0
   occupiedTile: {fileID: 0}
+  stuck: 0
   stepSounds: []
   movingDirection: 0
   movementLeft: 0
+--- !u!61 &-6876549532198134007
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423688122914116996}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1.5}
+    newSize: {x: 0.64, y: 0.96}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.5}
+  m_EdgeRadius: 0
 --- !u!1001 &5732670347985716284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -117,11 +144,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1423688122914116993}
     m_Modifications:
-    - target: {fileID: 1872045116174471371, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
-        type: 3}
-      propertyPath: m_Name
-      value: UnitUI
-      objectReference: {fileID: 0}
     - target: {fileID: 542606521, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
       propertyPath: m_textInfo.characterCount
       value: 1
@@ -135,22 +157,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 542606521, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
@@ -225,15 +231,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1872045116174471371, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
+        type: 3}
+      propertyPath: m_Name
+      value: UnitUI
+      objectReference: {fileID: 0}
     - target: {fileID: 542606523, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1652503831, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+    - target: {fileID: 1938799893, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1938799893, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652503831, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
@@ -248,18 +275,6 @@ Transform:
 --- !u!114 &5732670347452153989 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 542606521, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
-    type: 3}
-  m_PrefabInstance: {fileID: 5732670347985716284}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5732670346346475817 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
     type: 3}
   m_PrefabInstance: {fileID: 5732670347985716284}
   m_PrefabAsset: {fileID: 0}
