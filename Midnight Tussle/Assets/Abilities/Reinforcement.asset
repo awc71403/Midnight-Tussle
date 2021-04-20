@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Reinforcement
   m_EditorClassIdentifier: 
   aName: Reinforcement
-  aDesc: On death, summons a 2/2/2 minion in it's place.
+  aDesc: On death, summons a 2/2/1 minion in it's place.
   type: 2
   dogMinionSprite: {fileID: 21300000, guid: 5b451841f5ca7ec43b4afc6e767711b4, type: 3}
   catMinionSprite: {fileID: 21300000, guid: 7326c802afd9dd84f9d8ecc563d0ef8c, type: 3}
