@@ -122,8 +122,7 @@ public class TussleManager : MonoBehaviour
             // Move on to movement phase
             currentPlayer.ActivateMovement();
         }
-        
-        
+               
     }
 
     #endregion

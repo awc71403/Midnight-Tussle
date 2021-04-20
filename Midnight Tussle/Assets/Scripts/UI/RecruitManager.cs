@@ -11,15 +11,15 @@ public class RecruitManager : MonoBehaviour
     [SerializeField] private GameObject RecruitUIPrefab;
 
     private Vector2 bottomLeft;
-    private float heightThird;
-    private float widthThird;
+    private float heightFourth;
+    private float widthSixth;
 
     void Start(){
         Vector3[] fourCorners = new Vector3[4];
         recruitBox.GetWorldCorners(fourCorners);
         bottomLeft = fourCorners[0];
-        heightThird = Mathf.Abs(fourCorners[1].y - fourCorners[0].y) / 2;
-        widthThird = Mathf.Abs(fourCorners[3].x - fourCorners[0].x) / 2;
+        heightFourth = Mathf.Abs(fourCorners[1].y - fourCorners[0].y) / 4;
+        widthSixth = Mathf.Abs(fourCorners[3].x - fourCorners[0].x) / 6;
     }
 
     public void SetRemaining(int remainCount){
@@ -53,6 +53,6 @@ public class RecruitManager : MonoBehaviour
     private Vector2 GetPosition(int index){
         int x = index % 3; // Get the row
         int y = index / 3; // Get the column
-        return bottomLeft + Vector2.up * y * heightThird + Vector2.right * x * widthThird;
+        return bottomLeft + Vector2.up * y * heightFourth + Vector2.right * (x * 2 + 1) * widthSixth;
     }
 }

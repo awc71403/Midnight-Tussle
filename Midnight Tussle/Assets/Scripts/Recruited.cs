@@ -24,9 +24,6 @@ public class Recruited : MonoBehaviour {
     private bool dragging = false;
     private Vector2 origin;
 
-    //Checks if mouse is hovering over unti
-    private bool Mouse_over;
-
     //Determins the GUI paramaters
     //private float box_width = 250;
     //private float box_height = 25;
@@ -120,17 +117,12 @@ public class Recruited : MonoBehaviour {
 
     private void OnMouseOver()
     {
-        Mouse_over = true;
-        Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        InfoHolder.transform.position = new Vector2(mousepos.x, mousepos.y);
-        InfoHolder.over = true;
-        InfoHolder.ability.text = recruit.ability.aDesc;
+        InfoHolder.SetUnit(recruit);
     }
 
     private void OnMouseExit()
     {
-        Mouse_over = false;
-        InfoHolder.over = false;
+        InfoHolder.ResetUnit();
     }
     #endregion
 }

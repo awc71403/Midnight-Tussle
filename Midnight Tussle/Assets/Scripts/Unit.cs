@@ -23,7 +23,6 @@ public abstract class Unit : MonoBehaviour {
 
     [Header("References")]
     [SerializeField] private TextMeshPro HPText;
-    [SerializeField] private TextMeshPro attackText;
     [SerializeField] private TextMeshPro movementText;
 
     [HideInInspector] public PlayerType playertype;
@@ -41,9 +40,6 @@ public abstract class Unit : MonoBehaviour {
 
     // Sprite Rendering
     private SpriteRenderer myRenderer;
-
-    //Checks if mouse is hovering over unti
-    private bool Mouse_over;
 
     //Determins the GUI paramaters
     //private float box_width= 250;
@@ -84,7 +80,6 @@ public abstract class Unit : MonoBehaviour {
 
     void Start(){
         HPText.text = health.ToString();
-        attackText.text = attack.ToString();
         movementText.text = movement.ToString();
 
         CheckAbilityCond(Ability.ActivationType.SUMMON);
@@ -112,7 +107,6 @@ public abstract class Unit : MonoBehaviour {
     void Update(){
         HPText.text = health.ToString();
         movementText.text = movementLeft.ToString();
-        attackText.text = attack.ToString();
     }
 
     #endregion
@@ -120,7 +114,7 @@ public abstract class Unit : MonoBehaviour {
     #region Movement
     public void MovementState(bool state){
         movementLeft = movement;
-        movementText.gameObject.SetActive(state);
+        movementText.transform.parent.gameObject.SetActive(state);
     }
 
     public void Movementr() {
@@ -299,17 +293,12 @@ public abstract class Unit : MonoBehaviour {
 
     private void OnMouseOver()
     {
-        Mouse_over = true;
-        Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        InfoHolder.transform.position =  new Vector2(mousepos.x, mousepos.y);
-        InfoHolder.over = true;
-        InfoHolder.ability.text = ability.aDesc;
+        InfoHolder.SetUnit(this);
     }
 
     private void OnMouseExit()
     {
-        Mouse_over = false;
-        InfoHolder.over = false;
+        InfoHolder.ResetUnit();
     }
     #endregion
 }
