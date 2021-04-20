@@ -94,16 +94,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Pip
-  maxHealth: 5
-  movement: 2
-  attack: 3
-  ability: {fileID: 11400000, guid: d5acb41deac125b49b6369e4c4cf0b22, type: 2}
+  initialHealth: 1
+  attack: 1
+  movement: 1
+  ability: {fileID: 11400000, guid: c34ea5a31b6ff7c4db9c51253eb84193, type: 2}
   HPText: {fileID: 5710912078123505935}
   attackText: {fileID: 5710912079232411811}
   movementText: {fileID: 5710912079529124005}
   playertype: 0
   rarity: 0
   player: {fileID: 0}
+  killedBy: {fileID: 0}
   health: 0
   occupiedTile: {fileID: 0}
   stepSounds: []
@@ -116,6 +117,59 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1373107263098194955}
     m_Modifications:
+    - target: {fileID: 1938799891, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938799891, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938799891, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938799891, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 542606521, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 542606521, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 542606521, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 542606521, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1872045116174471371, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
+        type: 3}
+      propertyPath: m_Name
+      value: UnitUI
+      objectReference: {fileID: 0}
     - target: {fileID: 3249255201158710729, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -171,68 +225,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 542606521, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 542606521, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 542606521, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 542606521, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1872045116174471371, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
-        type: 3}
-      propertyPath: m_Name
-      value: UnitUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1652503829, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938799891, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938799891, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938799891, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938799891, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 1
+    - target: {fileID: 542606523, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1652503831, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1938799893, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 542606523, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}

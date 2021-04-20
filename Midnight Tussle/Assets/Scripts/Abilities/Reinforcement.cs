@@ -5,31 +5,34 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Abilities/Reinforcement")]
 public class Reinforcement : Ability
 {
-    public Sprite dogMinionSprite;
-    public Sprite catMinionSprite;
-    public Ability minionAbility;
+    public GameObject dogMinionPrefab;
+    public GameObject catMinionPrefab;
+
     public const int MINIONHP = 2;
     public const int MINIONDMG = 2;
-    public const int MINIONSPEED = 2;
+    public const int MINIONSPEED = 1;
 
     public override void TriggerAbility(Unit unit) {
-        Unit minion = Instantiate(unit);
+        Unit minion;
         if (unit.playertype == PlayerType.DOG) {
-            minion.GetComponent<SpriteRenderer>().sprite = dogMinionSprite;
+            minion = Instantiate(dogMinionPrefab).GetComponent<Unit>();
         }
         else {
-            minion.GetComponent<SpriteRenderer>().sprite = catMinionSprite;
+            minion = Instantiate(catMinionPrefab).GetComponent<Unit>();
         }
 
-        minion.ability = minionAbility;
+        minion.gameObject.transform.SetParent(unit.gameObject.transform.parent);
+
         minion.initialHealth = MINIONHP;
         minion.attack = MINIONDMG;
         minion.movement = MINIONSPEED;
 
-        minion.occupiedTile.Unit = minion;
+        minion.occupiedTile = unit.occupiedTile;
+        unit.occupiedTile.Unit = minion;
         unit.player.AddUnit(minion);
         minion.movementLeft = 0;
 
-        minion.health  = MINIONHP;
+        minion.health = MINIONHP;
+        minion.RecalculateDepth();
     }
 }

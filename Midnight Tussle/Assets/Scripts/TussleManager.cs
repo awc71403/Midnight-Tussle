@@ -197,7 +197,7 @@ public class TussleManager : MonoBehaviour
     }
 
     private void UpdateFurthestColumnCanSpawn(){
-        int first =  currentTurn == PlayerType.DOG ? 0 : XSIZE - 1; 
+        int first = currentTurn == PlayerType.DOG ? 0 : XSIZE - 1; 
         int direction = currentTurn == PlayerType.DOG ? 1 : -1; 
         
         int max = first - direction;
@@ -227,7 +227,13 @@ public class TussleManager : MonoBehaviour
             furthestColumn = first;
         }
         else{
-            furthestColumn = max;
+            if (currentTurn == PlayerType.DOG)
+            {
+                furthestColumn = Mathf.Min(max, XSIZE - 2);
+            }
+            else {
+                furthestColumn = Mathf.Max(max, 1);
+            }
         }
 
         foreach (Tile tile in mapArray) {

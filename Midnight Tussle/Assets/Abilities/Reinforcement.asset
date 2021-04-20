@@ -15,6 +15,7 @@ MonoBehaviour:
   aName: Reinforcement
   aDesc: On death, summons a 2/2/1 minion in it's place.
   type: 2
-  dogMinionSprite: {fileID: 21300000, guid: 5b451841f5ca7ec43b4afc6e767711b4, type: 3}
-  catMinionSprite: {fileID: 21300000, guid: 7326c802afd9dd84f9d8ecc563d0ef8c, type: 3}
-  minionAbility: {fileID: 11400000, guid: c34ea5a31b6ff7c4db9c51253eb84193, type: 2}
+  dogMinionPrefab: {fileID: 2318272880079779411, guid: 6abf7729efe449a4e87d8b06dcb6f0f4,
+    type: 3}
+  catMinionPrefab: {fileID: 1373107263098194958, guid: 50bf045a546a65b4ea3d845ebd65abed,
+    type: 3}

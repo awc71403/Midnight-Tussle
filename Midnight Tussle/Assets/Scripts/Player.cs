@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
     }
 
     public void CallMovement(Direction direction) {
-        Movement(direction);
+        StartCoroutine("Movement", direction);
     }
 
     // Returns true if there are still more to place

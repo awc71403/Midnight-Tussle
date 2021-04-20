@@ -8,12 +8,19 @@ public class Rally : Ability {
     public const int RALLYAMOUNT = 2;
 
     public override void TriggerAbility(Unit unit) {
+        List<Unit> units;
         if (unit.playertype == PlayerType.DOG) {
-            List<Unit> units = TussleManager.instance.dogPlayer.GetUnits;
-            units[Random.Range(0, units.Count)].IncreaseHP(RALLYAMOUNT);
+            units =  new List<Unit>(TussleManager.instance.dogPlayer.GetUnits);
+
+
         }
         else {
-            List<Unit> units = TussleManager.instance.catPlayer.GetUnits;
+            units = new List<Unit>(TussleManager.instance.catPlayer.GetUnits);
+        }
+
+        units.Remove(unit);
+        if (units.Count != 0)
+        {
             units[Random.Range(0, units.Count)].IncreaseHP(RALLYAMOUNT);
         }
     }

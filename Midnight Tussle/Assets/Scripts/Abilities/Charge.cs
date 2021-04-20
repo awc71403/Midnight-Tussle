@@ -6,19 +6,27 @@ using UnityEngine;
 public class Charge : Ability
 {
     public override void TriggerAbility(Unit unit) {
+        unit.stuck = true;
+
         if (unit.playertype == PlayerType.DOG) {
             unit.player.CallMovement(Direction.RIGHT);
             List<Unit> units = TussleManager.instance.catPlayer.GetUnits;
             foreach (Unit dog in units) {
-                dog.movementLeft++;
+                if (dog != unit) {
+                    dog.movementLeft++;
+                }
             }
         }
         else {
             unit.player.CallMovement(Direction.LEFT);
             List<Unit> units = TussleManager.instance.catPlayer.GetUnits;
             foreach (Unit cat in units) {
-                cat.movementLeft++;
+                if (cat != unit) {
+                    cat.movementLeft++;
+                }
             }
         }
+
+        unit.stuck = false;
     }
 }

@@ -13,8 +13,6 @@ public class WorkTogether : Ability
                 if (rightUnit != null && rightUnit.playertype == PlayerType.DOG) {
                     rightUnit.health += unit.health;
                     rightUnit.attack += unit.attack;
-                    unit.occupiedTile.ClearUnit();
-                    unit.player.RemoveUnit(unit);
                 }
             }
         }
@@ -25,10 +23,12 @@ public class WorkTogether : Ability
                 if (leftUnit != null && leftUnit.playertype == PlayerType.CAT) {
                     leftUnit.health += unit.health;
                     leftUnit.attack += unit.attack;
-                    unit.occupiedTile.ClearUnit();
-                    unit.player.RemoveUnit(unit);
                 }
             }
         }
+
+        unit.occupiedTile.ClearUnit();
+        unit.player.RemoveUnit(unit);
+        Destroy(unit.gameObject);
     }
 }

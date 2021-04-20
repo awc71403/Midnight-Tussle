@@ -17,7 +17,7 @@ public abstract class Unit : MonoBehaviour {
     public int attack;
     [Tooltip("Number of tiles the unit can move every turn")]
     public int movement;
-    
+
 
     public Ability ability;
 
@@ -33,9 +33,11 @@ public abstract class Unit : MonoBehaviour {
 
     [HideInInspector] public Unit killedBy;
 
-    [HideInInspector] public int health;
+    /*[HideInInspector]*/ public int health;
     [Tooltip("holds a reference of the tile that is currently occupied")]
     [HideInInspector] public Tile occupiedTile;
+
+    [HideInInspector] public bool stuck;
 
     // Sprite Rendering
     private SpriteRenderer myRenderer;
@@ -77,6 +79,7 @@ public abstract class Unit : MonoBehaviour {
         animator = GetComponent<Animator>();
         health = initialHealth;
         InfoHolder = FindObjectOfType<InforUI>();
+        stuck = false;
     }
 
     void Start(){
@@ -109,6 +112,7 @@ public abstract class Unit : MonoBehaviour {
     void Update(){
         HPText.text = health.ToString();
         movementText.text = movementLeft.ToString();
+        attackText.text = attack.ToString();
     }
 
     #endregion
@@ -151,6 +155,9 @@ public abstract class Unit : MonoBehaviour {
     }
 
     public IEnumerator MoveUnitInDirection(Direction direction) {
+        if (stuck) {
+            yield break;
+        }
         movingDirection = direction;
         Tile target = occupiedTile.directionMap[direction];
         if(target != null){
@@ -162,15 +169,11 @@ public abstract class Unit : MonoBehaviour {
                 Debug.Log("encountered enemy");
                 if (playertype != target.Unit.playertype)
                 {
-                    CheckAbilityCond(Ability.ActivationType.ATTACK);
                     Unit targetUnit = target.Unit;
-                    targetUnit.TakeDamage(attack, this);
-                    if(targetUnit.health > 0){
-                        TakeDamage(targetUnit.attack, targetUnit);
-                    }
-                    else{
+                    CheckAbilityCond(Ability.ActivationType.ATTACK);
 
-                    }
+                    targetUnit.TakeDamage(attack, this);
+                    TakeDamage(targetUnit.attack, targetUnit);
                 }
             }
         }
@@ -205,6 +208,7 @@ public abstract class Unit : MonoBehaviour {
             CheckAbilityCond(Ability.ActivationType.DEATH);
             occupiedTile.ClearUnit();
             player.RemoveUnit(this);
+            Debug.Log("Dead");
             //Might need to change locations
             StartCoroutine("DeathAnimation");
         }
