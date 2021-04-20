@@ -159,6 +159,8 @@ public class Player : MonoBehaviour
         playerUI.SetArrowState(direction, false);
         moveInProcess = false;
 
+        
+
         // Stop if no more moves left
         if(!MovesLeft()){
             movingPhase = false;
@@ -166,7 +168,7 @@ public class Player : MonoBehaviour
             foreach(Unit unit in units){
                 unit.MovementState(false);
             }
-            TussleManager.instance.EndTurn();
+            if(!TussleManager.instance.gameOver) TussleManager.instance.EndTurn(); // Don't need to end turn if game over
         }        
     }
 

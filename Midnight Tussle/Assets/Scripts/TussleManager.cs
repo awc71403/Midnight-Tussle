@@ -51,6 +51,8 @@ public class TussleManager : MonoBehaviour
     [SerializeField]
     private int furthestColumn;
 
+    [HideInInspector] public bool gameOver = false;
+
     #endregion
 
     #region Set Up
@@ -125,6 +127,11 @@ public class TussleManager : MonoBehaviour
                
     }
 
+    public void PlaceMinion(Unit minion, Tile tile, Player player){
+        tile.PlaceUnit(minion);
+        player.AddUnit(minion);
+    }
+
     #endregion
 
     #region UI
@@ -177,7 +184,6 @@ public class TussleManager : MonoBehaviour
             dogPlayer.nexus.TakeDamage(unit.attack);
             if(dogPlayer.nexus.health == 0){
                 yield return dogPlayer.nexus.DeathAnimation();
-                yield return new WaitForSeconds(1);
                 EndTussle(PlayerType.CAT);
             }
             else{
@@ -188,7 +194,6 @@ public class TussleManager : MonoBehaviour
             catPlayer.nexus.TakeDamage(unit.attack);
             if(catPlayer.nexus.health == 0){
                 yield return catPlayer.nexus.DeathAnimation();
-                yield return new WaitForSeconds(1);
                 EndTussle(PlayerType.DOG);
             }
             else{
@@ -287,6 +292,7 @@ public class TussleManager : MonoBehaviour
 
 
     private void EndTussle(PlayerType winner){
+        gameOver = true;
         uiManager.End(winner);
     }
 

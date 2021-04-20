@@ -5,23 +5,39 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Abilities/Revenge")]
 public class Revenge : Ability {
 
-    public Sprite dogMinionSprite;
-    public Sprite catMinionSprite;
-    public Ability minionAbility;
+    public GameObject dogMinionPrefab;
+    public GameObject catMinionPrefab;
+
+    public const int MINIONHP = 1;
+    public const int MINIONDMG = 1;
+    public const int MINIONSPEED = 1;
 
     public override void TriggerAbility(Unit unit) {
         if(unit.killedBy == null) return;
-        if (unit.killedBy.health > 0) {
-            unit.killedBy.health = 1;
-            unit.killedBy.attack = 1;
-            unit.movement = 1;
-            unit.ability = minionAbility;
-
-            if (unit.killedBy.playertype == PlayerType.DOG) {
-                unit.killedBy.GetComponent<SpriteRenderer>().sprite = dogMinionSprite;
-            } else {
-                unit.killedBy.GetComponent<SpriteRenderer>().sprite = catMinionSprite;
-            }
+        
+        Unit minion;
+        if (unit.killedBy.playertype == PlayerType.DOG) {
+            minion = Instantiate(dogMinionPrefab).GetComponent<Unit>();
+            minion.playertype = PlayerType.DOG;
         }
+        else {
+            minion = Instantiate(catMinionPrefab).GetComponent<Unit>();
+            minion.playertype = PlayerType.CAT;
+        }
+
+        Tile tile = unit.killedBy.occupiedTile;
+        tile.ClearUnit();
+        TussleManager.instance.PlaceMinion(minion, tile, unit.killedBy.player);
+        unit.killedBy.Revenged();
+
+        minion.initialHealth = MINIONHP;
+        minion.attack = MINIONDMG;
+        minion.movement = MINIONSPEED;
+
+        minion.movementLeft = 0;
+
+        minion.health = MINIONHP;
+        minion.RecalculateDepth();
+        
     }
 }

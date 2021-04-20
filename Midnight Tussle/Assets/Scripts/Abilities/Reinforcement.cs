@@ -16,20 +16,21 @@ public class Reinforcement : Ability
         Unit minion;
         if (unit.playertype == PlayerType.DOG) {
             minion = Instantiate(dogMinionPrefab).GetComponent<Unit>();
+            minion.playertype = PlayerType.DOG;
         }
         else {
             minion = Instantiate(catMinionPrefab).GetComponent<Unit>();
+            minion.playertype = PlayerType.CAT;
         }
 
-        minion.gameObject.transform.SetParent(unit.gameObject.transform.parent);
+        Tile tile = unit.occupiedTile;
+        tile.ClearUnit();
+        TussleManager.instance.PlaceMinion(minion, tile, unit.player);
 
         minion.initialHealth = MINIONHP;
         minion.attack = MINIONDMG;
         minion.movement = MINIONSPEED;
 
-        minion.occupiedTile = unit.occupiedTile;
-        unit.occupiedTile.Unit = minion;
-        unit.player.AddUnit(minion);
         minion.movementLeft = 0;
 
         minion.health = MINIONHP;

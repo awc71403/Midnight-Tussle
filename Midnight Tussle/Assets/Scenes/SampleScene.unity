@@ -2377,6 +2377,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7540061552632811802, guid: 38670c41e59fbe94b989014c5d94287c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.3899994
+      objectReference: {fileID: 0}
     - target: {fileID: 4112254404015352398, guid: 38670c41e59fbe94b989014c5d94287c,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -7233,8 +7238,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 4 new recruits on their way
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
-  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ed89319d06c0d6c409b59159f93e0ca7, type: 2}
+  m_sharedMaterial: {fileID: 2689442072179109558, guid: ed89319d06c0d6c409b59159f93e0ca7,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

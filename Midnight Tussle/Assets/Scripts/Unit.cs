@@ -169,12 +169,17 @@ public abstract class Unit : MonoBehaviour {
         else {
             killedBy = from;
             CheckAbilityCond(Ability.ActivationType.DEATH);
-            occupiedTile.ClearUnit();
+            if(occupiedTile.Unit == this) occupiedTile.ClearUnit(); //condition needed for some abilities
             player.RemoveUnit(this);
             Debug.Log("Dead");
             //Might need to change locations
             StartCoroutine("DeathAnimation");
         }
+    }
+
+    public void Revenged(){
+        player.RemoveUnit(this);
+        StartCoroutine("DeathAnimation");
     }
     #endregion
 
