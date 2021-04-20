@@ -13,10 +13,11 @@ public abstract class Unit : MonoBehaviour {
     public string characterName;
     [Tooltip("Amount of healtht he unit starts with")]
     public int initialHealth;
-    [Tooltip("Number of tiles the unit can move every turn")]
-    public int movement;
     [Tooltip("Amount of damage this unit deals to enemies")]
     public int attack;
+    [Tooltip("Number of tiles the unit can move every turn")]
+    public int movement;
+    
 
     public Ability ability;
 
@@ -28,13 +29,13 @@ public abstract class Unit : MonoBehaviour {
     [HideInInspector] public PlayerType playertype;
     [HideInInspector] public int rarity;
     [Tooltip("A reference to the player object which controlls the units")]
-    public Player player;
+    [HideInInspector] public Player player;
 
-    public Unit killedBy;
+    [HideInInspector] public Unit killedBy;
 
-    public int health;
+    [HideInInspector] public int health;
     [Tooltip("holds a reference of the tile that is currently occupied")]
-    public Tile occupiedTile;
+    [HideInInspector] public Tile occupiedTile;
 
     // Sprite Rendering
     private SpriteRenderer myRenderer;
@@ -50,6 +51,7 @@ public abstract class Unit : MonoBehaviour {
 
     private Animator animator;
 
+    [Header("Sound")]
     [SerializeField]
     private AudioClip[] stepSounds;
     private AudioSource audioSource;
@@ -62,8 +64,8 @@ public abstract class Unit : MonoBehaviour {
     #endregion
 
     #region Turn Variables
-    public Direction movingDirection;
-    public int movementLeft;
+    [HideInInspector] public Direction movingDirection;
+    [HideInInspector] public int movementLeft;
 
     #endregion
 
