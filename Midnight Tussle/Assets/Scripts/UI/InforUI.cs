@@ -28,7 +28,7 @@ public class InforUI : MonoBehaviour
     {
         over = false;
         myrect = GetComponent<RectTransform>();
-        startingtransform = transform.position;
+        startingtransform = transform.position - Vector3.one * 1000;
     }
 
     // Update is called once per frame
@@ -72,6 +72,7 @@ public class InforUI : MonoBehaviour
     public void ResetUnit(){
         current = null;
         over = false;
+
     }
 
 }
