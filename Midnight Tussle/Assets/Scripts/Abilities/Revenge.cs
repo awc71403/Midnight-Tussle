@@ -10,6 +10,7 @@ public class Revenge : Ability {
     public Ability minionAbility;
 
     public override void TriggerAbility(Unit unit) {
+        if(unit.killedBy == null) return;
         if (unit.killedBy.health > 0) {
             unit.killedBy.health = 1;
             unit.killedBy.attack = 1;

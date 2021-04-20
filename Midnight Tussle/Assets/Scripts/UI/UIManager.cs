@@ -30,6 +30,12 @@ public class UIManager : MonoBehaviour
         animator.Play("TurnStart");
     }
 
+    public void End(PlayerType winner){
+        turnText.text = winner == PlayerType.DOG ? "DOG team has taken the park!" : "CAT team has taken the park!";
+        recruitText.text = "Thanks for playing!";
+        animator.Play("GameOver");
+    }
+
 
     #endregion
 }

@@ -61,7 +61,7 @@ public class InforUI : MonoBehaviour
 
         current = unit;
         nameText.text = unit.characterName;
-        abilityText.text = string.Format("Ability: {0}\n{1}", unit.ability.aName, unit.ability.aDesc);
+        abilityText.text = string.Format("Ability: <color=red>{0}</color>\n{1}", unit.ability.aName, unit.ability.aDesc);
         hpText.text = unit.initialHealth.ToString();
         atkText.text = unit.attack.ToString();
         moveText.text = unit.movement.ToString();

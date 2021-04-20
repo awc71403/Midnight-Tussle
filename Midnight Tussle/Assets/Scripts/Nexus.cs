@@ -38,7 +38,6 @@ public class Nexus : MonoBehaviour
 
     public IEnumerator DeathAnimation() {
         // loop over 0.5 second backwards
-        print("death time");
         for (float i = 0.25f; i >= 0; i -= Time.deltaTime) {
             // set color with i as alpha
             myRenderer.color = new Color(1, 1, 1, i);

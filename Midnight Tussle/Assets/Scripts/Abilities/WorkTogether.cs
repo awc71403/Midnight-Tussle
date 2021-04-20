@@ -6,11 +6,13 @@ using UnityEngine;
 public class WorkTogether : Ability
 {
     public override void TriggerAbility(Unit unit) {
+        bool sacrifice = false;
         if (unit.playertype == PlayerType.DOG) {
             Tile rightTile = unit.occupiedTile.directionMap[Direction.RIGHT];
             if (rightTile != null) {
                 Unit rightUnit = rightTile.Unit;
                 if (rightUnit != null && rightUnit.playertype == PlayerType.DOG) {
+                    sacrifice = true;
                     rightUnit.health += unit.health;
                     rightUnit.attack += unit.attack;
                 }
@@ -21,14 +23,13 @@ public class WorkTogether : Ability
             if (leftTile != null) {
                 Unit leftUnit = leftTile.Unit;
                 if (leftUnit != null && leftUnit.playertype == PlayerType.CAT) {
+                    sacrifice = true;
                     leftUnit.health += unit.health;
                     leftUnit.attack += unit.attack;
                 }
             }
         }
 
-        unit.occupiedTile.ClearUnit();
-        unit.player.RemoveUnit(unit);
-        Destroy(unit.gameObject);
+        if(sacrifice) unit.TakeDamage(unit.health, null);
     }
 }
