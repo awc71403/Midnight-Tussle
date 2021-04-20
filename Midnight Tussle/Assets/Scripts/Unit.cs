@@ -117,37 +117,6 @@ public abstract class Unit : MonoBehaviour {
         movementText.transform.parent.gameObject.SetActive(state);
     }
 
-    public void Movementr() {
-        // if (player == GameManager.PLAYER1) {
-        //     if (occupiedTile.Right != null && occupiedTile.Right.Unit == null) {
-        //         StartCoroutine(MoveUnitInDirection(player));
-        //     }
-        //     else if (occupiedTile.Right.Unit.player != GameManager.PLAYER1) {
-        //         //Fight
-        //         int enemyHP = occupiedTile.Right.Unit.GetHP;
-        //         occupiedTile.Right.Unit.TakeDamage(currenthealth);
-        //         TakeDamage(enemyHP);
-        //         if (currenthealth > 0) {
-        //             StartCoroutine(MoveUnitInDirection(player));
-        //         }
-        //     }
-        // }
-        // else {
-        //     if (occupiedTile.Left != null && occupiedTile.Left.Unit == null) {
-        //         StartCoroutine(MoveUnitInDirection(player));
-        //     }
-        //     else if (occupiedTile.Left.Unit.player != GameManager.PLAYER2) {
-        //         //Fight
-        //         int enemyHP = occupiedTile.Left.Unit.GetHP;
-        //         occupiedTile.Left.Unit.TakeDamage(currenthealth);
-        //         TakeDamage(enemyHP);
-        //         if (currenthealth > 0) {
-        //             StartCoroutine(MoveUnitInDirection(player));
-        //         }
-        //     }
-        // }
-    }
-
     public IEnumerator MoveUnitInDirection(Direction direction) {
         if (stuck) {
             yield break;
@@ -168,7 +137,7 @@ public abstract class Unit : MonoBehaviour {
                     CheckAbilityCond(Ability.ActivationType.ATTACK);
 
                     targetUnit.TakeDamage(attack, this);
-                    TakeDamage(targetUnit.attack, targetUnit);
+                    if(targetUnit.health > 0) TakeDamage(targetUnit.attack, targetUnit);
                 }
             }
         }
@@ -237,7 +206,6 @@ public abstract class Unit : MonoBehaviour {
 
     IEnumerator DeathAnimation() {
         // loop over 0.5 second backwards
-        print("death time");
         for (float i = 0.25f; i >= 0; i -= Time.deltaTime) {
             // set color with i as alpha
             myRenderer.color = new Color(1, 1, 1, i);

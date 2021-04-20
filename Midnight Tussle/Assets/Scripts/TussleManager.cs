@@ -177,6 +177,8 @@ public class TussleManager : MonoBehaviour
             dogPlayer.nexus.TakeDamage(unit.attack);
             if(dogPlayer.nexus.health == 0){
                 yield return dogPlayer.nexus.DeathAnimation();
+                yield return new WaitForSeconds(1);
+                EndTussle(PlayerType.CAT);
             }
             else{
                 yield return dogPlayer.nexus.HurtAnimation();
@@ -186,13 +188,14 @@ public class TussleManager : MonoBehaviour
             catPlayer.nexus.TakeDamage(unit.attack);
             if(catPlayer.nexus.health == 0){
                 yield return catPlayer.nexus.DeathAnimation();
+                yield return new WaitForSeconds(1);
+                EndTussle(PlayerType.DOG);
             }
             else{
                 yield return catPlayer.nexus.HurtAnimation();
             }
         }
-        unit.player.RemoveUnit(unit);
-        Destroy(unit.gameObject);
+        unit.TakeDamage(unit.health, null); // Kill the unit
     }
 
     private void UpdateFurthestColumnCanSpawn(){
@@ -282,5 +285,9 @@ public class TussleManager : MonoBehaviour
         }
     }
 
+
+    private void EndTussle(PlayerType winner){
+        uiManager.End(winner);
+    }
 
 }
