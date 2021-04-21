@@ -137,7 +137,7 @@ public abstract class Unit : MonoBehaviour {
                     CheckAbilityCond(Ability.ActivationType.ATTACK);
 
                     targetUnit.TakeDamage(attack, this);
-                    if(targetUnit.health > 0) TakeDamage(targetUnit.attack, targetUnit);
+                    TakeDamage(targetUnit.attack, targetUnit);
                 }
             }
         }
