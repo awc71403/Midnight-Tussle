@@ -119,6 +119,7 @@ public abstract class Unit : MonoBehaviour {
 
     public IEnumerator MoveUnitInDirection(Direction direction) {
         if (stuck) {
+            stuck = false;
             yield break;
         }
         movingDirection = direction;

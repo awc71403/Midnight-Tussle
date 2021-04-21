@@ -26,7 +26,5 @@ public class Charge : Ability
                 }
             }
         }
-
-        unit.stuck = false;
     }
 }

@@ -200,7 +200,9 @@ public class TussleManager : MonoBehaviour
                 yield return catPlayer.nexus.HurtAnimation();
             }
         }
-        unit.TakeDamage(unit.health, null); // Kill the unit
+        unit.occupiedTile.ClearUnit();
+        unit.player.RemoveUnit(unit);
+        Destroy(unit.gameObject);
     }
 
     private void UpdateFurthestColumnCanSpawn(){

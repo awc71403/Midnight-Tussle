@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Abilities/Trick")]
-public class Trick : Ability {
+[CreateAssetMenu(menuName = "Abilities/Evade")]
+public class Evade : Ability {
 
     public override void TriggerAbility(Unit unit)
     {
