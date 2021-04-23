@@ -92,6 +92,7 @@ public class Player : MonoBehaviour
     }
 
     public void CallMovement(Direction direction) {
+        Debug.Log("CallMovement");
         StartCoroutine("Movement", direction);
     }
 
@@ -124,7 +125,7 @@ public class Player : MonoBehaviour
         movingPhase = true;
     }
 
-    IEnumerator Movement(Direction direction){
+    IEnumerator Movement(Direction direction) {
         moveInProcess = true;
 
         // Arrow UI
@@ -150,7 +151,7 @@ public class Player : MonoBehaviour
         // Process one-by-one
         while(movementQueue.Count != 0){
             Unit unit = movementQueue.Dequeue();
-            
+
             // Try moving in direction
             yield return unit.MoveUnitInDirection(direction);
         }
@@ -159,7 +160,9 @@ public class Player : MonoBehaviour
         playerUI.SetArrowState(direction, false);
         moveInProcess = false;
 
-        
+        if (movingPhase == false) {
+            yield break;
+        }
 
         // Stop if no more moves left
         if(!MovesLeft()){

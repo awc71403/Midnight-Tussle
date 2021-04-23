@@ -82,6 +82,7 @@ public abstract class Unit : MonoBehaviour {
         HPText.text = health.ToString();
         movementText.text = movement.ToString();
 
+        movementLeft = movement;
         CheckAbilityCond(Ability.ActivationType.SUMMON);
     }
 
@@ -118,7 +119,9 @@ public abstract class Unit : MonoBehaviour {
     }
 
     public IEnumerator MoveUnitInDirection(Direction direction) {
+        Debug.Log("MoveUnitInDirection");
         if (stuck) {
+            Debug.Log("STUCK");
             stuck = false;
             yield break;
         }

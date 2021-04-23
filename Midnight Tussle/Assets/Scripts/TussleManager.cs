@@ -40,7 +40,7 @@ public class TussleManager : MonoBehaviour
 
     private Tile[,] mapArray = new Tile[XSIZE, YSIZE];
 
-    public const int XSIZE = 6;
+    public const int XSIZE = 7;
     public const int YSIZE = 5;
     
     public Player currentPlayer {
@@ -120,7 +120,8 @@ public class TussleManager : MonoBehaviour
         tile.PlaceUnit(instantiated);
         bool continueRecruit = currentPlayer.AddUnit(instantiated);
         UpdateFurthestColumnCanSpawn();
-        if(!continueRecruit || ColumnAvailable()){
+        if(!continueRecruit/* || !ColumnAvailable()*/)
+        {
             // Move on to movement phase
             currentPlayer.ActivateMovement();
         }
@@ -149,7 +150,7 @@ public class TussleManager : MonoBehaviour
     private void NewTurn() {
         turnCount++;
         int newRecruits = rolledAtLevel[currentPlayer.GetLevel() - 1];
-        int toRecruit = placedAtLevel[currentPlayer.GetLevel() - 1];
+        int toRecruit = 2;// placedAtLevel[currentPlayer.GetLevel() - 1];
         uiManager.StartTurn(currentTurn, newRecruits);
         List<Unit> rolled = gachaMachine.Roll(currentTurn, newRecruits, currentPlayer.GetLevel());
 
@@ -181,7 +182,7 @@ public class TussleManager : MonoBehaviour
 
     public IEnumerator AttackNexus(Unit unit, PlayerType playerType){
         if(playerType == PlayerType.DOG){
-            dogPlayer.nexus.TakeDamage(unit.attack);
+            dogPlayer.nexus.TakeDamage(unit.attack + unit.health);
             if(dogPlayer.nexus.health == 0){
                 yield return dogPlayer.nexus.DeathAnimation();
                 EndTussle(PlayerType.CAT);
@@ -191,7 +192,7 @@ public class TussleManager : MonoBehaviour
             }
         }
         else{
-            catPlayer.nexus.TakeDamage(unit.attack);
+            catPlayer.nexus.TakeDamage(unit.attack + unit.health);
             if(catPlayer.nexus.health == 0){
                 yield return catPlayer.nexus.DeathAnimation();
                 EndTussle(PlayerType.DOG);
@@ -238,10 +239,10 @@ public class TussleManager : MonoBehaviour
         else{
             if (currentTurn == PlayerType.DOG)
             {
-                furthestColumn = Mathf.Min(max, XSIZE - 2);
+                furthestColumn = Mathf.Min(max, XSIZE / 2);
             }
             else {
-                furthestColumn = Mathf.Max(max, 1);
+                furthestColumn = Mathf.Max(max, XSIZE / 2);
             }
         }
 

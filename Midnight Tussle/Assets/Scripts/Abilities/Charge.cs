@@ -10,7 +10,7 @@ public class Charge : Ability
 
         if (unit.playertype == PlayerType.DOG) {
             unit.player.CallMovement(Direction.RIGHT);
-            List<Unit> units = TussleManager.instance.catPlayer.GetUnits;
+            List<Unit> units = TussleManager.instance.dogPlayer.GetUnits;
             foreach (Unit dog in units) {
                 if (dog != unit) {
                     dog.movementLeft++;
