@@ -7,7 +7,6 @@ public class RecruitManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private RectTransform recruitBox;
-    [SerializeField] private TextMeshProUGUI remainingText;
     [SerializeField] private GameObject RecruitUIPrefab;
 
     private Vector2 bottomLeft;
@@ -20,10 +19,6 @@ public class RecruitManager : MonoBehaviour
         bottomLeft = fourCorners[0];
         heightFourth = Mathf.Abs(fourCorners[1].y - fourCorners[0].y) / 4;
         widthSixth = Mathf.Abs(fourCorners[3].x - fourCorners[0].x) / 6;
-    }
-
-    public void SetRemaining(int remainCount){
-        remainingText.text = string.Format("{0} more will join the cause!", remainCount);
     }
 
     public void CreateRecruits(List<Unit> recruits){
@@ -47,7 +42,6 @@ public class RecruitManager : MonoBehaviour
         foreach(Transform child in transform){
             Destroy(child.gameObject);
         }
-        remainingText.text = "";
     }
 
     private Vector2 GetPosition(int index){

@@ -3313,9 +3313,9 @@ MonoBehaviour:
   - {fileID: -1316186502677188125, guid: 68617abd334828b4e9470f9c2c179116, type: 3}
   - {fileID: 174194728817978637, guid: 68617abd334828b4e9470f9c2c179116, type: 3}
   startingTreats: 3
+  treatsCostByRarity: 01000000030000000500000007000000
   treatsRewardByRarity: 02000000040000000600000008000000
   treatsPerTurn: 1
-  furthestColumn: 0
   gameOver: 0
 --- !u!114 &422112939
 MonoBehaviour:
@@ -6328,6 +6328,31 @@ PrefabInstance:
     - target: {fileID: 1224586520, guid: 649fedf676300fa4c85f9a1dbab7ed45, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650715936625745490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650715936625745490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650715936625745490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650715936625745490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650715936625745490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 1224586521, guid: 649fedf676300fa4c85f9a1dbab7ed45, type: 3}
       propertyPath: m_Sprite
@@ -10400,7 +10425,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recruitBox: {fileID: 1112822403}
-  remainingText: {fileID: 0}
   RecruitUIPrefab: {fileID: 8188456770114847769, guid: e862eff236559ac45ae25eb140f742eb,
     type: 3}
 --- !u!1 &1841586223
@@ -11872,7 +11896,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recruitBox: {fileID: 795011512}
-  remainingText: {fileID: 0}
   RecruitUIPrefab: {fileID: 8188456770114847769, guid: e862eff236559ac45ae25eb140f742eb,
     type: 3}
 --- !u!1 &2041288205

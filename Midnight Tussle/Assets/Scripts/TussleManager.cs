@@ -30,6 +30,7 @@ public class TussleManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private List<Sprite> temp_raritySprites = new List<Sprite>(4); // None, Common, Rare, Epic, Legendary
     public int startingTreats;
+    public int[] treatsCostByRarity = new int[4];
     public int[] treatsRewardByRarity = new int[4];
     public int treatsPerTurn;
 
@@ -48,7 +49,6 @@ public class TussleManager : MonoBehaviour
 
     }
 
-    [SerializeField]
     private int furthestColumn;
 
     [HideInInspector] public bool gameOver = false;
@@ -181,10 +181,19 @@ public class TussleManager : MonoBehaviour
 
     #endregion
 
-    public void AttemptBuy(RecruitZone zoneData){
+    public void AttemptBuyZone(RecruitZone zoneData){
         if(currentPlayer.GetTreats() >= zoneData.cost){
             currentPlayer.UpdateTreats(currentPlayer.GetTreats() - zoneData.cost);
             StartPlacement(zoneData);
+        }
+    }
+
+    public void AttemptBuyRecruit(Recruited recruited, Tile tile){
+        int cost = treatsCostByRarity[recruited.recruit.rarity];
+        if(currentPlayer.GetTreats() >= cost){
+            currentPlayer.UpdateTreats(currentPlayer.GetTreats() - cost);
+            PlaceUnitOnTile(recruited.recruit, tile);
+            Destroy(recruited.gameObject);
         }
     }
 

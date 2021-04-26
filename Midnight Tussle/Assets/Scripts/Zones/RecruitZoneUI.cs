@@ -43,7 +43,7 @@ public class RecruitZoneUI : MonoBehaviour
     // }
 
     public void SelectZone(){
-        TussleManager.instance.AttemptBuy(zoneData);
+        TussleManager.instance.AttemptBuyZone(zoneData);
     }
 
 }

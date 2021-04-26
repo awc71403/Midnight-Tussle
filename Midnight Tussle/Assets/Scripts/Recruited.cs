@@ -8,9 +8,12 @@ public class Recruited : MonoBehaviour {
     [Header("References")]
     [SerializeField] private SpriteRenderer rarityImage;
     [SerializeField] private SpriteRenderer spriteImage;
-    [SerializeField] private TextMeshPro HPText;
-    [SerializeField] private TextMeshPro movementText;
-    [SerializeField] private TextMeshPro attackText;
+    [SerializeField] private SpriteRenderer treatImage;
+    [SerializeField] private TextMeshPro costText;
+
+    [Header("Assets")]
+    [SerializeField] private Sprite dogTreat;
+    [SerializeField] private Sprite catTreat;
 
     [Header("Layer Mask")]
     [SerializeField] private LayerMask tileMask;
@@ -44,10 +47,9 @@ public class Recruited : MonoBehaviour {
         this.recruit = recruit;
         spriteImage.sprite = recruit.GetSprite();
         rarityImage.sprite = TussleManager.raritySprites[recruit.rarity];
-        HPText.text = recruit.initialHealth.ToString();
-        movementText.text = recruit.movement.ToString();
-        attackText.text = recruit.attack.ToString();
-        
+        costText.text = TussleManager.instance.treatsCostByRarity[recruit.rarity].ToString();
+        treatImage.sprite = recruit.playertype == PlayerType.DOG ? dogTreat : catTreat;
+
         origin = transform.position;
     }
     #endregion
@@ -106,8 +108,7 @@ public class Recruited : MonoBehaviour {
             TussleManager tussle = TussleManager.instance;
             if(tussle.ColumnInRange(tile.xIndex)){
                 if (!tile.HasUnit()) {
-                    tussle.PlaceUnitOnTile(recruit, tile);
-                    Destroy(this.gameObject);
+                    tussle.AttemptBuyRecruit(this, tile);
                 }
             }           
         }
