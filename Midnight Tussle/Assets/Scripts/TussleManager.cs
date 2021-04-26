@@ -149,9 +149,16 @@ public class TussleManager : MonoBehaviour
     // Called to begin a turn
     private void NewTurn() {
         turnCount++;
+        
+        uiManager.StartZone(currentTurn);
+       
+    }
+
+    public void StartPlacement(){
+        uiManager.StartPlacement();
+
         int newRecruits = rolledAtLevel[currentPlayer.GetLevel() - 1];
         int toRecruit = 2;// placedAtLevel[currentPlayer.GetLevel() - 1];
-        uiManager.StartTurn(currentTurn, newRecruits);
         List<Unit> rolled = gachaMachine.Roll(currentTurn, newRecruits, currentPlayer.GetLevel());
 
         UpdateFurthestColumnCanSpawn();
@@ -162,8 +169,6 @@ public class TussleManager : MonoBehaviour
         else{
             currentPlayer.ActivateMovement();
         }
-
-        
     }
 
     // Called to end a turn

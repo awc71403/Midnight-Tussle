@@ -8,9 +8,10 @@ public class UIManager : MonoBehaviour
     #region Variables
     [Header("References")]
     [SerializeField] private TextMeshProUGUI turnText;
-    [SerializeField] private TextMeshProUGUI recruitText;
+    [SerializeField] private Transform recruitGroup;
     
     private Animator animator;
+    private RecruitZoneUI[] zoneUI;
 
     #endregion
     
@@ -18,21 +19,29 @@ public class UIManager : MonoBehaviour
 
     void Start(){
         animator = GetComponent<Animator>();
+        zoneUI = recruitGroup.GetComponentsInChildren<RecruitZoneUI>();
     }
 
     #endregion
 
     #region Functions
 
-    public void StartTurn(PlayerType turn, int recruitCount){
+    public void StartZone(PlayerType turn){
         turnText.text = turn == PlayerType.DOG ? "Dog's Turn" : "Cat's Turn";
-        recruitText.text = string.Format("{0} new recruits on their way", recruitCount);
         animator.Play("TurnStart");
+
+        foreach(RecruitZoneUI zone in zoneUI){
+            zone.SetSpecies(turn);
+        }
+         
+    }
+
+    public void StartPlacement(){
+        animator.Play("StartPlacement");
     }
 
     public void End(PlayerType winner){
         turnText.text = winner == PlayerType.DOG ? "DOG team has taken the park!" : "CAT team has taken the park!";
-        recruitText.text = "Thanks for playing!";
         animator.Play("GameOver");
     }
 
