@@ -13,7 +13,6 @@ public enum PlayerType{
 public class TussleManager : MonoBehaviour
 {
     #region Static Variables
-    public const int MAX_LEVEL = 4; // This is NOT zero-indexed!!!!
     public static List<Sprite> raritySprites;
 
     #endregion 
@@ -29,9 +28,10 @@ public class TussleManager : MonoBehaviour
     [SerializeField] public Player catPlayer;
 
     [Header("Settings")]
-    [SerializeField] private List<int> rolledAtLevel = new List<int>(MAX_LEVEL);
-    [SerializeField] private List<int> placedAtLevel = new List<int>(MAX_LEVEL);
-    [SerializeField] private List<Sprite> temp_raritySprites = new List<Sprite>(MAX_LEVEL + 1); // None, Common, Rare, Epic, Legendary
+    [SerializeField] private List<Sprite> temp_raritySprites = new List<Sprite>(4); // None, Common, Rare, Epic, Legendary
+    public int startingTreats;
+    public int[] treatsRewardByRarity = new int[4];
+    public int treatsPerTurn;
 
     private Gacha gachaMachine;
 
@@ -111,6 +111,9 @@ public class TussleManager : MonoBehaviour
             }
         }
 
+        // Balance - no new treat on first turn
+        currentPlayer.UpdateTreats(currentPlayer.GetTreats() - treatsPerTurn);
+
         NewTurn();
     }
 
@@ -118,13 +121,8 @@ public class TussleManager : MonoBehaviour
         // Instantiate an instance of the unit and place it on the given tile.
         Unit instantiated = Instantiate<Unit>(recruitPrefab, tile.transform.position, Quaternion.identity, transform);
         tile.PlaceUnit(instantiated);
-        bool continueRecruit = currentPlayer.AddUnit(instantiated);
+        currentPlayer.AddUnit(instantiated);
         UpdateFurthestColumnCanSpawn();
-        if(!continueRecruit/* || !ColumnAvailable()*/)
-        {
-            // Move on to movement phase
-            currentPlayer.ActivateMovement();
-        }
                
     }
 
@@ -149,26 +147,24 @@ public class TussleManager : MonoBehaviour
     // Called to begin a turn
     private void NewTurn() {
         turnCount++;
-        
+        currentPlayer.UpdateTreats(currentPlayer.GetTreats() + treatsPerTurn);
         uiManager.StartZone(currentTurn);
        
     }
 
-    public void StartPlacement(){
+    public void StartPlacement(RecruitZone zoneData){
         uiManager.StartPlacement();
 
-        int newRecruits = rolledAtLevel[currentPlayer.GetLevel() - 1];
-        int toRecruit = 2;// placedAtLevel[currentPlayer.GetLevel() - 1];
-        List<Unit> rolled = gachaMachine.Roll(currentTurn, newRecruits, currentPlayer.GetLevel());
+        List<Unit> rolled = gachaMachine.Roll(currentTurn, zoneData);
 
         UpdateFurthestColumnCanSpawn();
 
-        if(ColumnAvailable()){
-            currentPlayer.StartRecruiting(rolled, toRecruit);
-        }
-        else{
-            currentPlayer.ActivateMovement();
-        }
+        currentPlayer.StartRecruiting(rolled);
+
+    }
+
+    public void StartAttack(){
+        currentPlayer.ActivateMovement();
     }
 
     // Called to end a turn
@@ -184,6 +180,13 @@ public class TussleManager : MonoBehaviour
     }
 
     #endregion
+
+    public void AttemptBuy(RecruitZone zoneData){
+        if(currentPlayer.GetTreats() >= zoneData.cost){
+            currentPlayer.UpdateTreats(currentPlayer.GetTreats() - zoneData.cost);
+            StartPlacement(zoneData);
+        }
+    }
 
     public IEnumerator AttackNexus(Unit unit, PlayerType playerType){
         if(playerType == PlayerType.DOG){
@@ -283,10 +286,6 @@ public class TussleManager : MonoBehaviour
         {
             tile.GetComponent<SpriteRenderer>().color = Color.clear;
         }
-    }
-
-    private bool ColumnAvailable(){
-        return furthestColumn >= 0 && furthestColumn < XSIZE;
     }
 
     public bool ColumnInRange(int column){

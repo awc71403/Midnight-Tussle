@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerUI : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class PlayerUI : MonoBehaviour
     #region Variables
 
     [Header("Group References")]
-    [SerializeField] private RectTransform handGroup;
     [SerializeField] private RectTransform moveGroup;
+    [SerializeField] private RectTransform button;
+
+    [Header("Treat References")]
+    [SerializeField] private TextMeshProUGUI treatCount;
 
     [Header("Arrow References")]
     [SerializeField] private Image arrowLeft;
@@ -34,7 +38,7 @@ public class PlayerUI : MonoBehaviour
     #region Functions
 
     public void HandState(bool state){
-        handGroup.gameObject.SetActive(state);
+        button.gameObject.SetActive(state);
     }
 
     public void MoveState(bool state){
@@ -63,6 +67,14 @@ public class PlayerUI : MonoBehaviour
         SetArrowState(Direction.RIGHT, false);
         SetArrowState(Direction.DOWN, false);
         SetArrowState(Direction.UP, false);
+    }
+
+    public void EndRecruit(){
+        TussleManager.instance.StartAttack();
+    }
+
+    public void UpdateTreatCount(int count){
+        treatCount.text = count.ToString();
     }
 
 

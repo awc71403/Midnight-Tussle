@@ -19,21 +19,12 @@ public class Gacha : MonoBehaviour
     [SerializeField] private List<Unit> dogEpicUnits;
     [SerializeField] private List<Unit> dogLegendaryUnits;
 
-    [Header("Settings")]
-    [SerializeField] private float[] startDistribution = new float[TussleManager.MAX_LEVEL];
-    [SerializeField] private float[] finalDistribution = new float[TussleManager.MAX_LEVEL];
-    private float[] differenceDistribution = new float[TussleManager.MAX_LEVEL];
-
     List<Unit>[] catUnits;
     List<Unit>[] dogUnits;
 
     #endregion
 
     void Awake(){
-        for(int i = 0; i < TussleManager.MAX_LEVEL; i++){
-            differenceDistribution[i] = finalDistribution[i] - startDistribution[i];
-        }
-
         // Set up cat units
         catUnits = new List<Unit>[4]{catNormalUnits, catRareUnits, catEpicUnits, catLegendaryUnits};
 
@@ -45,9 +36,10 @@ public class Gacha : MonoBehaviour
     #region Gacha
 
     // Will roll count units, 
-    public List<Unit> Roll(PlayerType roller, int count, int level) {
+    public List<Unit> Roll(PlayerType roller, RecruitZone zoneData) {
 
-        float[] currentDist = currentDistribution(level);
+        float[] currentDist = zoneData.dist;
+        int count = zoneData.summonCount;
 
         List<Unit> recruits = new List<Unit>(count); 
 
@@ -57,7 +49,7 @@ public class Gacha : MonoBehaviour
 
             float sumRate = 0;
 
-            for(int rarity = 0; rarity < TussleManager.MAX_LEVEL; rarity++){
+            for(int rarity = 0; rarity < 4; rarity++){
                 sumRate += currentDist[rarity];
                 
                 if(random <= sumRate){
@@ -83,22 +75,6 @@ public class Gacha : MonoBehaviour
         return recruits;
     }
 
-    // Lerps between the start and final distributions according to level (1 returns start, MAX_LEVEL returns final)
-    private float[] currentDistribution(int level){
-        
-        if(level == 1) return startDistribution;
-        else if(level == TussleManager.MAX_LEVEL) return finalDistribution;
-
-        float[] distribution = new float[TussleManager.MAX_LEVEL];
-        
-        float differenceFactor = (level - 1) / (TussleManager.MAX_LEVEL - 1);
-
-        for(int i = 0; i < TussleManager.MAX_LEVEL; i++){
-            distribution[i] = startDistribution[i] + differenceDistribution[i] * differenceFactor;
-        }
-
-        return distribution;
-    }
 
     #endregion
 }

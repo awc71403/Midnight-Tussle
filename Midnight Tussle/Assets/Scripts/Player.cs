@@ -19,13 +19,9 @@ public class Player : MonoBehaviour
 
     private int nexusHealth;
 
+    private int treatCount;
+
     private List<Unit> units = new List<Unit>();
-
-    // Add pity
-
-    // Add XP
-    
-    // Add UI
 
     #endregion
 
@@ -42,6 +38,7 @@ public class Player : MonoBehaviour
 
     void Start(){
         recruitManager = GetComponent<RecruitManager>();
+        UpdateTreats(TussleManager.instance.startingTreats);
     }
 
     #endregion
@@ -76,16 +73,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    // NOT ZERO-INDEXED!!
-    public int GetLevel(){
-        return 1;
-    }
-
-    public void StartRecruiting(List<Unit> rolled, int countToRecruit){
+    public void StartRecruiting(List<Unit> rolled){
         //Check if there is a place to put units
         playerUI.HandState(true);
-        this.countToRecruit = countToRecruit;
-        recruitManager.SetRemaining(countToRecruit);
         recruitManager.CreateRecruits(rolled);
     
         
@@ -97,11 +87,9 @@ public class Player : MonoBehaviour
     }
 
     // Returns true if there are still more to place
-    public bool AddUnit(Unit unit){
-        recruitManager.SetRemaining(--countToRecruit);
+    public void AddUnit(Unit unit){
         units.Add(unit);
         unit.player = this;
-        return countToRecruit != 0; // FIX ME add condition about no more placement spots available
     }
 
     public void RemoveUnit(Unit unit)
@@ -183,7 +171,22 @@ public class Player : MonoBehaviour
         return false;
     }
 
+    #region Treats
+
+    public int GetTreats(){
+        return treatCount;
+    }
+
+    public void UpdateTreats(int count){
+        treatCount = count;
+        playerUI.UpdateTreatCount(treatCount);
+    }
+
     #endregion
+
+    #endregion
+
+
 
     
 

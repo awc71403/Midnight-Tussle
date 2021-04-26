@@ -27,7 +27,7 @@ public class RecruitZoneUI : MonoBehaviour
         summonText.text = "Summon Count: " + zoneData.summonCount.ToString();
         nameText.text = zoneData.zoneName;
         for(int i = 0; i < 4; i++){
-            distributions[i].text = zoneData.dist[i].ToString("P2");
+            distributions[i].text = string.Format("{0:0%}", zoneData.dist[i]);
         }
     }
 
@@ -41,5 +41,9 @@ public class RecruitZoneUI : MonoBehaviour
     // public void SetState(bool state){
     //     gameObject.SetActive(state);
     // }
+
+    public void SelectZone(){
+        TussleManager.instance.AttemptBuy(zoneData);
+    }
 
 }
