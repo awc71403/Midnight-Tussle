@@ -3315,7 +3315,7 @@ MonoBehaviour:
   startingTreats: 3
   treatsCostByRarity: 01000000030000000500000007000000
   treatsRewardByRarity: 02000000040000000600000008000000
-  treatsPerTurn: 1
+  treatsPerTurn: 2
   gameOver: 0
 --- !u!114 &422112939
 MonoBehaviour:
