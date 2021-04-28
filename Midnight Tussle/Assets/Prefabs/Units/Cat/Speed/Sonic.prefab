@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Sonic
-  initialHealth: 5
-  attack: 2
+  initialHealth: 6
+  attack: 3
   movement: 3
   ability: {fileID: 11400000, guid: d7f0fe56b7649d74d9eaf885440bfcda, type: 2}
   HPText: {fileID: 2091853953058136514}
@@ -144,6 +144,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4704220464127866054}
     m_Modifications:
+    - target: {fileID: 1872045116174471371, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
+        type: 3}
+      propertyPath: m_Name
+      value: UnitUI
+      objectReference: {fileID: 0}
     - target: {fileID: 542606521, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
       propertyPath: m_textInfo.characterCount
       value: 1
@@ -230,11 +235,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1872045116174471371, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
-        type: 3}
-      propertyPath: m_Name
-      value: UnitUI
       objectReference: {fileID: 0}
     - target: {fileID: 542606523, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
       propertyPath: m_Mesh
