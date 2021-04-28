@@ -17,6 +17,7 @@ public abstract class Unit : MonoBehaviour {
     public int attack;
     [Tooltip("Number of tiles the unit can move every turn")]
     public int movement;
+    public bool minion;
 
 
     public Ability ability;
@@ -181,6 +182,7 @@ public abstract class Unit : MonoBehaviour {
             player.RemoveUnit(this);
 
             //Might need to change locations
+            if(!minion) TussleManager.instance.GiveTreatFromDeath(playertype, rarity);
             yield return DeathAnimation();
         }
     }

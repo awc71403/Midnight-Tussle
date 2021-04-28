@@ -201,6 +201,11 @@ public class TussleManager : MonoBehaviour
         }
     }
 
+    public void GiveTreatFromDeath(PlayerType killedType, int rarity){
+        Player killer = killedType == PlayerType.DOG ? catPlayer : dogPlayer;
+        killer.UpdateTreats(killer.GetTreats() + treatsRewardByRarity[rarity]);
+    }
+
     public IEnumerator AttackNexus(Unit unit, PlayerType playerType){
         if(playerType == PlayerType.DOG){
             dogPlayer.nexus.TakeDamage(unit.attack + unit.health);

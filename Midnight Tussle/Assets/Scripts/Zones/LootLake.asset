@@ -15,8 +15,8 @@ MonoBehaviour:
   zoneName: Loot Lake
   dist:
   - 0
-  - 0.5
-  - 0
-  - 0
+  - 0.6
+  - 0.35
+  - 0.05
   cost: 5
   summonCount: 3
