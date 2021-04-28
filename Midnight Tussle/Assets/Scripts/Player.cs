@@ -114,6 +114,7 @@ public class Player : MonoBehaviour
     }
 
     IEnumerator Movement(Direction direction) {
+       
         moveInProcess = true;
 
         // Arrow UI

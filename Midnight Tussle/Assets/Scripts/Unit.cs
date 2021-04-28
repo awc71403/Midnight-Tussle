@@ -128,6 +128,7 @@ public abstract class Unit : MonoBehaviour {
         if(target != null){
             // Going to another tile
             if(!target.HasUnit()){
+                AudioManager.instance.PlaySFX("Move");
                 occupiedTile.directionMap[direction].PlaceUnit(this);
                 InfoHolder.ResetUnit();
             } else
@@ -138,8 +139,8 @@ public abstract class Unit : MonoBehaviour {
                     Unit targetUnit = target.Unit;
                     CheckAbilityCond(Ability.ActivationType.ATTACK);
 
-                    targetUnit.TakeDamage(attack, this);
-                    TakeDamage(targetUnit.attack, targetUnit);
+                    yield return targetUnit.TakeDamage(attack, this);
+                    if(targetUnit.health > 0) yield return TakeDamage(targetUnit.attack, targetUnit);
                 }
             }
         }
@@ -163,26 +164,30 @@ public abstract class Unit : MonoBehaviour {
 
     #region Attack
 
-    public void TakeDamage(int damage, Unit from) {
+    public void TakeDamageBase(int damage, Unit from){
+        StartCoroutine(TakeDamage(damage, from));
+    }
+
+    public IEnumerator TakeDamage(int damage, Unit from) {
         health -= damage;
         CheckAbilityCond(Ability.ActivationType.DAMAGE);
         if (health > 0) {
-            StartCoroutine("HurtAnimation", damage);
+            yield return HurtAnimation(damage);
         }
         else {
             killedBy = from;
             CheckAbilityCond(Ability.ActivationType.DEATH);
             if(occupiedTile.Unit == this) occupiedTile.ClearUnit(); //condition needed for some abilities
             player.RemoveUnit(this);
-            Debug.Log("Dead");
+
             //Might need to change locations
-            StartCoroutine("DeathAnimation");
+            yield return DeathAnimation();
         }
     }
 
     public void Revenged(){
         player.RemoveUnit(this);
-        StartCoroutine("DeathAnimation");
+        StartCoroutine(DeathAnimation());
     }
     #endregion
 
@@ -197,6 +202,7 @@ public abstract class Unit : MonoBehaviour {
 
     #region Animation
     IEnumerator HurtAnimation(int damage) {
+        AudioManager.instance.PlaySFX("Move");
 
         // Shaking
         Vector3 defaultPosition = transform.position;
@@ -212,6 +218,7 @@ public abstract class Unit : MonoBehaviour {
     }
 
     IEnumerator DeathAnimation() {
+        AudioManager.instance.PlaySFX("Death");
         // loop over 0.5 second backwards
         for (float i = 0.25f; i >= 0; i -= Time.deltaTime) {
             // set color with i as alpha

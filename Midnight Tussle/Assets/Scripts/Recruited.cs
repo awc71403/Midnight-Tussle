@@ -94,6 +94,7 @@ public class Recruited : MonoBehaviour {
 
     private void OnMouseDown()
     {
+        AudioManager.instance.PlaySFX("Select");
         dragging = true;
     }
 

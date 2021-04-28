@@ -10820,6 +10820,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1926875341}
   - component: {fileID: 1926875340}
+  - component: {fileID: 1926875343}
+  - component: {fileID: 1926875342}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -10853,6 +10855,146 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1926875342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926875339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d300b1bc9988ea344847a311cac148fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxList:
+  - name: Attack
+    clip: {fileID: 8300000, guid: c07f00a28ab654b45924b8a876405b0a, type: 3}
+    volume: 1
+  - name: Buff
+    clip: {fileID: 8300000, guid: ca32cfd0b39346c45aa35f01cbe27e73, type: 3}
+    volume: 1
+  - name: Cancel
+    clip: {fileID: 8300000, guid: 9e8400c3da1c52d47a9784a8eb58af55, type: 3}
+    volume: 1
+  - name: Death
+    clip: {fileID: 8300000, guid: 75e02493aacede2469a0deee6ee59eaf, type: 3}
+    volume: 1
+  - name: Hover
+    clip: {fileID: 8300000, guid: 9f714886cbd067943bfc35ef81261286, type: 3}
+    volume: 1
+  - name: Move
+    clip: {fileID: 8300000, guid: cf5044c018882be40a7203c588303476, type: 3}
+    volume: 1
+  - name: Nexus Death
+    clip: {fileID: 8300000, guid: 5c1b67925c2e56b47988130a928776ab, type: 3}
+    volume: 1
+  - name: Select
+    clip: {fileID: 8300000, guid: 4258ade43169fde40b14763d9b04ebc5, type: 3}
+    volume: 1
+  - name: Summon
+    clip: {fileID: 8300000, guid: 12bfd6c525c5e604aaa68117f1db7493, type: 3}
+    volume: 1
+  musicList:
+  - name: Battle Theme
+    song: {fileID: 8300000, guid: d4c512ff506c23d44a22acba5e3ebcba, type: 3}
+    volume: 1
+--- !u!82 &1926875343
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926875339}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1960259331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12871,6 +13013,56 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399454275755225490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399454275755225490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_Delegates.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399454275755225490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].eventID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399454275755225490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Hover
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399454275755225490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399454275755225490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399454275755225490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[1].eventID
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399454275755225490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Select
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399454275755225490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399454275755225490, guid: 649fedf676300fa4c85f9a1dbab7ed45,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 649fedf676300fa4c85f9a1dbab7ed45, type: 3}

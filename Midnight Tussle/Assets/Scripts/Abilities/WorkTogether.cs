@@ -30,6 +30,6 @@ public class WorkTogether : Ability
             }
         }
 
-        if(sacrifice) unit.TakeDamage(unit.health, null);
+        if(sacrifice) unit.TakeDamageBase(unit.health, null);
     }
 }

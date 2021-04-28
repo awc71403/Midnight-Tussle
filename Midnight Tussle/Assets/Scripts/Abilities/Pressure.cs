@@ -14,7 +14,7 @@ public class Pressure : Ability
             if (adjTile != null) {
                 Unit adjUnit = adjTile.Unit;
                 if (adjUnit != null && unit.playertype != adjUnit.playertype) {
-                    adjUnit.TakeDamage(PRESSUREAMOUNT, unit);
+                    adjUnit.TakeDamageBase(PRESSUREAMOUNT, unit);
                 }
             }
         }

@@ -22,6 +22,7 @@ public class Nexus : MonoBehaviour
     }
 
     public IEnumerator HurtAnimation() {
+        AudioManager.instance.PlaySFX("Hurt");
 
         // Shaking
         Vector3 defaultPosition = transform.position;
@@ -37,6 +38,7 @@ public class Nexus : MonoBehaviour
     }
 
     public IEnumerator DeathAnimation() {
+        AudioManager.instance.PlaySFX("Nexus Death");
         // loop over 0.5 second backwards
         for (float i = 0.25f; i >= 0; i -= Time.deltaTime) {
             // set color with i as alpha

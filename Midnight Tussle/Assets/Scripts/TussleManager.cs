@@ -73,6 +73,9 @@ public class TussleManager : MonoBehaviour
 
     // Called by the GameManager, used to set the Tussle in motion  and run setup for the match
     public void StartTussle() {
+
+        AudioManager.instance.PlayMusic("Battle Theme");
+
         currentTurn = PlayerType.DOG;
 
         // THESE SHOULD BE STORED WITH 0,0 AT BOTTOM LEFT in the hierarchy!!! And running horizontally in sequence!
@@ -120,6 +123,7 @@ public class TussleManager : MonoBehaviour
     public void PlaceUnitOnTile(Unit recruitPrefab, Tile tile) {
         // Instantiate an instance of the unit and place it on the given tile.
         Unit instantiated = Instantiate<Unit>(recruitPrefab, tile.transform.position, Quaternion.identity, transform);
+        AudioManager.instance.PlaySFX("Summon");
         tile.PlaceUnit(instantiated);
         currentPlayer.AddUnit(instantiated);
         UpdateFurthestColumnCanSpawn();
