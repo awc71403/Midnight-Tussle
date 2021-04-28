@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Halo
-  initialHealth: 10
+  initialHealth: 9
   attack: 4
   movement: 2
   ability: {fileID: 11400000, guid: 5ac983763ea5a364cba4e94f2c391852, type: 2}
@@ -144,6 +144,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4941031574210219635}
     m_Modifications:
+    - target: {fileID: 1872045116174471371, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
+        type: 3}
+      propertyPath: m_Name
+      value: UnitUI
+      objectReference: {fileID: 0}
     - target: {fileID: 3249255201158710729, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -198,11 +203,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1872045116174471371, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
-        type: 3}
-      propertyPath: m_Name
-      value: UnitUI
       objectReference: {fileID: 0}
     - target: {fileID: 542606523, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
       propertyPath: m_Mesh
