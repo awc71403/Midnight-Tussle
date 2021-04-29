@@ -515,7 +515,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &443423843
 RectTransform:
   m_ObjectHideFlags: 0
@@ -888,12 +888,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1315464928}
-        m_MethodName: 
+      - m_Target: {fileID: 1315464929}
+        m_MethodName: nextImage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1318,7 +1318,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1308857301}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1315464929}
+        m_MethodName: startslideshow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1308857301
@@ -1402,16 +1413,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84dd2e14b6587b644ba0e82dd5c8ca36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holder: {fileID: 443423842}
   sprites:
   - {fileID: 21300000, guid: c08a64be8e707384290b87a1b21a7b6d, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: c08a64be8e707384290b87a1b21a7b6d, type: 3}
   instructions:
-  - 
-  - 
-  - 
+  - At the beggingin of each turn you get to chose one of these 5 slots to roll from
+  - You can only chose slots you have enough to pay for but make sure you have enough
+    treats to summon units too
   slideshow: {fileID: 443423844}
-  showntext: {fileID: 0}
+  showntext: {fileID: 513249381}
 --- !u!4 &1315464930
 Transform:
   m_ObjectHideFlags: 0
