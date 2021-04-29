@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 082defa77c379fd4ea077373c58750f3
+guid: 1ed2141c564099048b3c7f4571c20972
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1958676783162264248
-    second: PlayButton_0
+      213: -1921337063021962082
+    second: tutorial_0
   - first:
-      213: 7928353779462949069
-    second: PlayButton_1
+      213: -8098022396540033732
+    second: tutorial_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -52,7 +52,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 64
-  spriteBorder: {x: 0, y: 27, z: 0, w: 0}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -87,7 +87,7 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
-    buildTarget: WebGL
+    buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -98,7 +98,7 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
-    buildTarget: iPhone
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -112,7 +112,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayButton_0
+      name: tutorial_0
       rect:
         serializedVersion: 2
         x: 0
@@ -126,14 +126,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f75543aa4316ece41b717b0ec600d619
-      internalID: -1958676783162264248
+      spriteID: 802c477e95965c944a024a1e5bd5869a
+      internalID: -1921337063021962082
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayButton_1
+      name: tutorial_1
       rect:
         serializedVersion: 2
         x: 0
@@ -147,8 +147,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff2c2c098fa54f449a6edc8294d4343a
-      internalID: 7928353779462949069
+      spriteID: 8415e0276e9059645b26137d7189222d
+      internalID: -8098022396540033732
       vertices: []
       indices: 
       edges: []
@@ -156,7 +156,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 2b6b0d0224bf00c4d876ade9eb4f1567
+    spriteID: f6ae2a5cacfce09449b6681d74c63457
     internalID: 0
     vertices: []
     indices: 
