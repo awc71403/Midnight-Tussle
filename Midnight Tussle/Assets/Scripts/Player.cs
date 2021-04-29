@@ -110,7 +110,9 @@ public class Player : MonoBehaviour
         }
 
         TussleManager.instance.ResetTileColor();
-        movingPhase = true;
+
+        if(!MovesLeft()) EndMovement();
+        else movingPhase = true;
     }
 
     IEnumerator Movement(Direction direction) {
@@ -149,19 +151,17 @@ public class Player : MonoBehaviour
         playerUI.SetArrowState(direction, false);
         moveInProcess = false;
 
-        if (movingPhase == false) {
-            yield break;
-        }
-
         // Stop if no more moves left
-        if(!MovesLeft()){
-            movingPhase = false;
-            playerUI.MoveState(false);
-            foreach(Unit unit in units){
-                unit.MovementState(false);
-            }
-            if(!TussleManager.instance.gameOver) TussleManager.instance.EndTurn(); // Don't need to end turn if game over
-        }        
+        if(!MovesLeft()) EndMovement();
+    }
+
+    private void EndMovement(){
+        movingPhase = false;
+        playerUI.MoveState(false);
+        foreach(Unit unit in units){
+            unit.MovementState(false);
+        }
+        if(!TussleManager.instance.gameOver) TussleManager.instance.EndTurn(); // Don't need to end turn if game over
     }
 
     private bool MovesLeft(){

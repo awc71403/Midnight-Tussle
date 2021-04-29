@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,14 +22,12 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start(){
-        StartTussle();
-    }
 
     #endregion
 
     // The function used to begin a tussle in the actual "Tussle" scene
-    public void StartTussle() {
-        TussleManager.instance.StartTussle();
+    public void LoadTussle() {
+        AudioManager.instance.PlayMusic("Battle Theme");
+        SceneManager.LoadScene("SampleScene");
     }
 }

@@ -25,6 +25,8 @@ public abstract class Unit : MonoBehaviour {
     [Header("References")]
     [SerializeField] private TextMeshPro HPText;
     [SerializeField] private TextMeshPro movementText;
+    [SerializeField] private TextMeshPro damageText;
+    [SerializeField] private ParticleSystemRenderer pRenderer;
 
     [HideInInspector] public PlayerType playertype;
     [HideInInspector] public int rarity;
@@ -33,7 +35,7 @@ public abstract class Unit : MonoBehaviour {
 
     [HideInInspector] public Unit killedBy;
 
-    /*[HideInInspector]*/ public int health;
+    [HideInInspector] public int health;
     [Tooltip("holds a reference of the tile that is currently occupied")]
     [HideInInspector] public Tile occupiedTile;
 
@@ -83,6 +85,8 @@ public abstract class Unit : MonoBehaviour {
         HPText.text = health.ToString();
         movementText.text = movement.ToString();
 
+        SetupMovementParticles();
+
         movementLeft = movement;
         CheckAbilityCond(Ability.ActivationType.SUMMON);
     }
@@ -130,7 +134,8 @@ public abstract class Unit : MonoBehaviour {
             // Going to another tile
             if(!target.HasUnit()){
                 AudioManager.instance.PlaySFX("Move");
-                occupiedTile.directionMap[direction].PlaceUnit(this);
+                yield return MoveAnimation(target.transform.position);
+                target.PlaceUnit(this);
                 InfoHolder.ResetUnit();
             } else
             {
@@ -140,8 +145,9 @@ public abstract class Unit : MonoBehaviour {
                     Unit targetUnit = target.Unit;
                     CheckAbilityCond(Ability.ActivationType.ATTACK);
 
+                    yield return AttackAnimation(targetUnit);
                     yield return targetUnit.TakeDamage(attack, this);
-                    if(targetUnit.health > 0) yield return TakeDamage(targetUnit.attack, targetUnit);
+                    yield return TakeDamage(targetUnit.attack, targetUnit);
                 }
             }
         }
@@ -154,8 +160,8 @@ public abstract class Unit : MonoBehaviour {
                 yield return TussleManager.instance.AttackNexus(this, PlayerType.DOG);
             }
         }
+
         movementLeft--;
-        RecalculateDepth();
         // StartBounceAnimation();
         yield return new WaitForSeconds(stepDuration);
 
@@ -172,10 +178,9 @@ public abstract class Unit : MonoBehaviour {
     public IEnumerator TakeDamage(int damage, Unit from) {
         health -= damage;
         CheckAbilityCond(Ability.ActivationType.DAMAGE);
-        if (health > 0) {
-            yield return HurtAnimation(damage);
-        }
-        else {
+        yield return HurtAnimation(damage);
+    
+        if(health <= 0){
             killedBy = from;
             CheckAbilityCond(Ability.ActivationType.DEATH);
             if(occupiedTile.Unit == this) occupiedTile.ClearUnit(); //condition needed for some abilities
@@ -206,16 +211,22 @@ public abstract class Unit : MonoBehaviour {
     IEnumerator HurtAnimation(int damage) {
         AudioManager.instance.PlaySFX("Move");
 
+        damageText.text = string.Format("-{0}", damage);
+
         // Shaking
         Vector3 defaultPosition = transform.position;
         System.Random r = new System.Random();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             double horizontalOffset = r.NextDouble() * 0.2 - 0.1f;
             Vector3 vectorOffset = new Vector3((float)horizontalOffset, 0, 0);
             transform.position += vectorOffset;
             yield return new WaitForSeconds(0.025f);
             transform.position = defaultPosition;
         }
+
+        damageText.text = "";
+
+        yield return new WaitForSeconds(.5f);
 
     }
 
@@ -233,31 +244,80 @@ public abstract class Unit : MonoBehaviour {
         yield return null; //Just to make sure any logic that needed to run this frame gets run
         Destroy(gameObject);
         // Destroy(myUITracker.gameObject);
+        yield return new WaitForSeconds(.5f);
     }
 
-    public void StartBounceAnimation() {
-        StartCoroutine("BounceAnimation");
-    }
-
-    IEnumerator BounceAnimation() {
-        int frames = 3;
-        //Vector3 originalPosition = transform.position;
-        float stretch = totalStretch;
-        float squish = totalSquish;
-        for (int i = frames; i > 0; i--) {
-            transform.localScale = new Vector3(1 + stretch, 1 - squish, 1);
-            yield return new WaitForSeconds(0.01f);
-            stretch /= 2.5f;
-            squish /= 2.5f;
+    IEnumerator MoveAnimation(Vector3 target){
+        float duration = .1f;
+        float elapsed = 0;
+        target +=  + .28f * Vector3.up;
+        Vector3 orig = transform.position;
+        while(elapsed < duration){
+            transform.position = Vector3.Lerp(orig, target, Mathf.SmoothStep(0, 1, elapsed / duration));
+            elapsed += Time.deltaTime;
+            yield return null;
         }
-        transform.localScale = new Vector3(1, 1, 1);
-
-        // Play random step sound
-        System.Random r = new System.Random();
-        int stepNum = r.Next(0, stepSounds.Length);
-        //audioSource.clip = stepSounds[stepNum];
-        //audioSource.Play();
     }
+
+    IEnumerator AttackAnimation(Unit targetUnit){
+        AudioManager.instance.PlaySFX("Attack");
+
+        Vector3 target = (targetUnit.transform.position + transform.position) / 2;
+
+        float duration = .1f;
+        float elapsed = 0;
+
+        Vector3 myOrig = transform.position;
+        Vector3 theirOrig = targetUnit.transform.position;
+
+        while(elapsed < duration){
+            transform.position = Vector3.Lerp(myOrig, target,elapsed / duration);
+            targetUnit.transform.position = Vector3.Lerp(theirOrig, target, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+
+        // Return to position
+        duration = .15f;
+        elapsed = 0;
+        
+
+        while(elapsed < duration){
+            transform.position = Vector3.Lerp(target, myOrig, Mathf.SmoothStep(0, 1, elapsed / duration));
+            targetUnit.transform.position = Vector3.Lerp(target, theirOrig, Mathf.SmoothStep(0, 1, elapsed / duration));
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = myOrig;
+        targetUnit.transform.position = theirOrig;
+
+    }
+
+    // public void StartBounceAnimation() {
+    //     StartCoroutine("BounceAnimation");
+    // }
+
+    // IEnumerator BounceAnimation() {
+    //     int frames = 3;
+    //     //Vector3 originalPosition = transform.position;
+    //     float stretch = totalStretch;
+    //     float squish = totalSquish;
+    //     for (int i = frames; i > 0; i--) {
+    //         transform.localScale = new Vector3(1 + stretch, 1 - squish, 1);
+    //         yield return new WaitForSeconds(0.01f);
+    //         stretch /= 2.5f;
+    //         squish /= 2.5f;
+    //     }
+    //     transform.localScale = new Vector3(1, 1, 1);
+
+    //     // Play random step sound
+    //     System.Random r = new System.Random();
+    //     int stepNum = r.Next(0, stepSounds.Length);
+    //     //audioSource.clip = stepSounds[stepNum];
+    //     //audioSource.Play();
+    // }
     #endregion
 
     #region Stats
@@ -286,4 +346,9 @@ public abstract class Unit : MonoBehaviour {
         InfoHolder.ResetUnit();
     }
     #endregion
+
+
+    private void SetupMovementParticles(){
+        pRenderer.material.SetTexture("_MainTex", GetComponent<SpriteRenderer>().sprite.texture);
+    }
 }

@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private List<SFX> sfxList;
     [SerializeField] private List<Music> musicList;
     private AudioSource audioSource;
+    private Music current = null;
 
     private Dictionary<string, SFX> sfxMap = new Dictionary<string, SFX>();
     private Dictionary<string, Music> musicMap = new Dictionary<string, Music>();
@@ -41,10 +42,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(string musicName){
         if(musicMap.ContainsKey(musicName)){
-            audioSource.clip = musicMap[musicName].song;
-            audioSource.volume = musicMap[musicName].volume;
-            audioSource.Play();
-                       
+            StartCoroutine(Crossfade(musicMap[musicName]));         
         }
     }
 
@@ -52,6 +50,35 @@ public class AudioManager : MonoBehaviour
         if(sfxMap.ContainsKey(sfxName)){
             audioSource.PlayOneShot(sfxMap[sfxName].clip, sfxMap[sfxName].volume);
         }
+    }
+
+    IEnumerator Crossfade(Music next){
+        float duration = .5f;
+        float elapsed = 0;
+
+        if(current != null){
+            while(elapsed < duration){
+                float volume = Mathf.Lerp(current.volume, 0, elapsed / duration);
+                audioSource.volume = volume;
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            elapsed = 0;
+        }
+
+        duration = 1;
+        current = next;
+        audioSource.clip = current.song;
+        audioSource.volume = current.volume;
+        audioSource.loop = current.loop;
+        audioSource.Play();
+
+        while(elapsed < duration){
+            float volume = Mathf.Lerp(0, current.volume, elapsed / duration);
+            audioSource.volume = volume;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }        
     }
 
 
@@ -70,6 +97,7 @@ public class SFX {
 public class Music {
     public string name;
     public AudioClip song;
+    public bool loop;
     
     [Range(0,1)]
     public float volume = 1;

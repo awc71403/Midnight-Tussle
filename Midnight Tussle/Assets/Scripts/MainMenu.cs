@@ -8,25 +8,14 @@ public class MainMenu : MonoBehaviour
     public static MainMenu instance = null;
 
 
-    #region Unity_funcs
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
+    private void Start(){
+        AudioManager.instance.PlayMusic("Title Theme");
     }
-    #endregion
-
+    
     #region Scene_funcs
     public void SampleScene()
     {
-        SceneManager.LoadScene("SampleScene");
+        GameManager.instance.LoadTussle();
     }
     #endregion
 }

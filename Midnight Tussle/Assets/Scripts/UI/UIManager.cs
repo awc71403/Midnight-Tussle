@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
     
     #region Init
 
-    void Start(){
+    void Awake(){
         animator = GetComponent<Animator>();
         zoneUI = recruitGroup.GetComponentsInChildren<RecruitZoneUI>();
     }
