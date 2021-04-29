@@ -1585,11 +1585,11 @@ MonoBehaviour:
     to move your units
   - All units move at the same time and you must use all of your units movment before
     it can becomes your opponents turn
-  - When moving would result in bumping into an enemy you instead attack that
+  - When moving would result in bumping into an enemy you instead attack that enemy
   - The amount of health a unit has can be seen inside of the heart to the bottom
     left of the unit
   - You can see more about a units stats by hovering over the unit
-  - Your goal is to reach your opponents side and destroy thei prized possesion
+  - Your goal is to reach your opponents side and destroy their prized possesion
   slideshow: {fileID: 443423844}
   showntext: {fileID: 513249381}
 --- !u!4 &1315464930
