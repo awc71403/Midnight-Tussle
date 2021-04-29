@@ -39,7 +39,7 @@ public abstract class Unit : MonoBehaviour {
     [Tooltip("holds a reference of the tile that is currently occupied")]
     [HideInInspector] public Tile occupiedTile;
 
-    [HideInInspector] public bool stuck;
+    [HideInInspector] public bool stun;
 
     // Sprite Rendering
     private SpriteRenderer myRenderer;
@@ -124,8 +124,8 @@ public abstract class Unit : MonoBehaviour {
     }
 
     public IEnumerator MoveUnitInDirection(Direction direction) {
-        if (stuck) {
-            stuck = false;
+        if (stun) {
+            stun = false;
             yield break;
         }
         movingDirection = direction;

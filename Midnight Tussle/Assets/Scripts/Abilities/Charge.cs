@@ -6,7 +6,7 @@ using UnityEngine;
 public class Charge : Ability
 {
     public override void TriggerAbility(Unit unit) {
-        unit.stuck = true;
+        unit.stun = true;
 
         if (unit.playertype == PlayerType.DOG) {
             unit.player.CallMovement(Direction.RIGHT);
