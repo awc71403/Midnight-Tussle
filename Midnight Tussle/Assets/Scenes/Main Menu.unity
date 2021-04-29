@@ -1565,10 +1565,31 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: c08a64be8e707384290b87a1b21a7b6d, type: 3}
   - {fileID: 21300000, guid: c08a64be8e707384290b87a1b21a7b6d, type: 3}
+  - {fileID: 21300000, guid: d29997bb06e5ea34d905f11f9ba08b61, type: 3}
+  - {fileID: 21300000, guid: 487d7eafa6da9504c99ed9e7437c3b07, type: 3}
+  - {fileID: 21300000, guid: 4ab9c02c7e88b1c45a596e5b3ebd9096, type: 3}
+  - {fileID: 21300000, guid: 7130cfe61ac2b4d45883d4fef02aa7a9, type: 3}
+  - {fileID: 21300000, guid: baa955fa86c28ee42968f09e5a96bdf8, type: 3}
+  - {fileID: 21300000, guid: 6eb678429cd3f1a40a402b2a588a4195, type: 3}
+  - {fileID: 21300000, guid: 845f179f9d74a9b4a832160013708866, type: 3}
+  - {fileID: 21300000, guid: 8b8d940c991232a4c871669acd038824, type: 3}
   instructions:
   - At the beggingin of each turn you get to chose one of these 5 slots to roll from
   - You can only chose slots you have enough to pay for but make sure you have enough
     treats to summon units too
+  - After Selecting a slot you can use the remaining treats to summon units on the
+    field
+  - You can only place units on the highlited green tiles and once you're done recruiting
+    press the stop recruiting button
+  - Once you have finished recruiting you can use the arrow keys on your computer
+    to move your units
+  - All units move at the same time and you must use all of your units movment before
+    it can becomes your opponents turn
+  - When moving would result in bumping into an enemy you instead attack that enemy
+  - The amount of health a unit has can be seen inside of the heart to the bottom
+    left of the unit
+  - You can see more about a units stats by hovering over the unit
+  - Your goal is to reach your opponents side and destroy their prized possesion
   slideshow: {fileID: 443423844}
   showntext: {fileID: 513249381}
 --- !u!4 &1315464930
