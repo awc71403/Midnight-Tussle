@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4f34339cac6ad242a0f406a532d4270, type: 3}
-  m_Name: TomatoTown
+  m_Name: SupremeShelter
   m_EditorClassIdentifier: 
-  zoneName: Tomato Town
+  zoneName: Supreme Shelter
   dist:
-  - 1
   - 0
   - 0
-  - 0
-  cost: 0
-  summonCount: 2
+  - 0.25
+  - 0.75
+  cost: 7
+  summonCount: 1

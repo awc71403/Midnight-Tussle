@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4f34339cac6ad242a0f406a532d4270, type: 3}
-  m_Name: MoistyMire
+  m_Name: ToyTown
   m_EditorClassIdentifier: 
-  zoneName: Moisty Mire
+  zoneName: Toy Town
   dist:
-  - 0.26
-  - 0.56
-  - 0.16
-  - 0.02
-  cost: 3
-  summonCount: 3
+  - 0.5
+  - 0.4
+  - 0.1
+  - 0
+  cost: 1
+  summonCount: 2

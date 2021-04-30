@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4f34339cac6ad242a0f406a532d4270, type: 3}
-  m_Name: LootLake
+  m_Name: ChewCity
   m_EditorClassIdentifier: 
-  zoneName: Loot Lake
+  zoneName: Chew City
   dist:
   - 0
-  - 0.6
-  - 0.35
-  - 0.05
+  - 0.5
+  - 0.4
+  - 0.1
   cost: 5
   summonCount: 3
