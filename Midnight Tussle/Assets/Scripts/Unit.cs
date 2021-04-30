@@ -70,6 +70,8 @@ public abstract class Unit : MonoBehaviour {
 
     #endregion
 
+    private bool dying = false; // needed for revenge, or else death will run with hurt, which will animate a destroyed object
+
     #region Initialization
 
     void Awake() {
@@ -78,7 +80,6 @@ public abstract class Unit : MonoBehaviour {
         animator = GetComponent<Animator>();
         health = initialHealth;
         InfoHolder = FindObjectOfType<InforUI>();
-        stuck = false;
     }
 
     void Start(){
@@ -87,8 +88,8 @@ public abstract class Unit : MonoBehaviour {
 
         SetupMovementParticles();
 
-        movementLeft = movement;
-        CheckAbilityCond(Ability.ActivationType.SUMMON);
+        movementLeft = 0;
+        
     }
 
     #endregion
@@ -119,15 +120,22 @@ public abstract class Unit : MonoBehaviour {
 
     #region Movement
     public void MovementState(bool state){
-        movementLeft = movement;
+        if(stun){
+            movementLeft = 0;
+            stun = false;
+        }
+        else{
+            movementLeft = movement;
+        }
+        
         movementText.transform.parent.gameObject.SetActive(state);
     }
 
+    public void MoveUnitInDirectionBase(Direction direction){
+        StartCoroutine(MoveUnitInDirection(direction));
+    }
+
     public IEnumerator MoveUnitInDirection(Direction direction) {
-        if (stun) {
-            stun = false;
-            yield break;
-        }
         movingDirection = direction;
         Tile target = occupiedTile.directionMap[direction];
         if(target != null){
@@ -176,6 +184,8 @@ public abstract class Unit : MonoBehaviour {
     }
 
     public IEnumerator TakeDamage(int damage, Unit from) {
+        if(dying) yield break; 
+
         health -= damage;
         CheckAbilityCond(Ability.ActivationType.DAMAGE);
         yield return HurtAnimation(damage);
@@ -231,6 +241,7 @@ public abstract class Unit : MonoBehaviour {
     }
 
     IEnumerator DeathAnimation() {
+        dying = true;
         AudioManager.instance.PlaySFX("Death");
         // loop over 0.5 second backwards
         for (float i = 0.25f; i >= 0; i -= Time.deltaTime) {

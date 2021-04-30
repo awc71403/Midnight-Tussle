@@ -128,6 +128,8 @@ public class TussleManager : MonoBehaviour
         tile.PlaceUnit(instantiated);
         currentPlayer.AddUnit(instantiated);
         UpdateFurthestColumnCanSpawn();
+
+        instantiated.CheckAbilityCond(Ability.ActivationType.SUMMON);
                
     }
 
@@ -194,6 +196,8 @@ public class TussleManager : MonoBehaviour
     }
 
     public void AttemptBuyRecruit(Recruited recruited, Tile tile){
+        if(currentPlayer.moveInProcess) return; 
+        
         int cost = treatsCostByRarity[recruited.recruit.rarity];
         if(currentPlayer.GetTreats() >= cost){
             currentPlayer.UpdateTreats(currentPlayer.GetTreats() - cost);

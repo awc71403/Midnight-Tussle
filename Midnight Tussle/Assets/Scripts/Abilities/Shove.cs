@@ -15,10 +15,10 @@ public class Shove : Ability {
                 Unit rightUnit = rightTile.Unit;
                 if (rightUnit != null && rightUnit.playertype == PlayerType.CAT)
                 {
-                    Tile rightrightTile = rightUnit.occupiedTile.directionMap[Direction.LEFT];
+                    Tile rightrightTile = rightUnit.occupiedTile.directionMap[Direction.RIGHT];
                     if (rightrightTile != null && rightrightTile.Unit == null)
                     {
-                        rightUnit.MoveUnitInDirection(Direction.LEFT);
+                        rightUnit.MoveUnitInDirectionBase(Direction.RIGHT);
                     }
                     rightUnit.stun = true;
                 }
@@ -34,7 +34,7 @@ public class Shove : Ability {
                 {
                     Tile leftleftTile = leftUnit.occupiedTile.directionMap[Direction.LEFT];
                     if (leftleftTile != null && leftleftTile.Unit == null) {
-                        leftUnit.MoveUnitInDirection(Direction.LEFT);
+                        leftUnit.MoveUnitInDirectionBase(Direction.LEFT);
                     }
                     leftUnit.stun = true;
                 }

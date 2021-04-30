@@ -9,22 +9,10 @@ public class Charge : Ability
         unit.stun = true;
 
         if (unit.playertype == PlayerType.DOG) {
-            unit.player.CallMovement(Direction.RIGHT);
-            List<Unit> units = TussleManager.instance.dogPlayer.GetUnits;
-            foreach (Unit dog in units) {
-                if (dog != unit) {
-                    dog.movementLeft++;
-                }
-            }
+            unit.player.ChargeAbility(Direction.RIGHT, unit);
         }
         else {
-            unit.player.CallMovement(Direction.LEFT);
-            List<Unit> units = TussleManager.instance.catPlayer.GetUnits;
-            foreach (Unit cat in units) {
-                if (cat != unit) {
-                    cat.movementLeft++;
-                }
-            }
+            unit.player.ChargeAbility(Direction.LEFT, unit);
         }
     }
 }

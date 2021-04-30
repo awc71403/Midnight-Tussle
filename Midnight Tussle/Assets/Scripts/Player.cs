@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     private int countToRecruit;
 
     public bool movingPhase = false;
-    private bool moveInProcess = false;
+    public bool moveInProcess = false;
 
     #endregion
 
@@ -81,9 +81,40 @@ public class Player : MonoBehaviour
         
     }
 
-    public void CallMovement(Direction direction) {
-        Debug.Log("CallMovement");
-        StartCoroutine("Movement", direction);
+    public void ChargeAbility(Direction direction, Unit abilityUser) {
+        StartCoroutine(ChargeMove(direction, abilityUser));
+    }
+
+    private IEnumerator ChargeMove(Direction direction, Unit abilityUser){
+        moveInProcess = true;
+
+        Queue<Unit> movementQueue = new Queue<Unit>(units);
+        switch(direction){
+            case Direction.LEFT:
+                movementQueue.OrderBy(u => u.occupiedTile.xIndex);
+                break;
+            case Direction.RIGHT:
+                movementQueue.OrderByDescending(u => u.occupiedTile.xIndex);
+                break;
+            case Direction.UP:
+                movementQueue.OrderByDescending(u => u.occupiedTile.yIndex);
+                break;
+            case Direction.DOWN:
+                movementQueue.OrderBy(u => u.occupiedTile.yIndex);
+                break;
+        }
+
+        while(movementQueue.Count != 0){
+            Unit unit = movementQueue.Dequeue();
+
+            if(unit != abilityUser){
+                // Try moving in direction
+                yield return unit.MoveUnitInDirection(direction);
+            }
+            
+        }
+
+        moveInProcess = false;
     }
 
     // Returns true if there are still more to place

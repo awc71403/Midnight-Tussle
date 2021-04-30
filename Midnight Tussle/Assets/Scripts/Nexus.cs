@@ -14,6 +14,7 @@ public class Nexus : MonoBehaviour
 
     void Start(){
         myRenderer = GetComponent<SpriteRenderer>();
+        HPText.text = health.ToString();
     }
 
     public void TakeDamage(int damage){
@@ -22,7 +23,7 @@ public class Nexus : MonoBehaviour
     }
 
     public IEnumerator HurtAnimation() {
-        AudioManager.instance.PlaySFX("Hurt");
+        AudioManager.instance.PlaySFX("Attack");
 
         // Shaking
         Vector3 defaultPosition = transform.position;
