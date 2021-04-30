@@ -6,8 +6,6 @@ using UnityEngine;
 public class Charge : Ability
 {
     public override void TriggerAbility(Unit unit) {
-        unit.stun = true;
-
         if (unit.playertype == PlayerType.DOG) {
             unit.player.ChargeAbility(Direction.RIGHT, unit);
         }
