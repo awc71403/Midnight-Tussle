@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Pressure
   m_EditorClassIdentifier: 
   aName: Pressure
-  aDesc: When summoned, enemies around take 2 damage.
+  aDesc: On summon, enemies around take 2 damage.
   type: 1

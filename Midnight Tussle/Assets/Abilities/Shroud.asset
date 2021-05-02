@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ffa685668e8e8245a919182c64b0b71, type: 3}
-  m_Name: Charge
+  m_Script: {fileID: 11500000, guid: b5633ac56ce30ae47834bb576ad25e77, type: 3}
+  m_Name: Shroud
   m_EditorClassIdentifier: 
-  aName: Charge
-  aDesc: On summon, move all of your other units forward.
+  aName: Shroud
+  aDesc: On summon, all dog units take 1 damage and get -1 attack.
   type: 1

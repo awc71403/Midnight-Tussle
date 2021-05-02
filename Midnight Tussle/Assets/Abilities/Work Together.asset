@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Work Together
   m_EditorClassIdentifier: 
   aName: Work Together
-  aDesc: If an ally unit is infront, add my health and attack to them and destroy
-    me.
+  aDesc: On summon, if an ally unit is infront, add my health and attack to them and
+    destroy me.
   type: 1

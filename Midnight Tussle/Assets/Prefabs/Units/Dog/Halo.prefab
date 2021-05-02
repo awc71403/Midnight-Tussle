@@ -101,7 +101,7 @@ MonoBehaviour:
   attack: 4
   movement: 2
   minion: 0
-  ability: {fileID: 11400000, guid: 5ac983763ea5a364cba4e94f2c391852, type: 2}
+  ability: {fileID: 11400000, guid: 69e98d1cf24a2b546a688110f17df424, type: 2}
   HPText: {fileID: 7801013128930810384}
   movementText: {fileID: 7801013127583916986}
   damageText: {fileID: 3704177059390865046}
@@ -112,7 +112,7 @@ MonoBehaviour:
   killedBy: {fileID: 0}
   health: 0
   occupiedTile: {fileID: 0}
-  stuck: 0
+  stun: 0
   stepSounds: []
   movingDirection: 0
   movementLeft: 0
@@ -4996,6 +4996,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnitUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5947855971816017887, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3249255201158710729, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5056,11 +5061,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1938799893, guid: 6ccf0a842fed6b44bb4a9f52338ca28b, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5947855971816017887, guid: 6ccf0a842fed6b44bb4a9f52338ca28b,
-        type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}

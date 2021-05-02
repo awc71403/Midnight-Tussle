@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Shove
   m_EditorClassIdentifier: 
   aName: Shove
-  aDesc: On summon, if enemy infront, move him back one and stun
+  aDesc: On summon, if an enemy is infront, move him back one and stun
   type: 1

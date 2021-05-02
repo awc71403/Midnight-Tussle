@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Provoked
   m_EditorClassIdentifier: 
   aName: Provoked
-  aDesc: When attacked, increase my attack by 1.
+  aDesc: When attacked, increase this unit's attack by 1.
   type: 3

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ffa685668e8e8245a919182c64b0b71, type: 3}
-  m_Name: Charge
+  m_Script: {fileID: 11500000, guid: 34c7e0d7c5776994f8a828e2e97dffec, type: 3}
+  m_Name: Fling
   m_EditorClassIdentifier: 
-  aName: Charge
-  aDesc: On summon, move all of your other units forward.
+  aName: Fling
+  aDesc: On summon, the first enemy infront of you takes 3 damage.
   type: 1

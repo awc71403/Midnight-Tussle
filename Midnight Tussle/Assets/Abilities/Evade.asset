@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Evade
   m_EditorClassIdentifier: 
   aName: Evade
-  aDesc: After attacking, swap locations of the units.
+  aDesc: On attack, swap locations of the units after combat.
   type: 4

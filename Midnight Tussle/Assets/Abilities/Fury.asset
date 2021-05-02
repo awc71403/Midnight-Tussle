@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Fury
   m_EditorClassIdentifier: 
   aName: Fury
-  aDesc: Attacks all enemies around you when attacking.
+  aDesc: On attack, damage all enemies around you as well.
   type: 4
