@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 using System.Linq;
 
 
 [RequireComponent(typeof(RecruitManager))]
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
 
     #region Variables 
@@ -14,14 +15,9 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerUI playerUI;
     public Nexus nexus;
 
-
     private RecruitManager recruitManager;
 
-    private int nexusHealth;
-
     private int treatCount;
-
-    private List<Unit> units = new List<Unit>();
 
     #endregion
 
@@ -31,6 +27,12 @@ public class Player : MonoBehaviour
 
     public bool movingPhase = false;
     public bool moveInProcess = false;
+
+    #endregion
+
+    #region Network Variables
+
+    private SyncList<Unit> units = new SyncList<Unit>();
 
     #endregion
 
@@ -45,7 +47,7 @@ public class Player : MonoBehaviour
 
     #region Getter
     public List<Unit> GetUnits {
-        get { return units; }
+        get { return units.ToList(); }
     }
     #endregion
 

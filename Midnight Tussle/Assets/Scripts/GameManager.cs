@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
     public static GameManager instance;
 
@@ -27,7 +28,6 @@ public class GameManager : MonoBehaviour
 
     // The function used to begin a tussle in the actual "Tussle" scene
     public void LoadTussle() {
-        AudioManager.instance.PlayMusic("Battle Theme");
-        SceneManager.LoadScene("SampleScene");
+        if(isServer) NetworkManager.singleton.ServerChangeScene("Networked");
     }
 }

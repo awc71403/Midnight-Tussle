@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Mirror;
 using UnityEngine.UI;
 
-public abstract class Unit : MonoBehaviour {
+public abstract class Unit : NetworkBehaviour {
 
     #region Variables
 

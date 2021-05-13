@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public enum PlayerType{
 }
 
 [RequireComponent(typeof(Gacha))]
-public class TussleManager : MonoBehaviour
+public class TussleManager : NetworkBehaviour
 {
     #region Static Variables
     public static List<Sprite> raritySprites;
@@ -35,19 +36,26 @@ public class TussleManager : MonoBehaviour
     public int treatsPerTurn;
 
     private Gacha gachaMachine;
-
-    private PlayerType currentTurn;
-    private int turnCount = 0;
+    
+    // private int turnCount = 0;
 
     private Tile[,] mapArray = new Tile[XSIZE, YSIZE];
 
     public const int XSIZE = 7;
     public const int YSIZE = 5;
-    
+
     public Player currentPlayer {
         get { return currentTurn == PlayerType.DOG ? dogPlayer : catPlayer; }
 
     }
+
+    #region Networked variables
+    
+    [SyncVar]
+    private PlayerType currentTurn;
+
+
+    #endregion
 
     private int furthestColumn;
 
@@ -65,9 +73,11 @@ public class TussleManager : MonoBehaviour
         instance = this;
 
         raritySprites = temp_raritySprites;
+
     }
 
     void Start(){
+        AudioManager.instance.PlayMusic("Battle Theme");
         gachaMachine = GetComponent<Gacha>();
         StartTussle();
     }
@@ -153,7 +163,7 @@ public class TussleManager : MonoBehaviour
     
     // Called to begin a turn
     private void NewTurn() {
-        turnCount++;
+        // turnCount++;
         currentPlayer.UpdateTreats(currentPlayer.GetTreats() + treatsPerTurn);
         uiManager.StartZone(currentTurn);
        

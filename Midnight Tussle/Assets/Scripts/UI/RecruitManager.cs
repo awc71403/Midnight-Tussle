@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 using TMPro;
 
 public class RecruitManager : MonoBehaviour
@@ -13,8 +14,9 @@ public class RecruitManager : MonoBehaviour
     private float heightFourth;
     private float widthSixth;
 
-    void Start(){
-
+    void Awake(){
+        // Register the prefab for the network spawn
+        NetworkManager.singleton.spawnPrefabs.Add(RecruitUIPrefab);
     }
 
     public void CreateRecruits(List<Unit> recruits){
