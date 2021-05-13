@@ -40,6 +40,21 @@ public class TutorialButton : MonoBehaviour
         }
     }
 
+    public void previousImage()
+    {
+        currentimage--;
+        if (currentimage < 0)
+        {
+            currentimage = -1;
+            holder.SetActive(false);
+        }
+        else
+        {
+            slideshow.sprite = sprites[currentimage];
+            showntext.text = instructions[currentimage];
+        }
+    }
+
     public void startslideshow()
     {
         holder.SetActive(true);
