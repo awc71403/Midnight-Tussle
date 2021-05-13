@@ -109,7 +109,7 @@ public class Recruited : MonoBehaviour {
             TussleManager tussle = TussleManager.instance;
             if(tussle.ColumnInRange(tile.xIndex)){
                 if (!tile.HasUnit()) {
-                    tussle.AttemptBuyRecruit(this, tile);
+                    tussle.Cmd_AttemptBuyRecruit(this.gameObject, tile.gameObject);
                 }
             }           
         }

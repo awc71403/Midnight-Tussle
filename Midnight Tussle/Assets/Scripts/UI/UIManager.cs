@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Mirror;
 
-public class UIManager : MonoBehaviour
+public class UIManager
 {
     #region Variables
     [Header("References")]
@@ -26,6 +27,7 @@ public class UIManager : MonoBehaviour
 
     #region Functions
 
+    [Client]
     public void StartZone(PlayerType turn){
         turnText.text = turn == PlayerType.DOG ? "Dog's Turn" : "Cat's Turn";
         animator.Play("TurnStart");
@@ -35,6 +37,7 @@ public class UIManager : MonoBehaviour
         }
          
     }
+
 
     public void StartPlacement(){
         animator.Play("StartPlacement");

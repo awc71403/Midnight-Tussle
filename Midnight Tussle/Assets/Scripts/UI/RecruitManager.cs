@@ -16,7 +16,7 @@ public class RecruitManager : MonoBehaviour
 
     void Awake(){
         // Register the prefab for the network spawn
-        NetworkManager.singleton.spawnPrefabs.Add(RecruitUIPrefab);
+        // NetworkManager.singleton.spawnPrefabs.Add(RecruitUIPrefab);
     }
 
     public void CreateRecruits(List<Unit> recruits){
@@ -32,6 +32,7 @@ public class RecruitManager : MonoBehaviour
 
         //Instantiate RecruitUI under the manager
         Recruited recruit = Instantiate(RecruitUIPrefab, position, Quaternion.identity, transform).GetComponent<Recruited>();
+        // NetworkServer.Spawn(recruit.gameObject);
         recruit.Setup(unit);       
     }
 

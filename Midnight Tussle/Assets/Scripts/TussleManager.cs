@@ -73,22 +73,26 @@ public class TussleManager : NetworkBehaviour
         instance = this;
 
         raritySprites = temp_raritySprites;
+        gachaMachine = GetComponent<Gacha>();
 
     }
 
     void Start(){
-        AudioManager.instance.PlayMusic("Battle Theme");
-        gachaMachine = GetComponent<Gacha>();
-        StartTussle();
+        if(isServer){
+            foreach(NetworkConnection connection in NetworkServer.connections.Values){               
+                Player p = connection == NetworkServer.localConnection ? dogPlayer : catPlayer;
+                NetworkServer.AddPlayerForConnection(connection, p.gameObject);
+                StartTussle();
+            }
+        }
+        else{
+            AudioManager.instance.PlayMusic("Battle Theme");
+            PrepMap();
+        }
+        
     }
 
-    // Called by the GameManager, used to set the Tussle in motion  and run setup for the match
-    public void StartTussle() {
-
-        
-
-        currentTurn = PlayerType.DOG;
-
+    private void PrepMap(){
         // THESE SHOULD BE STORED WITH 0,0 AT BOTTOM LEFT in the hierarchy!!! And running horizontally in sequence!
 
         // Fill mapArray, which should be empty at first.
@@ -124,6 +128,12 @@ public class TussleManager : NetworkBehaviour
                 
             }
         }
+    }
+    
+    // Called by the GameManager, used to set the Tussle in motion  and run setup for the match
+    [Server]
+    public void StartTussle() {
+        currentTurn = PlayerType.DOG;
 
         // Balance - no new treat on first turn
         currentPlayer.UpdateTreats(currentPlayer.GetTreats() - treatsPerTurn);
@@ -131,9 +141,11 @@ public class TussleManager : NetworkBehaviour
         NewTurn();
     }
 
+    [Server]
     public void PlaceUnitOnTile(Unit recruitPrefab, Tile tile) {
         // Instantiate an instance of the unit and place it on the given tile.
-        Unit instantiated = Instantiate<Unit>(recruitPrefab, tile.transform.position, Quaternion.identity, transform); 
+        Unit instantiated = Instantiate<Unit>(recruitPrefab, tile.transform.position, Quaternion.identity); 
+        NetworkServer.Spawn(instantiated.gameObject, currentPlayer.connectionToClient); // Give authority to owner
         AudioManager.instance.PlaySFX("Summon");
         tile.PlaceUnit(instantiated);
         currentPlayer.AddUnit(instantiated);
@@ -150,18 +162,10 @@ public class TussleManager : NetworkBehaviour
 
     #endregion
 
-    #region UI
-    public void ShowCharacterUI(Unit selectedUnit) {
-    }
-
-    public void ClearUI() {
-
-    }
-    #endregion
-
     #region Turn
     
     // Called to begin a turn
+    [Server]
     private void NewTurn() {
         // turnCount++;
         currentPlayer.UpdateTreats(currentPlayer.GetTreats() + treatsPerTurn);
@@ -169,6 +173,7 @@ public class TussleManager : NetworkBehaviour
        
     }
 
+    [Server]
     public void StartPlacement(RecruitZone zoneData){
         uiManager.StartPlacement();
 
@@ -180,11 +185,13 @@ public class TussleManager : NetworkBehaviour
 
     }
 
+    [Server]
     public void StartAttack(){
         currentPlayer.ActivateMovement();
     }
 
     // Called to end a turn
+    [Server]
     public void EndTurn() {
         if (currentTurn == PlayerType.DOG) {
             currentTurn = PlayerType.CAT;
@@ -198,15 +205,20 @@ public class TussleManager : NetworkBehaviour
 
     #endregion
 
-    public void AttemptBuyZone(RecruitZone zoneData){
+    [Command]
+    public void Cmd_AttemptBuyZone(RecruitZone zoneData){
         if(currentPlayer.GetTreats() >= zoneData.cost){
             currentPlayer.UpdateTreats(currentPlayer.GetTreats() - zoneData.cost);
             StartPlacement(zoneData);
         }
     }
-
-    public void AttemptBuyRecruit(Recruited recruited, Tile tile){
+    
+    [Command]
+    public void Cmd_AttemptBuyRecruit(GameObject recruitObj, GameObject tileObj){
         if(currentPlayer.moveInProcess) return; 
+
+        Recruited recruited = recruitObj.GetComponent<Recruited>();
+        Tile tile = tileObj.GetComponent<Tile>();
         
         int cost = treatsCostByRarity[recruited.recruit.rarity];
         if(currentPlayer.GetTreats() >= cost){
@@ -215,6 +227,7 @@ public class TussleManager : NetworkBehaviour
             Destroy(recruited.gameObject);
         }
     }
+
 
     public void GiveTreatFromDeath(PlayerType killedType, int rarity){
         Player killer = killedType == PlayerType.DOG ? catPlayer : dogPlayer;
@@ -330,11 +343,12 @@ public class TussleManager : NetworkBehaviour
         }
     }
 
-
     private void EndTussle(PlayerType winner){
         gameOver = true;
         AudioManager.instance.PlayMusic("Game Over");
         uiManager.End(winner);
     }
+
+    
 
 }

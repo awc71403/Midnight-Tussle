@@ -33,17 +33,17 @@ public class Gacha : MonoBehaviour
         dogUnits = new List<Unit>[4]{dogNormalUnits, dogRareUnits, dogEpicUnits, dogLegendaryUnits};
 
         // Register the prefabs for network spawning
-        foreach(List<Unit> unitList in catUnits){
-            foreach(Unit unit in unitList){
-                NetworkManager.singleton.spawnPrefabs.Add(unit.gameObject);
-            }
-        }
+        // foreach(List<Unit> unitList in catUnits){
+        //     foreach(Unit unit in unitList){
+        //         NetworkManager.singleton.spawnPrefabs.Add(unit.gameObject);
+        //     }
+        // }
 
-        foreach(List<Unit> unitList in dogUnits){
-            foreach(Unit unit in unitList){
-                NetworkManager.singleton.spawnPrefabs.Add(unit.gameObject);
-            }
-        }
+        // foreach(List<Unit> unitList in dogUnits){
+        //     foreach(Unit unit in unitList){
+        //         NetworkManager.singleton.spawnPrefabs.Add(unit.gameObject);
+        //     }
+        // }
     }
 
 

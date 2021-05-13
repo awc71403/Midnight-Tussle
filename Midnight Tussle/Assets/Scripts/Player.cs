@@ -25,14 +25,14 @@ public class Player : NetworkBehaviour
 
     private int countToRecruit;
 
-    public bool movingPhase = false;
-    public bool moveInProcess = false;
+    [HideInInspector] public bool movingPhase = false;
+    [HideInInspector] public bool moveInProcess = false;
 
     #endregion
 
     #region Network Variables
 
-    private SyncList<Unit> units = new SyncList<Unit>();
+    private List<Unit> units = new List<Unit>();
 
     #endregion
 
@@ -40,20 +40,22 @@ public class Player : NetworkBehaviour
 
     void Start(){
         recruitManager = GetComponent<RecruitManager>();
-        UpdateTreats(TussleManager.instance.startingTreats);
+        // UpdateTreats(TussleManager.instance.startingTreats);
     }
 
     #endregion
 
     #region Getter
     public List<Unit> GetUnits {
-        get { return units.ToList(); }
+        get { return units; }
     }
     #endregion
 
     #region Functions
 
     void Update(){
+        if(!isLocalPlayer) return;
+        
         if(movingPhase && !moveInProcess){
             if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {

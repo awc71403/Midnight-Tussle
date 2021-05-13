@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
@@ -11,7 +12,7 @@ public enum Direction {
     DOWN
 }
 
-public class Tile : MonoBehaviour {
+public class Tile : NetworkBehaviour {
     #region Instance Variables
 
     // THESE ARE ZERO-INDEXED, with 0,0 being the bottom left
@@ -22,10 +23,9 @@ public class Tile : MonoBehaviour {
 
     public static Tile hoveredTile;
 
-    public Vector3 unitOffset;
-
     public Dictionary<Direction, Tile> directionMap = new Dictionary<Direction, Tile>();
 
+    [SyncVar]
     private Unit myUnit;
 
     #endregion

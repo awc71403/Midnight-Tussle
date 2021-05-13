@@ -137,7 +137,8 @@ public class TussleNetworkManager : NetworkManager
     {
         base.OnServerReady(conn);
         if(NetworkServer.connections.Count == 2){
-            GameManager.instance.LoadTussle();
+            
+            // GameManager.instance.LoadTussle();
         } 
     }
 
