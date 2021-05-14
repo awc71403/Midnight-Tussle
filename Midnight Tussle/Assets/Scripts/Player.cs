@@ -186,7 +186,7 @@ public class Player : MonoBehaviour
         if(!MovesLeft()) EndMovement();
     }
 
-    private void EndMovement(){
+    public void EndMovement(){
         movingPhase = false;
         playerUI.MoveState(false);
         foreach(Unit unit in units){

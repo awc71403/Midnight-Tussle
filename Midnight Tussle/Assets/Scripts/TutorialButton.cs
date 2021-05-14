@@ -24,6 +24,19 @@ public class TutorialButton : MonoBehaviour
         currentimage = -1;
     }
 
+    void Update(){
+        if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            {
+                prevImage();
+                AudioManager.instance.PlaySFX("Cancel");
+            }
+            else if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            {
+                nextImage();
+                AudioManager.instance.PlaySFX("Select");
+            }
+    }
+
     public void nextImage()
     {
         
@@ -35,6 +48,16 @@ public class TutorialButton : MonoBehaviour
         }
         else
         {
+            slideshow.sprite = sprites[currentimage];
+            showntext.text = instructions[currentimage];
+        }
+    }
+
+    public void prevImage(){
+        
+        if( currentimage != 0)
+        {
+            currentimage--;
             slideshow.sprite = sprites[currentimage];
             showntext.text = instructions[currentimage];
         }

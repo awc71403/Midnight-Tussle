@@ -323,8 +323,13 @@ public class TussleManager : MonoBehaviour
 
     private void EndTussle(PlayerType winner){
         gameOver = true;
+        currentPlayer.EndMovement();
         AudioManager.instance.PlayMusic("Game Over");
         uiManager.End(winner);
+    }
+
+    public void Retry(){
+        GameManager.instance.LoadTussle();
     }
 
 }
